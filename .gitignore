@@ -1,0 +1,42 @@
+# === Java 클래스 파일 ===
+*.class
+
+# === 빌드 결과물 (Maven) ===
+target/
+dependency-reduced-pom.xml
+release.properties
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+buildNumber.properties
+.mvn/wrapper/maven-wrapper.jar
+.mvn/timing.properties
+
+# === Eclipse / STS 관련 ===
+.project
+.classpath
+.settings/
+.apt_generated/
+.factorypath
+.springBeans
+.sts4-cache/
+.metadata/
+
+# === 로그 파일 ===
+*.log
+
+# === OS 관련 ===
+.DS_Store
+Thumbs.db
+
+# === 임시 파일 ===
+*.tmp
+*.bak
+*.swp
+*~
+*.orig
+
+# === 환경 변수 설정 파일 ===
+.env
+.env.*
