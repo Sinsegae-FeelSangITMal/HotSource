@@ -30,6 +30,9 @@ buildNumber.properties
 .DS_Store
 Thumbs.db
 
+# static 폴더 전체 무시
+src/main/webapp/static/
+
 # === 임시 파일 ===
 *.tmp
 *.bak
