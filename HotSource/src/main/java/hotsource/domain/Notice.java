@@ -15,8 +15,9 @@ public class Notice {
 	@Id
 	private int notice_id;
 	private String title;
-	private String writer;
 	private String content;
-	private String regdate;
-	private int hit;
+	private String create_date;
+	private String notice_img_url;
+	
+	// private Seller seller;
 }

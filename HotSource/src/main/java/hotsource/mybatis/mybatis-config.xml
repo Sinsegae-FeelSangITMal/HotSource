@@ -6,6 +6,7 @@
 	<typeAliases>
 		<typeAlias type="hotsource.domain.TopCategory" alias="TopCategory" />
 		<typeAlias type="hotsource.domain.SubCategory" alias="SubCategory" />
+		<typeAlias type="hotsource.domain.Notice" alias="Notice" />
 	</typeAliases>
 	<environments default="development">
 		<environment id="development">
@@ -19,5 +20,6 @@
 	<mappers>
 		<mapper resource="hotsource/mybatis/TopCategoryMapper.xml" />
 		<mapper resource="hotsource/mybatis/SubCategoryMapper.xml" />
+		<mapper resource="hotsource/mybatis/NoticeMapper.xml" />
 	</mappers>
 </configuration>
