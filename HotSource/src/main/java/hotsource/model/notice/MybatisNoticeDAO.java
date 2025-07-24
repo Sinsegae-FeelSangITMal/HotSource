@@ -29,7 +29,7 @@ public class MybatisNoticeDAO implements NoticeDAO{
 
 	@Override
 	public Notice select(int notice_id) {
-		return null;
+		return sqlSessionTemplate.selectOne("Notice.select", notice_id);
 	}
 
 	@Override

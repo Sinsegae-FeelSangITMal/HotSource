@@ -25,7 +25,7 @@ public class NoticeServiceImpl implements NoticeService{
 	}
 
 	public Notice select(int notice_id) {
-		return null;
+		return noticeDAO.select(notice_id);
 	}
 
 	@Transactional

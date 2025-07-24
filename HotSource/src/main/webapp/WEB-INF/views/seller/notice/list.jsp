@@ -11,7 +11,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AdminLTE 3 | Dashboard</title>
+  <title>Notice</title>
 	<%@ include file="../inc/head_link.jsp" %>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -37,12 +37,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">공지글 목록</h1>
+            <h1 class="m-0">Notice List</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">공지글 관리 > 공지글 목록</li>
+              <li class="breadcrumb-item active">Notice > List</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -60,7 +60,7 @@
           <div class="col-12">
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">Responsive Hover Table</h3>
+                <h3 class="card-title">여기에 메인페이지 작가 공지글 리스트로 넘어가는 링크 걸어주면 굿</h3>
 
                 <div class="card-tools">
                   <div class="input-group input-group-sm" style="width: 150px;">
@@ -94,7 +94,7 @@
 					    Notice notice = noticeList.get(i); 
 					%>
 					  <tr>
-					    <td><a href="#">공지글 ID: <%= notice.getNotice_id() %></a></td>
+					    <td><a href="/seller/notice/detail?notice_id=<%= notice.getNotice_id()%>">공지글 ID: <%= notice.getNotice_id() %></a></td>
 					    <td><%= notice.getTitle() %></td>
 					    <td><%= notice.getContent() %></td>
 					    <td><%= notice.getCreate_date() %></td>
@@ -116,6 +116,10 @@
                   <% } %>
                   <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
                 </ul>
+                  <!-- 오른쪽 끝 배치 -->
+				  <div class="float-right">
+				    <button type="button" class="btn btn-info" id="bt_regist">공지글 작성</button>
+				  </div>
               </div>
               
             </div>
@@ -138,6 +142,15 @@
 </div>
 <!-- ./wrapper -->
 	<%@ include file="../inc/footer_link.jsp" %>
+	<script type="text/javascript">
+		$(()=>{
+		
+			// 공지글 작성 버튼 연결
+			$("#bt_regist").click(()=>{
+				$(location).attr("href", "/seller/notice/registform");
+			})
+		})
+	</script>
 	
 </body>
 </html>

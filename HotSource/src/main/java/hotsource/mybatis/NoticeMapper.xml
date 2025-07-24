@@ -15,11 +15,11 @@
 	</select>
 	
 	<insert id="insert" parameterType="Notice">
-		insert into notice(title, writer, content) values(#{title}, #{writer},#{content})
+		insert into notice(title, seller_id, content) values(#{title}, 1, #{content})
 	</insert>
 	
 	<update id="update" parameterType="Notice">
-		update notice set title=#{title}, writer=#{writer}, content=#{content}
+		update notice set title=#{title}, seller_id=#{seller.seller_id}, content=#{content}
 		where notice_id=#{notice_id}
 	</update>
 	
