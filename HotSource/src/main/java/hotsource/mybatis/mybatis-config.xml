@@ -7,6 +7,9 @@
 		<typeAlias type="hotsource.domain.TopCategory" alias="TopCategory" />
 		<typeAlias type="hotsource.domain.SubCategory" alias="SubCategory" />
 		<typeAlias type="hotsource.domain.Notice" alias="Notice" />
+		<typeAlias type="hotsource.domain.Role" alias="Role" />
+		<typeAlias type="hotsource.domain.SnsProvider" alias="SnsProvider" />
+		<typeAlias type="hotsource.domain.User" alias="User" />
 	</typeAliases>
 	<environments default="development">
 		<environment id="development">
@@ -21,5 +24,8 @@
 		<mapper resource="hotsource/mybatis/TopCategoryMapper.xml" />
 		<mapper resource="hotsource/mybatis/SubCategoryMapper.xml" />
 		<mapper resource="hotsource/mybatis/NoticeMapper.xml" />
+		<mapper resource="hotsource/mybatis/RoleMapper.xml" />
+		<mapper resource="hotsource/mybatis/SnsProviderMapper.xml" />
+		<mapper resource="hotsource/mybatis/UserMapper.xml" />
 	</mappers>
 </configuration>
