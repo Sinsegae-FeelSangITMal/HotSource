@@ -1,14 +1,16 @@
 package hotsource.domain;
 
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 import lombok.Data;
 
 @Data
+@Entity
+@Table(name="seller")
 public class Seller {
+	@Id
 	private int seller_id;
 	private String seller_name;
 	private String seller_nickname;

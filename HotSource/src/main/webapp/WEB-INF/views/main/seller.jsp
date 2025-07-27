@@ -1,7 +1,15 @@
+<%@page import="hotsource.domain.User"%>
+<%@page import="hotsource.domain.NoticeComment"%>
+<%@page import="hotsource.domain.NoticeLike"%>
+<%@page import="hotsource.domain.Notice"%>
 <%@page import="hotsource.domain.Seller"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
+	User user = (User)request.getAttribute("user");
 	Seller seller = (Seller)request.getAttribute("seller");
+	Notice notice = (Notice)request.getAttribute("notice");
+	NoticeLike noticeLike = (NoticeLike)request.getAttribute("noticeLike");
+	NoticeComment noticeComment = (NoticeComment)request.getAttribute("noticeComment");
 %>
 <!DOCTYPE html>
 <html>
@@ -30,7 +38,7 @@
 	<!-- 컨텐츠 영역 시작 -->
 		<!-- <a href="/seller/detail?product_id=<==product.getProduct_id() %>"><==product.getProduct_name() %></a>  -->
 		<!-- <a href="/seller/detail?seller_id=<== seller.getSeller_id() %>">상세 페이지 이동</a>  -->
-		<a href="/main/seller/detail?seller_id=<%= 1 %>">상세 페이지 이동(테스트용, seller_id==1)</a>
+		<a href="/main/seller/detail?seller_id=<%= 1 %>&notice_id=<%= 1 %>&notice_comment_id=<%= 1 %>&notice_like_id=<%= 1 %>">상세 페이지 이동(테스트용, seller_id==1)</a>
 	<!-- 컨텐츠 영역 끝 -->
 	
 	<!-- 푸터 영역 시작 -->

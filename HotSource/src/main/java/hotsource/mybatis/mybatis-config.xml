@@ -5,6 +5,8 @@
 <configuration>
 	<typeAliases>
 		<typeAlias type="hotsource.domain.Notice" 		alias="Notice" />
+		<typeAlias type="hotsource.domain.NoticeComment" alias="NoticeComment" />
+		<typeAlias type="hotsource.domain.NoticeLike" 	alias="NoticeLike" />
 		<typeAlias type="hotsource.domain.Role" 		alias="Role" />
 		<typeAlias type="hotsource.domain.Seller" 		alias="Seller" />
 		<typeAlias type="hotsource.domain.SnsProvider" 	alias="SnsProvider" />
@@ -23,6 +25,8 @@
 	</environments>
 	<mappers>
 		<mapper resource="hotsource/mybatis/NoticeMapper.xml" />
+		<mapper resource="hotsource/mybatis/NoticeCommentMapper.xml" />
+		<mapper resource="hotsource/mybatis/NoticeLikeMapper.xml" />
 		<mapper resource="hotsource/mybatis/RoleMapper.xml" />
 		<mapper resource="hotsource/mybatis/SellerMapper.xml" />
 		<mapper resource="hotsource/mybatis/SnsProviderMapper.xml" />

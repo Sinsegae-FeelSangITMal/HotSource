@@ -1,8 +1,16 @@
+<%@page import="hotsource.domain.User"%>
+<%@page import="hotsource.domain.NoticeComment"%>
+<%@page import="hotsource.domain.NoticeLike"%>
+<%@page import="hotsource.domain.Notice"%>
 <%@page import="hotsource.domain.Seller"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
+	User user = (User)request.getAttribute("user");
 	Seller seller = (Seller)request.getAttribute("seller");
+	Notice notice = (Notice)request.getAttribute("notice");
+	NoticeLike noticeLike = (NoticeLike)request.getAttribute("noticeLike");
+	NoticeComment noticeComment = (NoticeComment)request.getAttribute("noticeComment");
 %>
 <!DOCTYPE html>
 <html>
@@ -33,6 +41,28 @@
 	<!-- 컨텐츠 영역 시작 -->
 	<h1>작가 상세 페이지</h1>
 	<h3><%= seller.getSeller_name() %></h3>
+	
+	<% if (notice != null) { %>
+	  	Notice ID: <%= notice.getNotice_id() %>, <br>
+	  	Notice Content: <%= notice.getContent()%> <br>
+	<% } else { %>
+	  <h3>Notice 객체가 없습니다.</h3>
+	<% } %>
+	
+	<% if (noticeLike != null) { %>
+	  	NoticeLike isLike: <%= noticeLike.getIs_like() %>, <br>
+	  	NoticeLike userID: <%= noticeLike.getUser().getUser_id()%>, <br>
+	  	NoticeLike userName: <%= noticeLike.getUser().getUser_name()%> <br>
+	<% } else { %>
+	  <h3>NoticeLike 객체가 없습니다.</h3>
+	<% } %>
+	
+	<% if (noticeComment != null) { %>
+	  	NoticeComment ID: <%= noticeComment.getNotice_comment_id()%>, <br>
+	  	NoticeComment Content: <%= noticeComment.getContent()%> <br>
+	<% } else { %>
+	  <h3>NoticeComment 객체가 없습니다.</h3>
+	<% } %>
 
 	<!-- 컨텐츠 영역 끝 -->
 	

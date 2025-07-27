@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import hotsource.domain.Notice;
+import hotsource.domain.NoticeComment;
 import hotsource.exception.NoticeException;
 import lombok.extern.slf4j.Slf4j;
 
@@ -15,39 +16,34 @@ import lombok.extern.slf4j.Slf4j;
 // 생성하여 싱글턴으로 관리
 @Slf4j
 @Repository
-public class MybatisNoticeDAO implements NoticeDAO{
+public class MybatisNoticeCommentDAO implements NoticeCommentDAO{
 	
 	// 스프링 컨테이너로 하여금 자동으로 주입시켜달라!
 	@Autowired
 	private SqlSessionTemplate sqlSessionTemplate;
-	
+
 	@Override
 	public List selectAll() {
-		log.debug("DAO의 selectAll() 도달");
-		return sqlSessionTemplate.selectList("Notice.selectAll");
+		return sqlSessionTemplate.selectList("NoticeComment.selectAll");
 	}
 
 	@Override
-	public Notice select(int notice_id) {
-		return sqlSessionTemplate.selectOne("Notice.select", notice_id);
+	public NoticeComment select(int notice_comment_id) {
+		return sqlSessionTemplate.selectOne("NoticeComment.select", notice_comment_id);
 	}
 
 	@Override
-	public void insert(Notice notice) throws NoticeException{
-		int result = sqlSessionTemplate.insert("Notice.insert", notice);
-		if(result < 1) {
-			log.error("글 등록 실패");
-			throw new NoticeException("글 등록 실패");
-		}
-	}
-
-	@Override
-	public void update(Notice notice) {
+	public void regist(NoticeComment noticeComment) {
 		
 	}
 
 	@Override
-	public void delete(int notice_id) {
+	public void update(NoticeComment noticeComment) {
+		
+	}
+
+	@Override
+	public void delete(int notice_comment_id) {
 		
 	}
 }

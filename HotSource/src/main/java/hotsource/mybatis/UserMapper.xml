@@ -12,8 +12,7 @@
 		where user_id = #{user_id}
 	</select>
 	
-	<select id="select" parameterType="int" resultType="User">
-		select * from user 
-		where user_id = #{user_id}
+	<select id="selectAll" parameterType="int" resultType="User">
+		select * from user
 	</select>
 </mapper>
