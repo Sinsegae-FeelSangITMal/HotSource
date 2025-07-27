@@ -32,6 +32,10 @@ Thumbs.db
 
 # static 폴더 전체 무시
 # HotSource/src/main/webapp/static/
+HotSource/src/main/webapp/static/header,banner
+HotSource/src/main/webapp/static/mypagelist
+HotSource/src/main/webapp/static/originalcopytheme
+HotSource/src/main/webapp/static/product
 
 # 이클립스/STS 서버 설정 무시
 Servers/

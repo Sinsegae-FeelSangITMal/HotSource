@@ -5,7 +5,7 @@
 		<nav class="navbar navbar-expand-lg custom_nav-container ">
 		
 			<!-- 왼쪽 상단 로고 시작-->
-			<a class="navbar-brand" href="index.html">
+			<a class="navbar-brand" href="/main/index">
 				<img src="/static/images/main_logo.png" alt="" style="width:200px">
 			</a>
 			<!-- 왼쪽 상단 로고 끝 -->
@@ -21,13 +21,13 @@
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
 				<ul class="navbar-nav  mx-auto ">
 					<li class="nav-item active"><a class="nav-link"
-						href="main.html">Home <span class="sr-only">(current)</span></a>
+						href="/main/index">Home <span class="sr-only">(current)</span></a>
 					</li>
-					<li class="nav-item"><a class="nav-link" href="menu.html">Image</a>
+					<li class="nav-item"><a class="nav-link" href="/main/images">Image</a>
 					</li>
-					<li class="nav-item"><a class="nav-link" href="about.html">Sound</a>
+					<li class="nav-item"><a class="nav-link" href="/main/sounds">Sound</a>
 					</li>
-					<li class="nav-item"><a class="nav-link" href="book.html">Sale</a>
+					<li class="nav-item"><a class="nav-link" href="/main/search">Sale</a>
 					</li>
 				</ul>
 				<!-- 중앙 메뉴 끝 -->
@@ -44,6 +44,9 @@
 						<!-- 드롭다운 메뉴 시작 -->
 						<div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
 						
+						<a class="dropdown-header">Notifications</a>
+						<div class="dropdown-divider"></div><!-- 구분선 -->
+						
 						<%for (int i=0;i<3;i++) {%>
 			            	<!-- 상품 하나 시작 -->
 							<a href="#" class="dropdown-item">
@@ -59,7 +62,7 @@
 							<div class="dropdown-divider"></div><!-- 구분선 -->
 						<%} %>
 				          
-						<a href="#" class="dropdown-item dropdown-footer">알림 지우기</a>
+						<a href="#" class="dropdown-item dropdown-footer">Clear</a>
 						</div>
 						<!-- 드롭다운 메뉴 끝 -->
 					</div>
@@ -80,11 +83,14 @@
 						<!-- 드롭다운 메뉴 시작 -->
 						<div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
 						
+						<a class="dropdown-header">Cart</a>
+						<div class="dropdown-divider"></div><!-- 구분선 -->
+						
 						<%for (int i=0;i<3;i++) {%>
 			            	<!-- 상품 하나 시작 -->
 							<a href="#" class="dropdown-item">
 								<div class="media">
-									<img src="/static/images/test1.gif" style="width:60px;" alt="User Avatar" class="img-size-50 mr-3 img-circle">
+									<img src="/static/images/big_logo.png" alt="User Avatar" class="img-size-50 mr-3 img-circle">
 									<div class="media-body">
 										<p class="text-sm">개짱멋진 리소스 이름</p>
 										<p class="text-sm text-muted">개쩌는 작가 이름</p>
@@ -95,7 +101,7 @@
 							<div class="dropdown-divider"></div><!-- 구분선 -->
 						<%} %>
 				          
-						<a href="#" class="dropdown-item dropdown-footer">장바구니로 이동</a>
+						<a href="#" class="dropdown-item dropdown-footer">View Cart</a>
 						</div>
 						<!-- 드롭다운 메뉴 끝 -->
 					</div>
@@ -103,13 +109,11 @@
 					
 					<!-- My Account 메뉴 시작 -->
 					<div class="nav-item dropdown">
-						<a class="nav-link dropdown-toggle" role="button" id="pages" data-toggle="dropdown" aria-expanded="false">My Account</a>
+						<a href="#" class="nav-link dropdown-toggle" role="button" id="pages" data-toggle="dropdown" aria-expanded="false">My Account</a>
 							<!-- 드롭다운 메뉴 시작 -->
 							<div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                        		<li><a href="index.html" class="dropdown-item">Orders </a></li>
-                        		<li><a href="index.html" class="dropdown-item">My Assets </a></li>
+                        		<li><a href="/main/mypage" class="dropdown-item">My Page </a></li>
                         		<li><a href="index.html" class="dropdown-item">Dashboard </a></li>
-                        		<li><a href="index.html" class="dropdown-item">Settings </a></li>
                         		<li><a href="index.html" class="dropdown-item">Log-out </a></li>
 							</div>
 							<!-- 드롭다운 메뉴 끝 -->

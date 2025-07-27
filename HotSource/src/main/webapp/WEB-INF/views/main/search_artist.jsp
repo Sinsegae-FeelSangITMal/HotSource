@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 
-<!-- 메인 페이지 -->
+<!-- 작가 검색 시 나오는 페이지 -->
 
 <head>
 
@@ -24,20 +24,14 @@
 
 	<!-- 헤더 및 배너 영역 시작 -->
 	<div class="hero_area">
-	
 		<!-- 헤더 영역 시작 -->
-		<%@ include file="./inc/header_main.jsp" %>
+		<%@ include file="./inc/header_search.jsp" %>
 		<!-- 헤더 영역 끝-->
-		
-		<!-- 배너 영역 시작 -->
-		
-		<%@ include file="./inc/banner.jsp" %>
-		<!-- 배너 영역 끝 -->
 	</div>
 	<!-- 헤더 및 배너 영역 끝 -->
 	
 	<!-- 컨텐츠 영역 시작 -->
-	<%@ include file="./inc/main_content.jsp" %>
+	<%@ include file="./inc/content_search_artist.jsp" %>
 	<!-- 컨텐츠 영역 끝 -->
 	
 	<!-- 푸터 영역 시작 -->
