@@ -15,6 +15,5 @@ public class User {
 	private String create_date;
 	
 	private Role role;
-	private SnsProvider snsProvider;
-	
+	private SnsProvider snsProvider;	
 }

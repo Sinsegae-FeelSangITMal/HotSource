@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE configuration
   PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
-  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+  "https://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 	<typeAliases>
-		<typeAlias type="hotsource.domain.TopCategory" alias="TopCategory" />
-		<typeAlias type="hotsource.domain.SubCategory" alias="SubCategory" />
-		<typeAlias type="hotsource.domain.Notice" alias="Notice" />
-		<typeAlias type="hotsource.domain.Role" alias="Role" />
-		<typeAlias type="hotsource.domain.SnsProvider" alias="SnsProvider" />
-		<typeAlias type="hotsource.domain.User" alias="User" />
+		<typeAlias type="hotsource.domain.Notice" 		alias="Notice" />
+		<typeAlias type="hotsource.domain.Role" 		alias="Role" />
+		<typeAlias type="hotsource.domain.Seller" 		alias="Seller" />
+		<typeAlias type="hotsource.domain.SnsProvider" 	alias="SnsProvider" />
+		<typeAlias type="hotsource.domain.SubCategory" 	alias="SubCategory" />
+		<typeAlias type="hotsource.domain.TopCategory" 	alias="TopCategory" />
+		<typeAlias type="hotsource.domain.User" 		alias="User" />
 	</typeAliases>
 	<environments default="development">
 		<environment id="development">
@@ -21,11 +22,12 @@
 		</environment>
 	</environments>
 	<mappers>
-		<mapper resource="hotsource/mybatis/TopCategoryMapper.xml" />
-		<mapper resource="hotsource/mybatis/SubCategoryMapper.xml" />
 		<mapper resource="hotsource/mybatis/NoticeMapper.xml" />
 		<mapper resource="hotsource/mybatis/RoleMapper.xml" />
+		<mapper resource="hotsource/mybatis/SellerMapper.xml" />
 		<mapper resource="hotsource/mybatis/SnsProviderMapper.xml" />
+		<mapper resource="hotsource/mybatis/SubCategoryMapper.xml" />
+		<mapper resource="hotsource/mybatis/TopCategoryMapper.xml" />
 		<mapper resource="hotsource/mybatis/UserMapper.xml" />
 	</mappers>
 </configuration>
