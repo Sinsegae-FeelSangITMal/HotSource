@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="AssetImg">
+
+    <!-- 공통 컬럼 정의 -->
+    <sql id="columns">
+        asset_img_id, asset_img_url, is_thumb, asset_id
+    </sql>
+
+    <!-- ResultMap: Asset 객체는 ID만 매핑 -->
+    <resultMap id="AssetImgResultMap" type="AssetImg">
+        <id property="asset_img_id" column="asset_img_id"/>
+        <result property="asset_img_url" column="asset_img_url"/>
+        <result property="is_thumb" column="is_thumb"/>
+        
+        <association property="asset" javaType="Asset">
+            <id property="asset_id" column="asset_id"/>
+        </association>
+    </resultMap>
+
+    <!-- 1. asset_id로 전체 이미지 조회 -->
+    <select id="selectByAssetId" parameterType="long" resultMap="AssetImgResultMap">
+        SELECT <include refid="columns"/>
+        FROM asset_img
+        WHERE asset_id = #{asset_id}
+    </select>
+
+    <!-- 2. 단일 이미지 조회 -->
+    <select id="select" parameterType="long" resultMap="AssetImgResultMap">
+        SELECT <include refid="columns"/>
+        FROM asset_img
+        WHERE asset_img_id = #{asset_img_id}
+    </select>
+
+    <!-- 3. 등록 -->
+    <insert id="insert" parameterType="AssetImg">
+        INSERT INTO asset_img (asset_img_url, is_thumb, asset_id)
+        VALUES (#{asset_img_url}, #{is_thumb}, #{asset.asset_id})
+    </insert>
+
+    <!-- 4. 수정 -->
+    <update id="update" parameterType="AssetImg">
+        UPDATE asset_img
+        SET asset_img_url = #{asset_img_url},
+            is_thumb = #{is_thumb}
+        WHERE asset_img_id = #{asset_img_id}
+    </update>
+
+    <!-- 5. 삭제 -->
+    <delete id="delete" parameterType="long">
+        DELETE FROM asset_img WHERE asset_img_id = #{asset_img_id}
+    </delete>
+
+    <!-- 6. asset_id로 이미지 전체 삭제 (선택) -->
+    <delete id="deleteByAssetId" parameterType="long">
+        DELETE FROM asset_img WHERE asset_id = #{asset_id}
+    </delete>
+
+</mapper>

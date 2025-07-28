@@ -3,7 +3,6 @@
 <html>
 
 <!-- 메인 페이지 -->
-
 <head>
 
 	<!-- Basic -->
@@ -27,6 +26,7 @@
 	
 		<!-- 헤더 영역 시작 -->
 		<%@ include file="./inc/header_main.jsp" %>
+
 		<!-- 헤더 영역 끝-->
 		
 		<!-- 배너 영역 시작 -->
@@ -47,6 +47,7 @@
 	<!-- Js Plugins 시작 -->
 	<%@ include file="./inc/footer_link.jsp" %>
 	<!-- Js Plugins 끝 -->
+
 </script>
 </body>
 

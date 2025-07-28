@@ -1,34 +1,72 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="Asset">
-	
-	<sql id="columns">
-		asset_id, title, price, summary, description, youtube_url, crate_date, view_count, subcategory_id, seller_id
-	</sql>
-	
-	<resultMap			type="Asset"						id="joinAssetMap">
-		<id 					column="asset_id"				property="asset_id"/>
-		<result			column="title"						property="title"/>
-		<result			column="price"						property="price"/>
-		<result			column="summary"				property="summary"/>
-		<result			column="description"			property="description"/>
-		<result			column="youtube_url"			property="youtube_url"/>
-		<result			column="create_date"			property="create_date"/>
-		<result			column="view_count"			property="view_count"/>
-		<association	column="subcategory_id"		property="subCategory"	javaType="SubCategory"		select="SubCategory.select"/>
-		<association	column="seller_id"				property="seller"				javaType="Seller"					select="Seller.select"/>
-	</resultMap>
-	
-	<select id="selectAll" resultMap="joinAssetMap">
-		SELECT <include refid="columns"/> FROM asset
-	</select>
-	
-	<select id="select" resultMap="joinAssetMap" parameterType="int">
-		SELECT <include refid="columns"/> FROM asset WHERE asset_id=#{asset_id}
-	</select>
-	
-	<select id="selectBySellerId" resultType="Asset" parameterType="int">
-		SELECT <include refid="columns"/> FROM asset WHERE seller_id=#{seller_id}
-	</select>
-	
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="AssetMapper">
+
+    <sql id="columns">
+        asset_id, subcategory_id, seller_id, title, price, summary,
+        description, youtube_url, create_date, view_count
+    </sql>
+
+    <!-- 단순 ResultMap -->
+    <resultMap id="AssetResultMap" type="Asset">
+        <id property="asset_id" column="asset_id"/>
+        <result property="title" column="title"/>
+        <result property="price" column="price"/>
+        <result property="summary" column="summary"/>
+        <result property="description" column="description"/>
+        <result property="youtube_url" column="youtube_url"/>
+        <result property="create_date" column="create_date"/>
+        <result property="view_count" column="view_count"/>
+
+        <!-- 외래키는 객체 대신 ID만 담김 -->
+        <association property="seller" javaType="Seller">
+            <id property="seller_id" column="seller_id"/>
+        </association>
+
+        <association property="subCategory" javaType="SubCategory">
+            <id property="subcategory_id" column="subcategory_id"/>
+        </association>
+    </resultMap>
+
+    <!-- 전체 조회 -->
+    <select id="selectAll" resultMap="AssetResultMap">
+        SELECT <include refid="columns"/> FROM asset
+    </select>
+
+    <!-- 단일 조회 -->
+    <select id="select" parameterType="long" resultMap="AssetResultMap">
+        SELECT <include refid="columns"/> FROM asset
+        WHERE asset_id = #{asset_id}
+    </select>
+
+    <!-- 등록 -->
+    <insert id="regist" parameterType="Asset">
+        INSERT INTO asset (
+            subcategory_id, seller_id, title, price, summary, description, youtube_url
+        ) VALUES (
+            #{subCategory.subcategory_id},
+            #{seller.seller_id},
+            #{title}, #{price}, #{summary}, #{description}, #{youtube_url}
+        )
+    </insert>
+
+    <!-- 수정 -->
+    <update id="update" parameterType="Asset">
+        UPDATE asset
+        SET title = #{title},
+            price = #{price},
+            summary = #{summary},
+            description = #{description},
+            youtube_url = #{youtube_url},
+            subcategory_id = #{subCategory.subcategory_id}
+        WHERE asset_id = #{asset_id}
+    </update>
+
+    <!-- 삭제 -->
+    <delete id="delete" parameterType="long">
+        DELETE FROM asset WHERE asset_id = #{asset_id}
+    </delete>
+
 </mapper>

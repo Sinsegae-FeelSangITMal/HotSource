@@ -12,7 +12,7 @@
 		<result				column="comment"			property="comment"/>
 		<result				column="create_date"		property="create_date"/>
 		<result				column="update_date"		property="update_date"/>
-		<association	column="user_id"				property="user"					javaType="User"					select="User.select"/>
+		<association	column="user_id"				property="user"					javaType="User"					select="User.selectByUserId"/>
 		<association	column="asset_id"				property="asset"				javaType="Asset"				select="Asset.select"/>
 		<association	column="order_asset_id"	property="orderedAsset"	javaType="OrderedAsset"	select="OrderedAsset.select"/>
 	</resultMap>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="NoticeComment">
+	
+	<sql id="columns">
+		notice_comment_id, notice_id, user_id, content, create_date
+	</sql>
+	
+	<select id="selectAll" resultType="NoticeComment">
+		select <include refid="columns"/> from notice_comment
+	</select>
+	
+	<select id="select" parameterType="int" resultType="NoticeComment">
+		select <include refid="columns"/> from notice_comment
+		where	notice_comment_id = #{notice_comment_id}
+	</select>
+	
+	<insert id="insert" parameterType="NoticeComment">
+		insert into notice_comment values(#{notice_id}, #{user_id}, #{content})
+	</insert>
+	
+	<update id="update" parameterType="NoticeComment">
+		update notice_comment set  user_id=#{user.user_id}, content=#{content}
+		where notice_comment_id=#{notice_comment_id}
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		delete from notice_comment where notice_comment_id=#{notice_comment_id}
+	</delete>
+</mapper>

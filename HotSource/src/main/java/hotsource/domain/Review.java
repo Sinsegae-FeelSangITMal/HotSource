@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 public class Review {
-	private int review_id;
+	private long review_id;
 	private float rate;
 	private String comment;
 	private Timestamp create_date;
