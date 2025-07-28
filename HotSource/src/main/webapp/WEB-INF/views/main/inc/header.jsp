@@ -5,7 +5,7 @@
 		<nav class="navbar navbar-expand-lg custom_nav-container ">
 		
 			<!-- 왼쪽 상단 로고 시작-->
-			<a class="navbar-brand" href="index.html">
+			<a class="navbar-brand" href="/main/index/">
 				<img src="/static/images/main_logo.png" alt="" style="width:200px">
 			</a>
 			<!-- 왼쪽 상단 로고 끝 -->

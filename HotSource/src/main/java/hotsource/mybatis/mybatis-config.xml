@@ -19,9 +19,9 @@
 		<typeAlias type="hotsource.domain.SubCategory" 	 alias="SubCategory" />
 		<typeAlias type="hotsource.domain.TopCategory" 	 alias="TopCategory" />
 		<typeAlias type="hotsource.domain.User" 		 alias="User" />
-		<typeAlias type="hotsource.domain.Ordered" alias="Ordered" />
-		<typeAlias type="hotsource.domain.OrderedAsset" alias="OrderedAsset" />
-		<typeAlias type="hotsource.domain.Review" alias="Review" />
+		<typeAlias type="hotsource.domain.Ordered"  	 alias="Ordered" />
+		<typeAlias type="hotsource.domain.OrderedAsset"  alias="OrderedAsset" />
+		<typeAlias type="hotsource.domain.Review"		 alias="Review" />
 
 	</typeAliases>
 	<environments default="development">

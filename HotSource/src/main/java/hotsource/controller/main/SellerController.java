@@ -41,7 +41,7 @@ public class SellerController {
 	@RequestMapping(value= "/seller", method=RequestMethod.GET)
 	public ModelAndView getMain() {
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("main/seller");
+		mav.setViewName("main/seller/seller");
 		
 		return mav;
 	}

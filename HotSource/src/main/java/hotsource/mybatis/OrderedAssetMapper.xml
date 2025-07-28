@@ -15,7 +15,7 @@
 		<result 			column="asset_discount" 	property="asset_discount"/>
 		<result 			column="asset_pay" 			property="asset_pay"/>
 		<association 	column="order_id" 			property="ordered" 		javaType="Ordered"		select="Ordered.select"/>
-		<association 	column="asset_id" 			property="asset" 			javaType="Asset"			select="Asset.select"/>
+		<association 	column="asset_id" 			property="asset" 		javaType="Asset"		select="Asset.select"/>
 	</resultMap>
 	
 	<select id="selectAll" resultMap="joinOrderAssetMap">

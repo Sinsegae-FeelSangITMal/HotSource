@@ -32,6 +32,8 @@
 	
 	<!-- 컨텐츠 영역 시작 -->
 	<%@ include file="./inc/content_search_all.jsp" %>
+	<%@ include file="./inc/header_search.jsp" %>
+	
 	<!-- 컨텐츠 영역 끝 -->
 	
 	<!-- 푸터 영역 시작 -->
