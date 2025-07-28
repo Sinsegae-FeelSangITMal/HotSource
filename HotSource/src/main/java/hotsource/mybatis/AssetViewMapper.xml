@@ -1,3 +1,65 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="AssetViewMapper"></mapper>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="AssetView">
+
+    <!-- 공통 컬럼 정의 -->
+    <sql id="columns">
+        asset_view_id, viewed_date, user_id, asset_id
+    </sql>
+
+    <!-- ResultMap: User, Asset은 ID만 매핑 -->
+    <resultMap id="AssetViewResultMap" type="AssetView">
+        <id property="asset_view_id" column="asset_view_id"/>
+        <result property="viewed_date" column="viewed_date"/>
+
+        <association property="user" javaType="User">
+            <id property="user_id" column="user_id"/>
+        </association>
+
+        <association property="asset" javaType="Asset">
+            <id property="asset_id" column="asset_id"/>
+        </association>
+    </resultMap>
+
+    <!-- 1. 전체 조회 -->
+    <select id="selectAll" resultMap="AssetViewResultMap">
+        SELECT <include refid="columns"/>
+        FROM asset_view
+    </select>
+
+    <!-- 2. 특정 ID로 조회 -->
+    <select id="select" parameterType="long" resultMap="AssetViewResultMap">
+        SELECT <include refid="columns"/>
+        FROM asset_view
+        WHERE asset_view_id = #{asset_view_id}
+    </select>
+
+    <!-- 3. 사용자 기준 조회 -->
+    <select id="selectByUserId" parameterType="long" resultMap="AssetViewResultMap">
+        SELECT <include refid="columns"/>
+        FROM asset_view
+        WHERE user_id = #{user_id}
+        ORDER BY viewed_date DESC
+    </select>
+
+    <!-- 4. 등록 -->
+    <insert id="insert" parameterType="AssetView">
+        INSERT INTO asset_view (viewed_date, user_id, asset_id)
+        VALUES (#{viewed_date}, #{user.user_id}, #{asset.asset_id})
+    </insert>
+
+    <!-- 5. 삭제 -->
+    <delete id="delete" parameterType="long">
+        DELETE FROM asset_view
+        WHERE asset_view_id = #{asset_view_id}
+    </delete>
+
+    <!-- 6. 특정 유저가 본 특정 에셋 삭제 (예: 중복 제거용) -->
+    <delete id="deleteByUserAndAsset" parameterType="map">
+        DELETE FROM asset_view
+        WHERE user_id = #{user_id} AND asset_id = #{asset_id}
+    </delete>
+
+</mapper>

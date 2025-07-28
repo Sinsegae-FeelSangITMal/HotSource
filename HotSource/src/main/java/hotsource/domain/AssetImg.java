@@ -1,5 +1,12 @@
 package hotsource.domain;
 
-public class AssetImg {
+import lombok.Data;
 
+@Data
+public class AssetImg {
+	private Long asset_img_id;
+	private String asset_img_url;
+	private Boolean is_thumb;
+	
+	private Asset asset;
 }

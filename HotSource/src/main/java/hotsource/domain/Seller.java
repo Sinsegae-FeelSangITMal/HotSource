@@ -1,9 +1,6 @@
 package hotsource.domain;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import java.sql.Timestamp;
 
 import lombok.Data;
 
@@ -18,7 +15,7 @@ public class Seller {
 	private String seller_email;
 	private String bank_name;
 	private String account_number;
-	private String create_date;
+	private Timestamp create_date;
 	private Boolean is_active;
 	
 	private User user;

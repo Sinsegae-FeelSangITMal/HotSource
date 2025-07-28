@@ -1,6 +1,7 @@
 package hotsource.domain;
 
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
+import java.util.List;
 
 import lombok.Data;
 
@@ -12,9 +13,10 @@ public class Asset {
 	private String summary;
 	private String description;
 	private String youtube_url;
-	private LocalDateTime create_date;
+	private Timestamp create_date;
 	private int view_count;	
 	
     private Seller seller;
     private SubCategory subCategory;
+       
 }

@@ -1,5 +1,12 @@
 package hotsource.domain;
 
-public class AssetListItem {
+import lombok.Data;
 
+@Data
+public class AssetListItem {
+	private Long asset_list_item_id;
+	private int list_order;
+	
+	private Asset asset;
+	private AssetList assetList;
 }
