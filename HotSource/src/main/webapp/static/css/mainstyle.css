@@ -1378,7 +1378,7 @@ a:focus {
 	마이 페이지 - 끝
 \*----------------------------*/
 
-.slider_section .carousel-indicators {
+.slider_section .carousel-indicators.mine {
   position: unset;
   width: 100px;
   margin-top: 70px;
@@ -1392,7 +1392,7 @@ a:focus {
           align-items: center;
 }
 
-.slider_section .carousel-indicators li {
+.slider_section .carousel-indicators.mine li {
   background-color: #ffffff;
   width: 12px;
   height: 12px;
@@ -1400,7 +1400,7 @@ a:focus {
   opacity: 1;
 }
 
-.slider_section .carousel-indicators li.active {
+.slider_section .carousel-indicators.mine li.active {
   width: 20px;
   height: 20px;
   background-color: #F9B54A;

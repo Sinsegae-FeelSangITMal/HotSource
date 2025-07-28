@@ -1,10 +1,9 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 
-<!-- bootstrap core css -->
-<link rel="stylesheet" type="text/css" href="/static/css/bootstrap.css" />
 
 <!-- Custom styles for this template -->
-<link href="/static/css/style.css" rel="stylesheet" />
+<link href="/static/css/mainstyle.css" rel="stylesheet" />
+<link href="/static/css//cart.css" type="text/css" rel="stylesheet">
 
 <!--owl slider stylesheet -->
 <link rel="stylesheet" type="text/css"
@@ -23,3 +22,19 @@
 <!-- Slick -->
 <link type="text/css" rel="stylesheet" href="/static/css/slick.css"/>
 <link type="text/css" rel="stylesheet" href="/static/css/slick-theme.css"/>
+
+<!-- Google Font -->
+<link href="https://fonts.googleapis.com/css2?family=Cookie&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<!-- Css Styles -->
+<link rel="stylesheet" href="/static/assets/css/font-awesome.min.css" type="text/css">
+<link rel="stylesheet" href="/static/assets/css/bootstrap.min.css" type="text/css">
+<link rel="stylesheet" href="/static/assets/css/elegant-icons.css" type="text/css">
+<link rel="stylesheet" href="/static/assets/css/jquery-ui.min.css" type="text/css">
+<link rel="stylesheet" href="/static/assets/css/magnific-popup.css" type="text/css">
+<link rel="stylesheet" href="/static/assets/css/owl.carousel.min.css" type="text/css">
+<link rel="stylesheet" href="/static/assets/css/slicknav.min.css" type="text/css">
+<link rel="stylesheet" href="/static/assets/css/style.css" type="text/css">
+
+

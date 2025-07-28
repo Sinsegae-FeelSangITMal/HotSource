@@ -18,6 +18,7 @@ import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 /*
@@ -54,6 +55,13 @@ public class RootConfig {
 		@Bean
 		public SqlSessionTemplate sqlSessionTemplate() throws Exception {
 			return new SqlSessionTemplate(sqlSessionFactory());
+		}
+		
+		@Bean
+		public CommonsMultipartResolver multipartResolver() {
+			CommonsMultipartResolver resolver = new CommonsMultipartResolver();
+			resolver.setMaxUploadSize(10*1024*1024); // 10M
+			return resolver;
 		}
 		
 }
