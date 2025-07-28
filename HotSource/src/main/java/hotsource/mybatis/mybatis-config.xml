@@ -15,7 +15,9 @@
 		<typeAlias type="hotsource.domain.Ordered" alias="Ordered" />
 		<typeAlias type="hotsource.domain.OrderedAsset" alias="OrderedAsset" />
 		<typeAlias type="hotsource.domain.Review" alias="Review" />
-
+		<typeAlias type="hotsource.domain.Cart" alias="Cart" />
+		<typeAlias type="hotsource.domain.Wishlist" alias="Wishlist" />
+		<typeAlias type="hotsource.domain.WishlistItem" alias="WishlistItem" />
 	</typeAliases>
 	<environments default="development">
 		<environment id="development">
@@ -37,5 +39,8 @@
 		<mapper resource="hotsource/mybatis/SellerMapper.xml" />
 		<mapper resource="hotsource/mybatis/OrderedMapper.xml" />
 		<mapper resource="hotsource/mybatis/ReviewMapper.xml" />
+		<mapper resource="hotsource/mybatis/CartMapper.xml" />
+		<mapper resource="hotsource/mybatis/WishlistMapper.xml" />
+		<mapper resource="hotsource/mybatis/WishlistItemMapper.xml" />
 	</mappers>
 </configuration>

@@ -103,7 +103,7 @@
 			<!-- 검색 태그 영역 끝 -->
 			
 			<!-- 배너 넘김 버튼 영역 시작 -->
-			<ol class="carousel-indicators">
+			<ol class="carousel-indicators mine">
 				<li data-target="#customCarousel1" data-slide-to="0"
 					class="active"></li>
 				<li data-target="#customCarousel1" data-slide-to="1"></li>
