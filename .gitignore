@@ -43,6 +43,9 @@ HotSource/src/main/webapp/static/product
 # 이클립스/STS 서버 설정 무시
 Servers/
 
+#STS application.properties 설정 무시
+application.properties
+
 # === 임시 파일 ===
 *.tmp
 *.bak
