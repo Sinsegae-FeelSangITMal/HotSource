@@ -23,7 +23,7 @@
       <!-- 검색 결과 있을 시 작가 목록 출력 -->
       <% if (!result) %><h2 class="result-heading not-found">No results</h2>  
 	  <% if (result) {%> 
-		<%@ include file="search_artist.jsp" %>
+		<%@ include file="../search_artist.jsp" %>
       <%} %>
       <!-- 작가 목록 출력 끝 -->
     </section>
@@ -41,7 +41,7 @@
       <!-- 검색 결과 있을 시 이미지 목록 출력 -->
       <% if (!result) %><h2 class="result-heading not-found">No results</h2>
 	  <% if (result) {%>
-		<%@ include file="search_image.jsp" %>
+		<%@ include file="../search_resource.jsp" %>
      <%} %>
       <!-- 이미지 목록 출력 끝 -->
     </section>
@@ -59,7 +59,7 @@
       <!-- 검색 결과 있을 시 사운드 목록 출력 -->
       <% if (!result) %><h2 class="result-heading not-found">No results</h2>
 	  <% if (result) {%>
-		<%@ include file="search_sound.jsp" %>
+		<%@ include file="../search_resource.jsp" %>
       <%} %>
       <!-- 사운드 목록 출력 끝 -->
     </section>
