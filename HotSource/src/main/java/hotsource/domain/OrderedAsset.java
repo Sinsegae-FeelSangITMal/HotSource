@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class OrderedAsset {
-	private int order_asset_id;
+	private long order_asset_id;
 	private int seller_id;
 	private String seller_name;
 	private String asset_title;

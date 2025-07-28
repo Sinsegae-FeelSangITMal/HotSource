@@ -13,6 +13,10 @@ public class UserServiceImpl implements UserService{
 	@Autowired
 	private UserDAO userDAO;
 
+	public void regist(User user) {
+		userDAO.insert(user);
+		// 이메일 ㅅ발
+	}
 
 	@Override
 	public List selectAll() {
@@ -20,8 +24,12 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public User selectByUserId(int user_id) {
-		return userDAO.selectByUserId(user_id);
+	public User select(int user_id) {
+		return userDAO.select(user_id);
 	}
 
+	@Override
+	public List selectByRoleId(int role_id) {
+		return userDAO.selectByRoleId(role_id);
+	}
 }

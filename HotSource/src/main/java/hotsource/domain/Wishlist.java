@@ -8,7 +8,7 @@ import lombok.Data;
 
 @Data
 public class Wishlist {
-	private int wishlist_id;
+	private long wishlist_id;
 	private User user;
 	private String list_name;
 	private String description;

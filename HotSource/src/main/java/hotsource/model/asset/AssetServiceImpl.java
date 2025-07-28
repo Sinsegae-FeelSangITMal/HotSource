@@ -6,11 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import hotsource.domain.Asset;
-import hotsource.model.seller.SellerDAO;
 
 @Service
-public class AssetServiceImpl implements AssetService{
-
+public class AssetServiceImpl implements AssetService {
+	
 	@Autowired
 	private AssetDAO assetDAO;
 	
@@ -22,6 +21,10 @@ public class AssetServiceImpl implements AssetService{
 	@Override
 	public Asset select(int asset_id) {
 		return assetDAO.select(asset_id);
+	}
+
+	public List selectBySellerId(int seller_id) {
+		return assetDAO.selectBySellerId(seller_id);
 	}
 
 	@Override
@@ -38,5 +41,4 @@ public class AssetServiceImpl implements AssetService{
 	public void delete(int asset_id) {
 		
 	}
-
 }

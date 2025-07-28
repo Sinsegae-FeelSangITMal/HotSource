@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class AssetListItem {
-	private Long asset_list_item_id;
+	private long asset_list_item_id;
 	private int list_order;
 	
 	private Asset asset;

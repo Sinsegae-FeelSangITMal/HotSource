@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 public class WishlistItem {
-	private int wishlist_item_id;
+	private long wishlist_item_id;
 	private Wishlist wishlist;
 	private Asset asset;
 	private Timestamp create_date;

@@ -9,8 +9,8 @@ import org.springframework.stereotype.Repository;
 import hotsource.domain.Seller;
 
 @Repository
-public class MybatisSellerDAO implements SellerDAO{
-
+public class MybatisSellerDAO implements SellerDAO {
+	
 	@Autowired
 	private SqlSessionTemplate sqlSessionTemplate;
 	
@@ -20,8 +20,12 @@ public class MybatisSellerDAO implements SellerDAO{
 	}
 
 	@Override
-	public Seller select(int user_id) {
-		return sqlSessionTemplate.selectOne("Seller.select", user_id);
+	public Seller select(int seller_id) {
+		return sqlSessionTemplate.selectOne("Seller.select", seller_id);
 	}
 
+	@Override
+	public Seller selectByUserId(int user_id) {
+		return sqlSessionTemplate.selectOne("Seller.selectByUserId", user_id);
+	}
 }

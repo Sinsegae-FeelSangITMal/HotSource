@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import hotsource.domain.User;
-import hotsource.exception.UserException;
 
 @Repository
 public class MybatisUserDAO implements UserDAO{
@@ -30,8 +29,18 @@ public class MybatisUserDAO implements UserDAO{
 	}
 
 	@Override
-	public User selectByUserId(int user_id) {
-		return sqlSessionTemplate.selectOne("User.selectByUserId", user_id);
+	public void insert(User user) {
+		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public User select(int user_id) {
+		return sqlSessionTemplate.selectOne("User.select", user_id);
+	}
+
+	@Override
+	public List selectByRoleId(int role_id) {
+		return sqlSessionTemplate.selectList("User.selectByRoleId", role_id);
 	}
 
 }

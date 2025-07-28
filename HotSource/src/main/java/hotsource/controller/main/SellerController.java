@@ -13,9 +13,9 @@ import hotsource.domain.Notice;
 import hotsource.domain.NoticeComment;
 import hotsource.domain.NoticeLike;
 import hotsource.domain.Seller;
-import hotsource.model.notice.NoticeCommentService;
-import hotsource.model.notice.NoticeLikeService;
 import hotsource.model.notice.NoticeService;
+import hotsource.model.notice_comment.NoticeCommentService;
+import hotsource.model.notice_like.NoticeLikeService;
 import hotsource.model.seller.SellerService;
 import hotsource.model.user.UserService;
 

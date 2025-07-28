@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 public class AssetList {
-	private Long asset_list_id;
+	private long asset_list_id;
 	private String title;
 	private String description;
 	private Boolean is_public;

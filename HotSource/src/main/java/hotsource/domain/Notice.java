@@ -3,17 +3,12 @@ package hotsource.domain;
 import java.sql.Timestamp;
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
 import lombok.Data;
 
 @Data
 public class Notice {
-	private Long notice_id;
 	private Seller seller; //1:1 관계 (mybatis 에서 association 으로 매핑)
+	private long notice_id;
 	private String title;
 	private String content;
 	private Timestamp create_date;

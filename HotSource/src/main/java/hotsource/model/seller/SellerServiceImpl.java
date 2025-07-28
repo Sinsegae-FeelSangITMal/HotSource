@@ -8,11 +8,11 @@ import org.springframework.stereotype.Service;
 import hotsource.domain.Seller;
 
 @Service
-public class SellerServiceImpl implements SellerService{
+public class SellerServiceImpl implements SellerService {
 	
 	@Autowired
 	private SellerDAO sellerDAO;
-
+	
 	@Override
 	public List selectAll() {
 		return sellerDAO.selectAll();
@@ -23,4 +23,8 @@ public class SellerServiceImpl implements SellerService{
 		return sellerDAO.select(user_id);
 	}
 
+	@Override
+	public Seller selectByUserId(int user_id) {
+		return sellerDAO.selectByUserId(user_id);
+	}
 }

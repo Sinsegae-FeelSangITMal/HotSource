@@ -9,7 +9,7 @@ import lombok.Data;
 
 @Data
 public class Seller {
-	private Long seller_id;
+	private long seller_id;
 	private String seller_name;
 	private String seller_nickname;
 	private String seller_bio;

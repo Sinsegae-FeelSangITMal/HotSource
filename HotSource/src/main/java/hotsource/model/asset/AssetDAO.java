@@ -7,6 +7,7 @@ import hotsource.domain.Asset;
 public interface AssetDAO {
 	public List selectAll();
 	public Asset select(int asset_id);
+	public List selectBySellerId(int seller_id);
 	
 	public void regist(Asset asset);
 	public void update(Asset asset);
