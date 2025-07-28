@@ -6,6 +6,6 @@ import hotsource.domain.Ordered;
 
 public interface OrderedService {
 	public List selectAll();
-	public Ordered select(int order_id);
-	public List selectByUserId(int user_id);
+	public Ordered select(long order_id);
+	public List selectByUserId(long user_id);
 }

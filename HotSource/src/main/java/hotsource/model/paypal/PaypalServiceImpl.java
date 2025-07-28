@@ -19,12 +19,12 @@ public class PaypalServiceImpl implements PaypalService {
 	}
 
 	@Override
-	public Paypal select(int paypal_id) {
+	public Paypal select(long paypal_id) {
 		return paypalDAO.select(paypal_id);
 	}
 
 	@Override
-	public Paypal selectBySellerId(int seller_id) {
+	public Paypal selectBySellerId(long seller_id) {
 		return paypalDAO.selectBySellerId(seller_id);
 	}
 }

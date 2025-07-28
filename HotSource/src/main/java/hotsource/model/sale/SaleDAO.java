@@ -6,6 +6,6 @@ import hotsource.domain.Sale;
 
 public interface SaleDAO {
 	public List selectAll();
-	public Sale select(int sale_id);
-	public Sale selectByAssetId(int asset_id);
+	public Sale select(long sale_id);
+	public Sale selectByAssetId(long asset_id);
 }

@@ -20,12 +20,12 @@ public class MybatisSaleDAO implements SaleDAO {
 	}
 
 	@Override
-	public Sale select(int sale_id) {
+	public Sale select(long sale_id) {
 		return sqlSessionTemplate.selectOne("Sale.select", sale_id);
 	}
 
 	@Override
-	public Sale selectByAssetId(int asset_id) {
+	public Sale selectByAssetId(long asset_id) {
 		return sqlSessionTemplate.selectOne("Sale.selectByAssetId", asset_id);
 	}
 }

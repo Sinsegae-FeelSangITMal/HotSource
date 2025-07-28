@@ -24,12 +24,12 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public User select(int user_id) {
+	public User select(long user_id) {
 		return userDAO.select(user_id);
 	}
 
 	@Override
-	public List selectByRoleId(int role_id) {
+	public List selectByRoleId(long role_id) {
 		return userDAO.selectByRoleId(role_id);
 	}
 }

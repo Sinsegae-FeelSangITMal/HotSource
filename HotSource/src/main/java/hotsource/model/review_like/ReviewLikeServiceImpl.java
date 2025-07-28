@@ -12,7 +12,7 @@ public class ReviewLikeServiceImpl implements ReviewLikeService{
 	private ReviewLikeService reviewLikeService;
 	
 	@Override
-	public List selectByReviewId(int review_id) {
+	public List selectByReviewId(long review_id) {
 		return reviewLikeService.selectByReviewId(review_id);
 	}
 }

@@ -12,7 +12,7 @@ public class UserKeywordMappingServiceImpl implements UserKeywordMappingService 
 	private UserKeywordMappingDAO userKeywordMappingDAO;
 	
 	@Override
-	public List selectByUserId(int user_id) {
+	public List selectByUserId(long user_id) {
 		return userKeywordMappingDAO.selectByUserId(user_id);
 	}
 }

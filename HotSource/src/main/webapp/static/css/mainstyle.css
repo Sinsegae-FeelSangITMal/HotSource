@@ -171,7 +171,7 @@ a:focus {
   color: #ffffff;
 }
 
-.custom_nav-container {
+.header_section .navbar.navbar-expand-lg.custom_nav-container  {
   padding: 0;
 }
 
@@ -489,9 +489,9 @@ a:focus {
 .dropdown-account{
   padding: 0 25px;
 }
-.dropdown-toggle {
+.nav-link.dropdown-toggle {
   color: #ffffff !important; 
-  padding: 15px 30px;
+  padding: 15px 30px !important; 
 }
 .dropdown-account .dropdown-menu {
   left: auto;

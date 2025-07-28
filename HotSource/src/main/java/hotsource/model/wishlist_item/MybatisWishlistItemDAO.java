@@ -1,4 +1,4 @@
-package hotsource.model.keyword;
+package hotsource.model.wishlist_item;
 
 import java.util.List;
 
@@ -6,21 +6,19 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import hotsource.domain.Keyword;
-
 @Repository
-public class MybatisKeywordDAO implements KeywordDAO {
+public class MybatisWishlistItemDAO implements WishlistItemDAO {
 	
 	@Autowired
 	private SqlSessionTemplate sqlSessionTemplate;
 	
 	@Override
 	public List selectAll() {
-		return sqlSessionTemplate.selectList("Keyword.selectAll");
+		return sqlSessionTemplate.selectList("WishlistItem.selectAll");
 	}
 
 	@Override
-	public Keyword select(long keyword_id) {
-		return sqlSessionTemplate.selectOne("Keyword.select", keyword_id);
+	public List selectByWishlistId(long wishlist_id) {
+		return sqlSessionTemplate.selectList("WishlistItem.selectByWishlistId", wishlist_id);
 	}
 }

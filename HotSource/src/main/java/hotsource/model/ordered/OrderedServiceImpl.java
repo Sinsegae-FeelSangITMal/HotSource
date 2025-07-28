@@ -19,12 +19,12 @@ public class OrderedServiceImpl implements OrderedService {
 	}
 
 	@Override
-	public Ordered select(int order_id) {
+	public Ordered select(long order_id) {
 		return orderedDAO.select(order_id);
 	}
 
 	@Override
-	public List selectByUserId(int user_id) {
+	public List selectByUserId(long user_id) {
 		return orderedDAO.selectByUserId(user_id);
 	}
 }

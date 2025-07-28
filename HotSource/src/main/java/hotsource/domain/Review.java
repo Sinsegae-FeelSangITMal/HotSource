@@ -11,6 +11,7 @@ public class Review {
 	private String comment;
 	private Timestamp create_date;
 	private Timestamp update_date;
+	
 	private User user;
 	private Asset asset;
 	private OrderedAsset orderedAsset;

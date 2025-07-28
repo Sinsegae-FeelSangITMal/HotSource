@@ -6,5 +6,5 @@ import hotsource.domain.Keyword;
 
 public interface KeywordDAO {
 	public List selectAll();
-	public Keyword select(int keyword_id);
+	public Keyword select(long keyword_id);
 }

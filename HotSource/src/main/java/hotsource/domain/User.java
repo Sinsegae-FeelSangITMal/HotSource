@@ -22,4 +22,5 @@ public class User {
 	private List<Ordered> orderList;
 	private List<Review> reviewList;
 	private List<Wishlist> wishList;
+	private List<Cart> cartList;
 }

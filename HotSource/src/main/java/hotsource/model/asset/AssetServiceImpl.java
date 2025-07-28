@@ -19,11 +19,11 @@ public class AssetServiceImpl implements AssetService {
 	}
 
 	@Override
-	public Asset select(int asset_id) {
+	public Asset select(long asset_id) {
 		return assetDAO.select(asset_id);
 	}
 
-	public List selectBySellerId(int seller_id) {
+	public List selectBySellerId(long seller_id) {
 		return assetDAO.selectBySellerId(seller_id);
 	}
 
@@ -38,7 +38,7 @@ public class AssetServiceImpl implements AssetService {
 	}
 
 	@Override
-	public void delete(int asset_id) {
+	public void delete(long asset_id) {
 		
 	}
 }

@@ -19,7 +19,7 @@ public class MybatisUserDAO implements UserDAO{
 //	@Override
 //	public void insert(User user) throws UserException {
 //		
-//		int result = sqlSessionTemplate.insert("User.insert",user);
+//		long result = sqlSessionTemplate.insert("User.insert",user);
 //		if (result< 1) {
 //			throw new UserException("사용자 등록 실패");
 //		}
@@ -36,12 +36,12 @@ public class MybatisUserDAO implements UserDAO{
 	}
 
 	@Override
-	public User select(int user_id) {
+	public User select(long user_id) {
 		return sqlSessionTemplate.selectOne("User.select", user_id);
 	}
 
 	@Override
-	public List selectByRoleId(int role_id) {
+	public List selectByRoleId(long role_id) {
 		return sqlSessionTemplate.selectList("User.selectByRoleId", role_id);
 	}
 

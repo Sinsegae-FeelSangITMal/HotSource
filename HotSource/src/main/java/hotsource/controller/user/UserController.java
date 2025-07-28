@@ -1,28 +1,9 @@
 package hotsource.controller.user;
 
-import java.io.IOException;
-import java.util.concurrent.ExecutionException;
-
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.github.scribejava.apis.GoogleApi20;
-import com.github.scribejava.core.builder.ServiceBuilder;
-import com.github.scribejava.core.model.OAuth2AccessToken;
-import com.github.scribejava.core.model.OAuthRequest;
-import com.github.scribejava.core.model.Response;
-import com.github.scribejava.core.model.Verb;
-import com.github.scribejava.core.oauth.OAuth20Service;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-
-import hotsource.domain.User;
 import hotsource.model.snsprovider.SnsProviderService;
 import hotsource.model.user.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -39,7 +20,7 @@ public class UserController {
 	
 	@Autowired
 	private SnsProviderService snsProviderService;
-	
+
 	@GetMapping("/login")
 	public String getForm() {
 		return "/user/loginform";
