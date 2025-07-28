@@ -11,7 +11,7 @@
 	    <id property="notice_like_id" column="notice_like_id"/>
 	    <result property="is_like" column="is_like"/>
 	    
-	    <association property="user" javaType="User" column="user_id" select="User.selectByUserId"/>
+	    <association property="user" javaType="User" column="user_id" select="User.select"/>
 	    
 	    <association property="notice" javaType="Notice">
 	        <id property="notice_id" column="notice_id"/>

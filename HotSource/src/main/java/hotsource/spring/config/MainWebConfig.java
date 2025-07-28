@@ -1,9 +1,14 @@
 package hotsource.spring.config;
 
+import java.util.List;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 /*
@@ -12,7 +17,8 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 @Configuration
 @EnableWebMvc
 @ComponentScan(basePackages = { "hotsource.controller" })
-public class MainWebConfig {
+public class MainWebConfig extends WebMvcConfigurerAdapter{
+
 
 	/*
 	 * 하위 컨트롤러가 3, 4단계를 수행한 후, DispatcherServlet에게 정확한 파일명을 알려주는 게 아니라 파일의 일부 단서만
@@ -34,5 +40,10 @@ public class MainWebConfig {
 		resolver.setSuffix(".jsp");
 		return resolver;
 	}
-
+	
+	@Override
+	public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
+		converters.add(new MappingJackson2HttpMessageConverter());
+	}
+	
 }
