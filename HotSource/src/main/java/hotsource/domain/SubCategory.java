@@ -1,10 +1,6 @@
 package hotsource.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import java.util.List;
 
 import lombok.Data;
 
@@ -16,4 +12,5 @@ public class SubCategory {
 
 	private TopCategory topcategory;
 
+	private List<Asset> assetList;
 }

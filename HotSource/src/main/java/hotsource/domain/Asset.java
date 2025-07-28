@@ -19,4 +19,5 @@ public class Asset {
     private Seller seller;
     private SubCategory subCategory;
        
+	private List<Review> reviewList;
 }

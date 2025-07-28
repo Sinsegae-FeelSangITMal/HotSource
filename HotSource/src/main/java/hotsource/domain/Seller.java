@@ -2,6 +2,9 @@ package hotsource.domain;
 
 import java.sql.Timestamp;
 
+import java.util.List;
+
+
 import lombok.Data;
 
 @Data
@@ -19,4 +22,7 @@ public class Seller {
 	private Boolean is_active;
 	
 	private User user;
+	
+	private List<Asset> assetList;
+	private List<OrderedAsset> orderAssetList;
 }

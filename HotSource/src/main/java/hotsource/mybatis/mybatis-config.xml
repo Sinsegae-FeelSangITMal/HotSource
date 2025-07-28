@@ -19,6 +19,10 @@
 		<typeAlias type="hotsource.domain.SubCategory" 	 alias="SubCategory" />
 		<typeAlias type="hotsource.domain.TopCategory" 	 alias="TopCategory" />
 		<typeAlias type="hotsource.domain.User" 		 alias="User" />
+		<typeAlias type="hotsource.domain.Ordered" alias="Ordered" />
+		<typeAlias type="hotsource.domain.OrderedAsset" alias="OrderedAsset" />
+		<typeAlias type="hotsource.domain.Review" alias="Review" />
+
 	</typeAliases>
 	<environments default="development">
 		<environment id="development">
@@ -45,5 +49,9 @@
 		<mapper resource="hotsource/mybatis/SubCategoryMapper.xml" />
 		<mapper resource="hotsource/mybatis/TopCategoryMapper.xml" />
 		<mapper resource="hotsource/mybatis/UserMapper.xml" />
+		<mapper resource="hotsource/mybatis/AssetMapper.xml" />
+		<mapper resource="hotsource/mybatis/SellerMapper.xml" />
+		<mapper resource="hotsource/mybatis/OrderedMapper.xml" />
+		<mapper resource="hotsource/mybatis/ReviewMapper.xml" />
 	</mappers>
 </configuration>
