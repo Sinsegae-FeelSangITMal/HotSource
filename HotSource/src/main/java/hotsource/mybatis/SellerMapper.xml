@@ -21,7 +21,7 @@
 		<result 	column="seller_name" 			property="seller_name"/>
 		
 		<!-- 1:1 관계인 부모를 연계한다 -->
-		<association column="user_id" 	property="user" javaType="User" select="User.selectByUserId"/>
+		<association column="user_id" 	property="user" javaType="User" select="User.select"/>
 	</resultMap>
 	
 	<select id="selectAll" resultMap="joinMap">

@@ -4,10 +4,12 @@ import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
 
 import hotsource.domain.User;
 
+@Primary
 @Repository
 public class MybatisUserDAO implements UserDAO{
 

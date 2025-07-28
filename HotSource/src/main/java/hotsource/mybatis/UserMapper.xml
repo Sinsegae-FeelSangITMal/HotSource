@@ -35,4 +35,5 @@
 		values(#{id}, #{user_name}, #{user_email}, 1, #{snsProvider.sns_provider_id})
 	</insert>
 	
+
 </mapper>
