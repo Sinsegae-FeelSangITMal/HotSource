@@ -21,4 +21,6 @@ public class Asset {
        
 	private List<Review> reviewList;
 	private List<AssetKeywordMapping> keywordList;
+	private List<AssetFile> fileList;
+	private List<AssetImg> imgList;
 }

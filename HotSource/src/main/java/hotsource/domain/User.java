@@ -18,7 +18,8 @@ public class User {
 
 	private Role role;
 	private SnsProvider snsProvider;
+	
 	private List<Ordered> orderList;
 	private List<Review> reviewList;
-
+	private List<Wishlist> wishList;
 }

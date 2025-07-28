@@ -19,10 +19,11 @@ public class Seller {
 	private String bank_name;
 	private String account_number;
 	private Timestamp create_date;
-	private Boolean is_active;
+	private boolean is_active;
 	
 	private User user;
 	
 	private List<Asset> assetList;
 	private List<OrderedAsset> orderAssetList;
+	private List<Notice> noticeList;
 }

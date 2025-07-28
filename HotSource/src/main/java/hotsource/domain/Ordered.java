@@ -13,6 +13,6 @@ public class Ordered {
 	private String order_state;
 	private int total_price;
 	private int total_pay;
+	
 	private User user;
-	private List<OrderedAsset> orderAssetList;
 }
