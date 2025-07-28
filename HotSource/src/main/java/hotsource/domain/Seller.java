@@ -8,10 +8,7 @@ import javax.persistence.Table;
 import lombok.Data;
 
 @Data
-@Entity
-@Table(name="seller")
 public class Seller {
-	@Id
 	private Long seller_id;
 	private String seller_name;
 	private String seller_nickname;
@@ -21,7 +18,6 @@ public class Seller {
 	private String seller_email;
 	private String bank_name;
 	private String account_number;
-	@Column(name = "create_date", insertable = false, updatable = false)
 	private String create_date;
 	private Boolean is_active;
 	

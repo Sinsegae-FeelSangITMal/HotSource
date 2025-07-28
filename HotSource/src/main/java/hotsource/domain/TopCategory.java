@@ -7,11 +7,7 @@ import javax.persistence.Table;
 import lombok.Data;
 
 @Data
-@Entity
-@Table(name="topcategory")
 public class TopCategory {
-
-	@Id
 	private Long topcategory_id;
 	private String top_name;
 }

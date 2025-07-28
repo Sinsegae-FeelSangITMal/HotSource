@@ -2,10 +2,14 @@ package hotsource.util;
 
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.stereotype.Component;
+
 import lombok.Data;
 
 /*		 복잡한 페이징 처리 로직을 담당하는 유틸 클래스 		*/
 @Data
+@Component
 public class Paging {
 	private int totalRecord;			// 총 레코드 수
 	private int pageSize = 10;		// 페이지당 보여질 레코드 수

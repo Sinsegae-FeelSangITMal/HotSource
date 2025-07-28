@@ -10,15 +10,11 @@ import javax.persistence.Table;
 import lombok.Data;
 
 @Data
-@Entity
-@Table(name="notice")
 public class Notice {
-	@Id
 	private Long notice_id;
 	private Seller seller; //1:1 관계 (mybatis 에서 association 으로 매핑)
 	private String title;
 	private String content;
-	@Column(name = "create_date", insertable = false, updatable = false)
 	private String create_date;
 	private String notice_img_url;
 	

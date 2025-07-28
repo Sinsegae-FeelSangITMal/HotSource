@@ -2,11 +2,7 @@
 <!DOCTYPE html>
 <html>
 
-<<<<<<< HEAD
-=======
 <!-- 메인 페이지 -->
-
->>>>>>> develop
 <head>
 
 	<!-- Basic -->

@@ -11,8 +11,5 @@ public class NoticeLike {
     private Boolean is_like;
     private Notice notice;
     
-    //private User user;
-    @ManyToOne
-    @JoinColumn(name = "user_id")
     private User user;
 }

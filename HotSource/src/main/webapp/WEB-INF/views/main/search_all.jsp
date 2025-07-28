@@ -31,7 +31,7 @@
 	<!-- 헤더 및 배너 영역 끝 -->
 	
 	<!-- 컨텐츠 영역 시작 -->
-	<%@ include file="../inc/content_search_all.jsp" %>
+	<%@ include file="./inc/content_search_all.jsp" %>
 	<!-- 컨텐츠 영역 끝 -->
 	
 	<!-- 푸터 영역 시작 -->
