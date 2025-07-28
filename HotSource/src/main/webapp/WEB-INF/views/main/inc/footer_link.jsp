@@ -35,3 +35,4 @@
 <script src="/static/js/header.js"></script>
 <!-- 마이페이지 js : 이렇게 나눠도 되나요 -->
 <script src="/static/js/mypage.js"></script>
+

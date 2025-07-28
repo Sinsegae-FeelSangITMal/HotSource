@@ -1,6 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 
-
 <!-- Custom styles for this template -->
 <link href="/static/css/mainstyle.css" rel="stylesheet" />
 <link href="/static/css//cart.css" type="text/css" rel="stylesheet">
@@ -36,5 +35,4 @@
 <link rel="stylesheet" href="/static/assets/css/owl.carousel.min.css" type="text/css">
 <link rel="stylesheet" href="/static/assets/css/slicknav.min.css" type="text/css">
 <link rel="stylesheet" href="/static/assets/css/style.css" type="text/css">
-
-
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
