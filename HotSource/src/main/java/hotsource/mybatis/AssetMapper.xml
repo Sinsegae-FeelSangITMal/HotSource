@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Asset">
+	
+	<sql id="columns">
+		asset_id, subcategory_id, seller_id, title, price, summary, description, youtube_url, create_date, view_count 
+	</sql>
+
+	<select id="selectAll" resultType="Asset">
+		select <include refid="columns"/> from asset				
+	</select>
+	
+	<select id="select" parameterType="int" resultType="Asset">
+		select <include refid="columns"/> from asset
+		where asset_id=#{asset_id}	
+	</select>
+	
+	<insert id="regist" parameterType="Asset">
+		insert into asset(subcategory_id, seller_id, title, price, summary, description, youtube_url) values(#{subcategory_id}, #{seller_id}, #{title}, #{price}, #{summary}, #{description}, #{youtube_url})
+	</insert>
+	
+	<update id="update" parameterType="Asset">
+		update 	asset 
+		set 	title=#{title}
+			   ,price=#{price}
+			   ,summary=#{summary}
+			   ,price=#{price}
+			   ,description=#{description}
+			   ,youtube_url=#{youtube_url}
+			   ,subcategory_id=#{subcategory_id}			   
+		where notice_id=#{notice_id}
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		delete from asset where asset_id=#{asset_id}
+	</delete>
+</mapper>

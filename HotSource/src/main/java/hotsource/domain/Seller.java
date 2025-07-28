@@ -1,5 +1,6 @@
 package hotsource.domain;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -11,7 +12,7 @@ import lombok.Data;
 @Table(name="seller")
 public class Seller {
 	@Id
-	private int seller_id;
+	private Long seller_id;
 	private String seller_name;
 	private String seller_nickname;
 	private String seller_bio;
@@ -20,6 +21,7 @@ public class Seller {
 	private String seller_email;
 	private String bank_name;
 	private String account_number;
+	@Column(name = "create_date", insertable = false, updatable = false)
 	private String create_date;
 	private Boolean is_active;
 	

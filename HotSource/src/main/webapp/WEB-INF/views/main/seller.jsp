@@ -36,8 +36,6 @@
 	<!-- 헤더 영역 끝 -->
 	
 	<!-- 컨텐츠 영역 시작 -->
-		<!-- <a href="/seller/detail?product_id=<==product.getProduct_id() %>"><==product.getProduct_name() %></a>  -->
-		<!-- <a href="/seller/detail?seller_id=<== seller.getSeller_id() %>">상세 페이지 이동</a>  -->
 		<a href="/main/seller/detail?seller_id=<%= 1 %>&notice_id=<%= 1 %>&notice_comment_id=<%= 1 %>&notice_like_id=<%= 1 %>">상세 페이지 이동(테스트용, seller_id==1)</a>
 	<!-- 컨텐츠 영역 끝 -->
 	

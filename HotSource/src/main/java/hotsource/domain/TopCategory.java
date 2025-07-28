@@ -12,6 +12,6 @@ import lombok.Data;
 public class TopCategory {
 
 	@Id
-	private int topcategory_id;
+	private Long topcategory_id;
 	private String top_name;
 }

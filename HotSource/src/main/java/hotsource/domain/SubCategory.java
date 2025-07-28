@@ -14,7 +14,7 @@ import lombok.Data;
 public class SubCategory {
 	
 	@Id
-	private int subcategory_id;
+	private Long subcategory_id;
 	private String sub_name;
 	
 	@OneToOne
