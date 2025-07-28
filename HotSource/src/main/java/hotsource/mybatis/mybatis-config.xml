@@ -4,25 +4,35 @@
   "https://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 	<typeAliases>
-		<typeAlias type="hotsource.domain.Asset" 		 alias="Asset" />
-		<typeAlias type="hotsource.domain.AssetFile" 	 alias="AssetFile" />
-		<typeAlias type="hotsource.domain.AssetImg" 	 alias="AssetImg" />
-		<typeAlias type="hotsource.domain.AssetList" 	 alias="AssetList" />
-		<typeAlias type="hotsource.domain.AssetListItem" alias="AssetListItem" />
-		<typeAlias type="hotsource.domain.AssetView" 	 alias="AssetView" />
-		<typeAlias type="hotsource.domain.Notice" 		 alias="Notice" />
-		<typeAlias type="hotsource.domain.NoticeComment" alias="NoticeComment" />
-		<typeAlias type="hotsource.domain.NoticeLike" 	 alias="NoticeLike" />
-		<typeAlias type="hotsource.domain.Role" 		 alias="Role" />
-		<typeAlias type="hotsource.domain.Seller" 		 alias="Seller" />
-		<typeAlias type="hotsource.domain.SnsProvider" 	 alias="SnsProvider" />
-		<typeAlias type="hotsource.domain.SubCategory" 	 alias="SubCategory" />
-		<typeAlias type="hotsource.domain.TopCategory" 	 alias="TopCategory" />
-		<typeAlias type="hotsource.domain.User" 		 alias="User" />
-		<typeAlias type="hotsource.domain.Ordered"  	 alias="Ordered" />
-		<typeAlias type="hotsource.domain.OrderedAsset"  alias="OrderedAsset" />
-		<typeAlias type="hotsource.domain.Review"		 alias="Review" />
-
+		<typeAlias type="hotsource.domain.Asset" 		 		alias="Asset" />
+		<typeAlias type="hotsource.domain.AssetFile" 	 		alias="AssetFile" />
+		<typeAlias type="hotsource.domain.AssetImg" 	 		alias="AssetImg" />
+		<typeAlias type="hotsource.domain.AssetKeywordMapping" 	alias="AssetKeywordMapping" />
+		<typeAlias type="hotsource.domain.AssetList" 	 		alias="AssetList" />
+		<typeAlias type="hotsource.domain.AssetListItem" 		alias="AssetListItem" />
+		<typeAlias type="hotsource.domain.AssetView" 	 		alias="AssetView" />
+		<typeAlias type="hotsource.domain.Cart" 	 			alias="Cart" />
+		<typeAlias type="hotsource.domain.Keyword" 				alias="Keyword" />
+		<typeAlias type="hotsource.domain.Notice" 				alias="Notice" />
+		<typeAlias type="hotsource.domain.NoticeComment" 		alias="NoticeComment" />
+		<typeAlias type="hotsource.domain.NoticeLike" 	 		alias="NoticeLike" />
+		<typeAlias type="hotsource.domain.Ordered" 				alias="Ordered" />
+		<typeAlias type="hotsource.domain.OrderedAsset" 		alias="OrderedAsset" />
+		<typeAlias type="hotsource.domain.Paypal" 				alias="Paypal" />
+		<typeAlias type="hotsource.domain.Report" 				alias="Report" />
+		<typeAlias type="hotsource.domain.Review" 				alias="Review" />
+		<typeAlias type="hotsource.domain.ReviewLike" 			alias="ReviewLike" />
+		<typeAlias type="hotsource.domain.Role" 		 		alias="Role" />
+		<typeAlias type="hotsource.domain.Sale" 		 		alias="Sale" />
+		<typeAlias type="hotsource.domain.Seller" 		 		alias="Seller" />
+		<typeAlias type="hotsource.domain.SnsProvider" 	 		alias="SnsProvider" />
+		<typeAlias type="hotsource.domain.SubCategory" 	 		alias="SubCategory" />
+		<typeAlias type="hotsource.domain.Subscribe" 	 		alias="Subscribe" />
+		<typeAlias type="hotsource.domain.TopCategory" 	 		alias="TopCategory" />
+		<typeAlias type="hotsource.domain.User" 		 		alias="User" />
+		<typeAlias type="hotsource.domain.UserKeywordMapping" 	alias="UserKeywordMapping" />
+		<typeAlias type="hotsource.domain.Wishlist" 			alias="Wishlist" />
+		<typeAlias type="hotsource.domain.WishlistItem" 		alias="WishlistItem" />
 	</typeAliases>
 	<environments default="development">
 		<environment id="development">
@@ -34,24 +44,34 @@
 		</environment>
 	</environments>
 	<mappers>
+		<mapper resource="hotsource/mybatis/AssetMapper.xml" />
 		<mapper resource="hotsource/mybatis/AssetFileMapper.xml" />
 		<mapper resource="hotsource/mybatis/AssetImgMapper.xml" />
-		<mapper resource="hotsource/mybatis/AssetListItemMapper.xml" />
+		<mapper resource="hotsource/mybatis/AssetKeywordMappingMapper.xml" />
 		<mapper resource="hotsource/mybatis/AssetListMapper.xml" />
-		<mapper resource="hotsource/mybatis/AssetMapper.xml" />
+		<mapper resource="hotsource/mybatis/AssetListItemMapper.xml" />
 		<mapper resource="hotsource/mybatis/AssetViewMapper.xml" />
+		<mapper resource="hotsource/mybatis/CartMapper.xml" />
+		<mapper resource="hotsource/mybatis/KeywordMapper.xml" />
+		<mapper resource="hotsource/mybatis/NoticeMapper.xml" />
 		<mapper resource="hotsource/mybatis/NoticeCommentMapper.xml" />
 		<mapper resource="hotsource/mybatis/NoticeLikeMapper.xml" />
-		<mapper resource="hotsource/mybatis/NoticeMapper.xml" />
+		<mapper resource="hotsource/mybatis/OrderedMapper.xml" />
+		<mapper resource="hotsource/mybatis/OrderedAssetMapper.xml" />
+		<mapper resource="hotsource/mybatis/PaypalMapper.xml" />
+		<mapper resource="hotsource/mybatis/ReportMapper.xml" />
+		<mapper resource="hotsource/mybatis/ReviewMapper.xml" />
+		<mapper resource="hotsource/mybatis/ReviewLikeMapper.xml" />
 		<mapper resource="hotsource/mybatis/RoleMapper.xml" />
+		<mapper resource="hotsource/mybatis/SaleMapper.xml" />
 		<mapper resource="hotsource/mybatis/SellerMapper.xml" />
 		<mapper resource="hotsource/mybatis/SnsProviderMapper.xml" />
 		<mapper resource="hotsource/mybatis/SubCategoryMapper.xml" />
+		<mapper resource="hotsource/mybatis/SubscribeMapper.xml" />
 		<mapper resource="hotsource/mybatis/TopCategoryMapper.xml" />
 		<mapper resource="hotsource/mybatis/UserMapper.xml" />
-		<mapper resource="hotsource/mybatis/AssetMapper.xml" />
-		<mapper resource="hotsource/mybatis/SellerMapper.xml" />
-		<mapper resource="hotsource/mybatis/OrderedMapper.xml" />
-		<mapper resource="hotsource/mybatis/ReviewMapper.xml" />
+		<mapper resource="hotsource/mybatis/UserKeywordMappingMapper.xml" />
+		<mapper resource="hotsource/mybatis/WishlistMapper.xml" />
+		<mapper resource="hotsource/mybatis/WishlistItemMapper.xml" />
 	</mappers>
 </configuration>

@@ -1,24 +1,14 @@
 package hotsource.spring.config;
 
-import javax.naming.NamingException;
-import javax.sql.DataSource;
+import java.util.List;
 
-import org.apache.ibatis.session.SqlSessionFactory;
-import org.hibernate.SessionFactory;
-import org.mybatis.spring.SqlSessionFactoryBean;
-import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.jdbc.datasource.DataSourceTransactionManager;
-import org.springframework.jndi.JndiTemplate;
-import org.springframework.orm.hibernate5.HibernateTransactionManager;
-import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
-import org.springframework.transaction.PlatformTransactionManager;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 /*
@@ -27,7 +17,8 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 @Configuration
 @EnableWebMvc
 @ComponentScan(basePackages = { "hotsource.controller" })
-public class MainWebConfig {
+public class MainWebConfig extends WebMvcConfigurerAdapter{
+
 
 	/*
 	 * 하위 컨트롤러가 3, 4단계를 수행한 후, DispatcherServlet에게 정확한 파일명을 알려주는 게 아니라 파일의 일부 단서만
@@ -49,5 +40,10 @@ public class MainWebConfig {
 		resolver.setSuffix(".jsp");
 		return resolver;
 	}
-
+	
+	@Override
+	public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
+		converters.add(new MappingJackson2HttpMessageConverter());
+	}
+	
 }

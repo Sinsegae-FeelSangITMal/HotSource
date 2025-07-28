@@ -7,7 +7,7 @@ import lombok.Data;
 
 @Data
 public class Asset {
-	private Long asset_id;
+	private long asset_id;
 	private String title;
 	private int price;
 	private String summary;
@@ -20,4 +20,7 @@ public class Asset {
     private SubCategory subCategory;
        
 	private List<Review> reviewList;
+	private List<AssetKeywordMapping> keywordList;
+	private List<AssetFile> fileList;
+	private List<AssetImg> imgList;
 }

@@ -9,7 +9,7 @@ import lombok.Data;
 
 @Data
 public class Seller {
-	private Long seller_id;
+	private long seller_id;
 	private String seller_name;
 	private String seller_nickname;
 	private String seller_bio;
@@ -19,10 +19,11 @@ public class Seller {
 	private String bank_name;
 	private String account_number;
 	private Timestamp create_date;
-	private Boolean is_active;
+	private boolean is_active;
 	
 	private User user;
 	
 	private List<Asset> assetList;
 	private List<OrderedAsset> orderAssetList;
+	private List<Notice> noticeList;
 }

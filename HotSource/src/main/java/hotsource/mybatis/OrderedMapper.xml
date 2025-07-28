@@ -13,7 +13,7 @@
 		<result 			column="order_state" 		property="order_state"/>
 		<result 			column="total_price" 		property="total_price"/>
 		<result 			column="total_pay" 			property="total_pay"/>
-		<association 	column="user_id" 				property="user" 	javaType="User" select="User.selectByUserId"/>
+		<association 	column="user_id" 				property="user" 	javaType="User" select="User.select"/>
 	</resultMap>
 	
 	<select id="selectAll" resultMap="joinOrderMap">

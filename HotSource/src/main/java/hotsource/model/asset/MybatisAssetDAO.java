@@ -23,6 +23,10 @@ public class MybatisAssetDAO implements AssetDAO{
 	public Asset select(int asset_id) {
 		return sqlSessionTemplate.selectOne("Asset.select", asset_id);
 	}
+	
+	public List selectBySellerId(int seller_id) {
+		return sqlSessionTemplate.selectList("Asset.selectBySellerId", seller_id);
+	}
 
 	@Override
 	public void regist(Asset asset) {

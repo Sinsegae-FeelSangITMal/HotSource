@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Report">
+	
+	
+
+	<!-- 							나중에 추가									 -->
+	
+
+<!-- 
+	<sql id="columns">
+		report_id, target_type, target_id, reason, create_date, user_id
+	</sql>
+	
+	<resultMap 			type="Report" 						id="joinMap">
+		<id 					column="paypal_id" 				property="paypal_id"/>
+		<result 			column="paypal_status" 		property="paypal_status"/>
+		<result 			column="paypal_payer_id" 	property="paypal_payer_id"/>
+		<result 			column="paypal_verified" 		property="paypal_verified"/>
+		<result 			column="paypal_email" 			property="paypal_email"/>
+		<association 	column="seller_id" 				property="seller" 				javaType="Seller" 		select="Seller.select"/>
+	</resultMap>
+	
+	<select id="selectAll" resultMap="joinMap">
+		SELECT <include refid="columns"/> FROM report
+	</select>
+	
+	<select id="select" resultMap="joinMap" parameterType="int">
+		SELECT <include refid="columns"/> FROM report WHERE report_id=#{report_id}
+	</select>
+	
+	
+	<select id="selectBySellerId" resultMap="joinMap" parameterType="int">
+		SELECT <include refid="columns"/> FROM report WHERE seller_id=#{target_id}
+	</select>
+	 -->
+	
+</mapper>

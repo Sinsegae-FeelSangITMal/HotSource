@@ -23,7 +23,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import hotsource.domain.User;
-import hotsource.model.user.SnsProviderService;
+import hotsource.model.snsprovider.SnsProviderService;
 import hotsource.model.user.UserService;
 import lombok.extern.slf4j.Slf4j;
 
