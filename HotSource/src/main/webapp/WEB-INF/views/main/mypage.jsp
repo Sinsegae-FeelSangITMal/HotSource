@@ -2,11 +2,8 @@
 <!DOCTYPE html>
 <html>
 
-<<<<<<< HEAD
-=======
-<!-- 메인 페이지 -->
+<!-- 마이페이지 -->
 
->>>>>>> develop
 <head>
 
 	<!-- Basic -->
@@ -27,23 +24,16 @@
 
 	<!-- 헤더 및 배너 영역 시작 -->
 	<div class="hero_area">
-	
 		<!-- 헤더 영역 시작 -->
-		<%@ include file="./inc/header_main.jsp" %>
-
+		<%@ include file="./inc/header_simple.jsp" %>
 		<!-- 헤더 영역 끝-->
-		
-		<!-- 배너 영역 시작 -->
-		
-		<%@ include file="./inc/banner.jsp" %>
-		<!-- 배너 영역 끝 -->
 	</div>
 	<!-- 헤더 및 배너 영역 끝 -->
 	
-	<!-- 컨텐츠 영역 시작 -->
-	<%@ include file="./inc/main_content.jsp" %>
-	<!-- 컨텐츠 영역 끝 -->
-	
+	<!-- 사이드바, 컨텐트 영역 시작 -->
+	<%@ include file="./inc/mypage_content.jsp" %>
+	<!-- 사이드바, 컨텐트 영역 끝 -->
+
 	<!-- 푸터 영역 시작 -->
 	<%@ include file="./inc/footer.jsp" %>
 	<!-- 푸터 영역 끝 -->
@@ -51,7 +41,6 @@
 	<!-- Js Plugins 시작 -->
 	<%@ include file="./inc/footer_link.jsp" %>
 	<!-- Js Plugins 끝 -->
-
 </script>
 </body>
 

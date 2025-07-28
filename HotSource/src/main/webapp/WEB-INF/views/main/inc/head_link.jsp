@@ -2,7 +2,6 @@
 
 <!-- bootstrap core css -->
 <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.css" />
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="..." crossorigin="anonymous">
 
 <!-- Custom styles for this template -->
 <link href="/static/css/style.css" rel="stylesheet" />
@@ -19,3 +18,8 @@
 
 <!-- responsive style -->
 <link href="/static/css/responsive.css" rel="stylesheet" />
+
+
+<!-- Slick -->
+<link type="text/css" rel="stylesheet" href="/static/css/slick.css"/>
+<link type="text/css" rel="stylesheet" href="/static/css/slick-theme.css"/>

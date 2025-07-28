@@ -6,58 +6,67 @@
 		
 			<!-- 첫번째 배너 영역 시작 -->
 			<div class="carousel-item active">
-				<div class="container ">
-					<div class="row">
-						<div class="col-md-7 col-lg-6 ">
-							<div class="detail-box">
-								<h1>
-									AI 맞춤 검색으로<br> 원하는 리소스를 쉽게 찾아보세요
-								</h1>
-								<p>다양한 키워드에 어울리는 리소스를 추천해드립니다</p>
-								<div class="btn-box">
-									<a href="" class=""> 이미지 둘러보기 </a>
-									<a href="" class=""> 사운드 둘러보기 </a>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
+			  <div class="container">
+			    <div class="row align-items-center"> <!-- 수직 가운데 정렬 -->
+			      <div class="col-md-6">
+			        <div class="detail-box">
+			          <h1>AI 맞춤 검색으로<br> 원하는 리소스를 쉽게 찾아보세요</h1>
+			          <p>다양한 키워드에 어울리는 리소스를 추천해드립니다</p>
+			          <div class="btn-box">
+			            <a href="/main/images">이미지 둘러보기</a>
+			            <a href="/main/sounds">사운드 둘러보기</a>
+			          </div>
+			        </div>
+			      </div>
+			      <div class="col-md-6">
+			        <div class="img-box">
+			          <img src="/static/images/big_logo.png" alt="샘플 이미지" />
+			        </div>
+			      </div>
+			    </div>
+			  </div>
 			</div>
 			<!-- 첫번째 배너 영역 끝 -->
 
 			<!-- 두번째 배너 영역 시작 -->
-			<div class="carousel-item ">
-				<div class="container ">
-					<div class="row">
-						<div class="col-md-7 col-lg-6 ">
-							<div class="detail-box">
-								<h1>인기 리소스들을 만나보세요<br>사이즈 조절</h1>
-								<p>어쩌구</p>
-								<div class="btn-box">
-									<a href="" class="btn1"> 바로가기 </a>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
+			<div class="carousel-item">
+			  <div class="container">
+			    <div class="text-center detail-box">
+			      <h1>인기 에셋들을 만나보세요</h1>
+			    </div>
+			    <div class="row text-center">
+			      <div class="col-md-4">
+			        <img src="/static/images/fire1.jpg" class="img-fluid" alt="이미지1">
+			      </div>
+			      <div class="col-md-4">
+			        <img src="/static/images/fire1.jpg" class="img-fluid" alt="이미지2">
+			      </div>
+			      <div class="col-md-4">
+			        <img src="/static/images/fire1.jpg" class="img-fluid" alt="이미지3">
+			      </div>
+			    </div>
+			  </div>
 			</div>
 			<!-- 두번째 배너 영역 끝 -->
 
 			<!-- 세번째 배너 영역 시작 -->
 			<div class="carousel-item">
-				<div class="container ">
-					<div class="row">
-						<div class="col-md-7 col-lg-6 ">
-							<div class="detail-box">
-								<h1>최신 리소스들 둘러보기<br>사진 넣을 수 잇을가</h1>
-								<p>저쩌구</p>
-								<div class="btn-box">
-									<a href="" class="btn1"> 바로가기 </a>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
+			  <div class="container">
+			    <div class="text-center detail-box">
+			      <h1>최신 에셋들 둘러보기</h1>
+			    </div>
+			    <div class="row text-center">
+			      <div class="col-md-4">
+			        <img src="/static/images/fire1.jpg" class="img-fluid" alt="이미지1">
+			      </div>
+			      <div class="col-md-4">
+			        <img src="/static/images/fire1.jpg" class="img-fluid" alt="이미지2">
+			      </div>
+			      <div class="col-md-4">
+			        <img src="/static/images/fire1.jpg" class="img-fluid" alt="이미지3">
+			      </div>
+			    </div>
+			  </div>
 			</div>
 			<!-- 세번째 배너 영역 끝 -->
 		</div>
@@ -102,7 +111,7 @@
 			</ol>
 			<!-- 배너 넘김 버튼 영역 끝 -->
 		</div>
-	<!-- 검색바 영역 끝 -->
+		<!-- 검색바 영역 끝 -->
 	</div>
 </section>
 <!-- 배너 영역 끝 -->

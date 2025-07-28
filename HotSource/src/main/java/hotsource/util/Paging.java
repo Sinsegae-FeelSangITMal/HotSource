@@ -1,45 +1,31 @@
 package hotsource.util;
 
 import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
-
-import org.springframework.stereotype.Component;
-
 import lombok.Data;
-import lombok.extern.slf4j.Slf4j;
 
-@Component // 개발자가 정의한 컴포넌트, (Controller, Service, Repository 외의 컴포넌트)
+/*		 복잡한 페이징 처리 로직을 담당하는 유틸 클래스 		*/
 @Data
-@Slf4j
 public class Paging {
-
-	private int totalRecord;
-	private int pageSize = 10;
-	private int totalPage;
-	private int blockSize = 10;
-	private int currentPage = 1;
-	private int firstPage;
-	private int lastPage;
-	private int curPos;
-	private int num;
+	private int totalRecord;			// 총 레코드 수
+	private int pageSize = 10;		// 페이지당 보여질 레코드 수
+	private int totalPage ; 			// 총 페이지 수 
+	private int blockSize = 10;	// 블럭당 보여질 페이지 수 
+	private int currentPage = 1;	// 현재 보고있는 페이지 	
+	private int firstPage; 			// 블럭당 시작 페이지 
+	private int lastPage; 				// 블럭당 끝 페이지
+	private int curPos;				// 페이지당 List의 커서(index)의 위치
+	private int num; 					// 페이지당 시작 번호 
 	
-	public void init(List list, HttpServletRequest request) {
-		totalRecord = list.size();
-		totalPage = (int) Math.ceil((float) totalRecord/pageSize);
-		if(request.getParameter("currentPage") != null) {
-			currentPage = Integer.parseInt(request.getParameter("currentPage"));
-		} 
-		firstPage = currentPage - (currentPage - 1) % blockSize;
+	// 변수를 조합하여 계산 로직을 작성
+	public void init(int test, List list, HttpServletRequest request) {
+		totalRecord = test;	
+		totalPage = (int) Math.ceil((float) totalRecord / pageSize) ;
+		if (request.getParameter("currentPage") != null)		// 페이지가 넘어올 때만
+			currentPage= Integer.parseInt(request.getParameter("currentPage"));
+		firstPage = currentPage - (currentPage - 1) % blockSize;  
 		lastPage = firstPage + (blockSize - 1);
-		curPos = (currentPage-1) * pageSize;
+		curPos = (currentPage - 1) * pageSize;
 		num = totalRecord - curPos;
-		
-		log.debug("totalRecord= " + totalRecord);
-		log.debug("totalPage= " + totalPage);
-		log.debug("firstPage= " + firstPage);
-		log.debug("lastPage= " + lastPage);
-		log.debug("curPos= " + curPos);
-		log.debug("num= " + num);
 	}
 }
