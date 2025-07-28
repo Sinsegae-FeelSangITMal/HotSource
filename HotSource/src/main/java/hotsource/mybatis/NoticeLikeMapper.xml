@@ -5,23 +5,7 @@
 		<!-- notice_like_id , is_like , notice_id, user_id -->
 		notice_like_id, is_like, notice_id, user_id
 	</sql>
-	
-	
-	
-	
-	
-	<!-- 방법 1) join문 사용하기
-	<resultMap id="noticeLikeResultMap" type="NoticeLike">
-	    <id 	property="notice_like_id" 	column="notice_like_id"/>
-	    <result property="is_like" 		  	column="is_like"/>
-	    
-	    <association property="user" javaType="User">
-	        <id 	property="user_id" 	 	column="user_id"/>
-	        <result property="user_name" 	column="user_name"/>
-	    </association>
-	</resultMap>
-	 -->
-	
+
 	<!-- 방법 2) resultMap 사용하기 -->
 	<resultMap id="noticeLikeResultMap" type="NoticeLike">
 	    <id property="notice_like_id" column="notice_like_id"/>
@@ -35,18 +19,7 @@
 	    </association>
 	</resultMap>
 	
-	
-	
-	
-	
 	<select id="select" parameterType="int" resultMap="noticeLikeResultMap">
-		<!-- select <include refid="columns"/> from notice_like where notice_like_id=#{notice_like_id} AND user_id = #{user_id} -->
-		<!-- 방법 1) join문 사용하기
-		select <include refid="columns"/>
-		from notice_like n
-		join user u on n.user_id = u.user_id
-		where n.notice_like_id=#{notice_like_id}
-		-->
 		
 		<!-- 방법 2) resultMap 사용하기 -->
 		select <include refid="columns"/> from notice_like where notice_like_id=#{notice_like_id}
