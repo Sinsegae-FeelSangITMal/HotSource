@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Seller">
+	
+	<sql id="columns">
+		seller_id, seller_name, seller_nickname, seller_bio, seller_insta_url, seller_email, bank_name, account_number, create_date, is_active, user_id
+	</sql>
+	
+	<resultMap 		type="Seller" 						id="joinSellerMap">
+		<id 					column="seller_id" 				property="seller_id"/>
+		<result 			column="seller_name" 			property="seller_name"/>
+		<result 			column="seller_nickname" 	property="seller_nickname"/>
+		<result 			column="seller_bio" 				property="seller_bio"/>
+		<result 			column="seller_insta_url" 	property="seller_insta_url"/>
+		<result 			column="seller_email" 			property="seller_email"/>
+		<result 			column="bank_name" 			property="bank_name"/>
+		<result 			column="account_number" 	property="account_number"/>
+		<result 			column="create_date" 			property="create_date"/>
+		<result 			column="is_active" 				property="is_active"/>
+		<association 	column="user_id" 				property="user" 			javaType="User" 				select="User.select"/>
+		<collection 		column="seller_id"				property="assetList"		javaType="java.util.List"	ofType="Asset"				select="Asset.selectBySellerId"/>
+	</resultMap>
+	
+	<select id="selectAll" resultMap="joinSellerMap">
+		SELECT <include refid="columns"/> FROM seller
+	</select>
+	
+	<select id="select" resultMap="joinSellerMap" parameterType="int">
+		SELECT <include refid="columns"/> FROM seller WHERE seller_id=#{seller_id}
+	</select>
+	
+	<select id="selectByUserId" resultMap="joinSellerMap" parameterType="int">
+		SELECT <include refid="columns"/> FROM seller WHERE user_id=#{user_id}
+	</select>
+	
+</mapper>

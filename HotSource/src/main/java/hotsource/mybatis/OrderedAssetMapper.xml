@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="OrderedAsset">
+	
+	<sql id="columns">
+		order_asset_id, seller_id, seller_name, asset_title, asset_price, asset_discount, asset_pay, order_id, asset_id
+	</sql>
+	
+	<resultMap 		type="OrderedAsset" 				id="joinOrderAssetMap">
+		<id 					column="order_asset_id" 	property="order_asset_id"/>
+		<result 			column="seller_id" 			property="seller_id"/>
+		<result 			column="seller_name" 		property="seller_name"/>
+		<result 			column="asset_title" 			property="asset_title"/>
+		<result 			column="asset_price" 		property="asset_price"/>
+		<result 			column="asset_discount" 	property="asset_discount"/>
+		<result 			column="asset_pay" 			property="asset_pay"/>
+		<association 	column="order_id" 			property="ordered" 		javaType="Ordered"		select="Ordered.select"/>
+		<association 	column="asset_id" 			property="asset" 			javaType="Asset"			select="Asset.select"/>
+	</resultMap>
+	
+	<select id="selectAll" resultMap="joinOrderAssetMap">
+		SELECT <include refid="columns"/> FROM ordered_asset
+	</select>
+	
+	<select id="select" resultMap="joinOrderAssetMap" parameterType="int">
+		SELECT <include refid="columns"/> FROM ordered_asset WHERE order_asset_id=#{order_asset_id}
+	</select>
+	
+	<select id="selectByOrderId" resultMap="joinOrderAssetMap" parameterType="int">
+		SELECT <include refid="columns"/> FROM ordered_asset WHERE order_id=#{order_id}
+	</select>
+	
+</mapper>

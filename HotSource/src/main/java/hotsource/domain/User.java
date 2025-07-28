@@ -1,10 +1,12 @@
 package hotsource.domain;
 
+import java.sql.Timestamp;
+import java.util.List;
+
 import lombok.Data;
 
 @Data
 public class User {
-
 	private int user_id;
 	private String id;
 	private String password;
@@ -12,9 +14,9 @@ public class User {
 	private String user_email;
 	private String user_nickname;
 	private String profile_img_url;
-	private String create_date;
-	
+	private Timestamp create_date;
 	private Role role;
 	private SnsProvider snsProvider;
-	
+	private List<Ordered> orderList;
+	private List<Review> reviewList;
 }

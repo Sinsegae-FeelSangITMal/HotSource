@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Asset">
+	
+	<sql id="columns">
+		asset_id, title, price, summary, description, youtube_url, crate_date, view_count, subcategory_id, seller_id
+	</sql>
+	
+	<resultMap			type="Asset"						id="joinAssetMap">
+		<id 					column="asset_id"				property="asset_id"/>
+		<result			column="title"						property="title"/>
+		<result			column="price"						property="price"/>
+		<result			column="summary"				property="summary"/>
+		<result			column="description"			property="description"/>
+		<result			column="youtube_url"			property="youtube_url"/>
+		<result			column="create_date"			property="create_date"/>
+		<result			column="view_count"			property="view_count"/>
+		<association	column="subcategory_id"		property="subCategory"	javaType="SubCategory"		select="SubCategory.select"/>
+		<association	column="seller_id"				property="seller"				javaType="Seller"					select="Seller.select"/>
+	</resultMap>
+	
+	<select id="selectAll" resultMap="joinAssetMap">
+		SELECT <include refid="columns"/> FROM asset
+	</select>
+	
+	<select id="select" resultMap="joinAssetMap" parameterType="int">
+		SELECT <include refid="columns"/> FROM asset WHERE asset_id=#{asset_id}
+	</select>
+	
+	<select id="selectBySellerId" resultType="Asset" parameterType="int">
+		SELECT <include refid="columns"/> FROM asset WHERE seller_id=#{seller_id}
+	</select>
+	
+</mapper>
