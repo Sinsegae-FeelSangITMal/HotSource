@@ -16,7 +16,7 @@
 	
 	<title>HotSource</title>
 	
-	<%@ include file="./inc/head_link.jsp" %>
+	<%@ include file="../../main/inc/head_link.jsp" %>
 
 </head>
 
@@ -25,21 +25,21 @@
 	<!-- 헤더 및 배너 영역 시작 -->
 	<div class="hero_area">
 		<!-- 헤더 영역 시작 -->
-		<%@ include file="./inc/header_simple.jsp" %>
+		<%@ include file="../../main/inc/header_simple.jsp" %>
 		<!-- 헤더 영역 끝-->
 	</div>
 	<!-- 헤더 및 배너 영역 끝 -->
 	
 	<!-- 사이드바, 컨텐트 영역 시작 -->
-	<%@ include file="./inc/mypage_content.jsp" %>
+	<%@ include file="content.jsp" %>
 	<!-- 사이드바, 컨텐트 영역 끝 -->
 
 	<!-- 푸터 영역 시작 -->
-	<%@ include file="./inc/footer.jsp" %>
+	<%@ include file="../../main/inc/footer.jsp" %>
 	<!-- 푸터 영역 끝 -->
 
 	<!-- Js Plugins 시작 -->
-	<%@ include file="./inc/footer_link.jsp" %>
+	<%@ include file="../../main/inc/footer_link.jsp" %>
 	<!-- Js Plugins 끝 -->
 </script>
 </body>

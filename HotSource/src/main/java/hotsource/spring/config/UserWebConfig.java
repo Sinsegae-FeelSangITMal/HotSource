@@ -18,10 +18,10 @@ import lombok.extern.slf4j.Slf4j;
 @Configuration
 @EnableWebMvc
 @ComponentScan(basePackages = {"hotsource.controller.user"})
-@PropertySource("classpath:application.properties") 
+//@PropertySource("classpath:application.properties") 
 @Slf4j
 public class UserWebConfig {
-	
+	/*
 	@Value("${google.clientId}")
 	private String clientId;
 
@@ -30,7 +30,7 @@ public class UserWebConfig {
 
 	@Value("${google.redirectUri}")
 	private String redirectUri;
-
+*/
 	@Bean
 	public InternalResourceViewResolver internalResourceViewResolver() {
 		InternalResourceViewResolver resolver = new InternalResourceViewResolver();
@@ -38,7 +38,7 @@ public class UserWebConfig {
 		resolver.setSuffix(".jsp");
 		return resolver;
 	}
-
+/*
 	@Bean
 	public OAuth20Service googleAuthService() {
 		// 클라이언트 ID, Secret, 콜백 주소, 리소스owner 접근 범위
@@ -49,7 +49,7 @@ public class UserWebConfig {
 		builder.callback(redirectUri);
 		log.debug("redirectURI:" +redirectUri);
 		return builder.build(GoogleApi20.instance());
-	}
+	}*/
 }
 
 

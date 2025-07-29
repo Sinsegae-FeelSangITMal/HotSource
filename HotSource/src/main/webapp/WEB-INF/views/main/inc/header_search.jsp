@@ -112,7 +112,7 @@
 						<a href="#" class="nav-link dropdown-toggle" role="button" id="pages" data-toggle="dropdown" aria-expanded="false">My Account</a>
 							<!-- 드롭다운 메뉴 시작 -->
 							<div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                        		<li><a href="/main/mypage" class="dropdown-item">My Page </a></li>
+                        		<li><a href="/user/mypage" class="dropdown-item">My Page </a></li>
                         		<li><a href="index.html" class="dropdown-item">Dashboard </a></li>
                         		<li><a href="index.html" class="dropdown-item">Log-out </a></li>
 							</div>

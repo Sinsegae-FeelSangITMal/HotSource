@@ -37,10 +37,4 @@ public class MainController {
 		return "main/search_resource";
 	}
 	
-	// 훔쳐갈 거 있으면 훔쳐가라고 임시로 연결
-	@RequestMapping(value="/mypage")
-	public String mypage() {
-		return "main/mypage";
-	}
-	
 }
