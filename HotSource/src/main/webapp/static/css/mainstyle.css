@@ -905,6 +905,7 @@ a:focus {
 .artist-card {
   display: flex;
   align-items: flex-start;
+  align-items: center;
   padding: 20px;
   border: 1px solid #ddd;
   border-radius: 12px;
@@ -915,6 +916,15 @@ a:focus {
 .artist-avatar {
   width: 120px;
   height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin: 10px 30px 0 0;
+}
+
+/* 작가 공지 프로필 이미지 */
+.artist-post-avatar {
+  width: 70px;
+  height: 70px;
   border-radius: 50%;
   object-fit: cover;
   margin: 10px 30px 0 0;
@@ -944,20 +954,35 @@ a:focus {
   border: none;
   padding: 3px 65px;
   margin-top: 10px;
-  border-radius: 20px;
+  border-radius: 10px;
   cursor: pointer;
+  width: 220px;
 }
 
 /* 작가 정보 - 팔로우 버튼 - 팔로우 상태 아님 */
 .follow-btn.false {
   background-color: #D10024;
   color: white;
+  
 }
 
 /* 작가 정보 - 팔로우 버튼 - 팔로우 상태임 */
 .follow-btn.true {
-  background-color: #535353;
+  background-color: #F9B54A;
   color: white;
+  
+}
+
+/* 작가 정보 - 도네이션 버튼 */
+.donation-btn {
+  border: none;
+  padding: 3px 65px;
+  margin-top: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  background-color: #D9D9D9;
+  color: #000000;
+  width: 220px;
 }
 
 /* 작가 정보 - 구독자 수, 컨텐츠 수, 리뷰 수 */

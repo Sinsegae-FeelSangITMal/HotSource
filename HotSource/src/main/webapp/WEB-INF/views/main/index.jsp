@@ -47,8 +47,6 @@
 	<!-- Js Plugins 시작 -->
 	<%@ include file="./inc/footer_link.jsp" %>
 	<!-- Js Plugins 끝 -->
-
-</script>
 </body>
 
 </html>

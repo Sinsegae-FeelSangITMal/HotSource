@@ -44,24 +44,26 @@
 		</environment>
 	</environments>
 	<mappers>
-		<mapper resource="hotsource/mybatis/AssetMapper.xml" />
 		<mapper resource="hotsource/mybatis/AssetFileMapper.xml" />
 		<mapper resource="hotsource/mybatis/AssetImgMapper.xml" />
 		<mapper resource="hotsource/mybatis/AssetKeywordMappingMapper.xml" />
-		<mapper resource="hotsource/mybatis/AssetListMapper.xml" />
 		<mapper resource="hotsource/mybatis/AssetListItemMapper.xml" />
+		<mapper resource="hotsource/mybatis/AssetListMapper.xml" />
+		<mapper resource="hotsource/mybatis/AssetMapper.xml" />
 		<mapper resource="hotsource/mybatis/AssetViewMapper.xml" />
-		<mapper resource="hotsource/mybatis/CartMapper.xml" />
+		
+		<!-- <mapper resource="hotsource/mybatis/CartMapper.xml" /> -->
+		
 		<mapper resource="hotsource/mybatis/KeywordMapper.xml" />
-		<mapper resource="hotsource/mybatis/NoticeMapper.xml" />
 		<mapper resource="hotsource/mybatis/NoticeCommentMapper.xml" />
 		<mapper resource="hotsource/mybatis/NoticeLikeMapper.xml" />
-		<mapper resource="hotsource/mybatis/OrderedMapper.xml" />
+		<mapper resource="hotsource/mybatis/NoticeMapper.xml" />
 		<mapper resource="hotsource/mybatis/OrderedAssetMapper.xml" />
+		<mapper resource="hotsource/mybatis/OrderedMapper.xml" />
 		<mapper resource="hotsource/mybatis/PaypalMapper.xml" />
 		<mapper resource="hotsource/mybatis/ReportMapper.xml" />
-		<mapper resource="hotsource/mybatis/ReviewMapper.xml" />
 		<mapper resource="hotsource/mybatis/ReviewLikeMapper.xml" />
+		<mapper resource="hotsource/mybatis/ReviewMapper.xml" />
 		<mapper resource="hotsource/mybatis/RoleMapper.xml" />
 		<mapper resource="hotsource/mybatis/SaleMapper.xml" />
 		<mapper resource="hotsource/mybatis/SellerMapper.xml" />
@@ -69,9 +71,11 @@
 		<mapper resource="hotsource/mybatis/SubCategoryMapper.xml" />
 		<mapper resource="hotsource/mybatis/SubscribeMapper.xml" />
 		<mapper resource="hotsource/mybatis/TopCategoryMapper.xml" />
-		<mapper resource="hotsource/mybatis/UserMapper.xml" />
 		<mapper resource="hotsource/mybatis/UserKeywordMappingMapper.xml" />
+		<mapper resource="hotsource/mybatis/UserMapper.xml" />
+		<!-- 
 		<mapper resource="hotsource/mybatis/WishlistMapper.xml" />
 		<mapper resource="hotsource/mybatis/WishlistItemMapper.xml" />
+		 -->
 	</mappers>
 </configuration>

@@ -11,6 +11,7 @@
 	NoticeLike noticeLike = (NoticeLike)request.getAttribute("noticeLike");
 	NoticeComment noticeComment = (NoticeComment)request.getAttribute("noticeComment");
 %>
+
 <!DOCTYPE html>
 <html>
 <head>
