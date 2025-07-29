@@ -25,4 +25,9 @@ public class SubscribeServiceImpl implements SubscribeService {
 	public List selectByUserId(int user_id) {
 		return subscribeDAO.selectByUserId(user_id);
 	}
+
+	@Override
+	public int selectSubCount(int seller_id) {
+		return subscribeDAO.selectSubCount(seller_id);
+	}
 }

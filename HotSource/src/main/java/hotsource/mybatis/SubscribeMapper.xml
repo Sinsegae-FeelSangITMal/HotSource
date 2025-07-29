@@ -6,10 +6,10 @@
 		subscribe_id, subscribe_date, cancel_date, user_id, seller_id
 	</sql>
 	
-	<resultMap 			type="Subscribe" 				id="joinMap">
-		<id 					column="subscribe_id" 		property="subscribe_id"/>
-		<result 			column="subscribe_date" 	property="subscribe_date"/>
-		<result 			column="cancel_date" 		property="cancel_date"/>
+	<resultMap 			type="Subscribe" 			id="joinMap">
+		<id 			column="subscribe_id" 		property="subscribe_id"/>
+		<result 		column="subscribe_date" 	property="subscribe_date"/>
+		<result 		column="cancel_date" 		property="cancel_date"/>
 		
 		<!-- 여기서 User는 구독자 A, Seller는 판매자 B로 다른 사람임 -->
 		<association 	column="user_id" 		property="user" 	javaType="User" 	select="User.select"/>
@@ -26,6 +26,10 @@
 	
 	<select id="selectBySellerId" resultMap="joinMap" parameterType="int">
 		SELECT <include refid="columns"/> FROM subscribe WHERE seller_id=#{seller_id}
+	</select>
+	
+	<select id="selectSubCount" resultType="int" parameterType="int">
+		SELECT count(user_id) FROM subscribe WHERE seller_id=#{seller_id}
 	</select>
 	
 </mapper>

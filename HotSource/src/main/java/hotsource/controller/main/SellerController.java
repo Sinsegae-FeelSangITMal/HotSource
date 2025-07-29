@@ -13,10 +13,12 @@ import hotsource.domain.Notice;
 import hotsource.domain.NoticeComment;
 import hotsource.domain.NoticeLike;
 import hotsource.domain.Seller;
+import hotsource.domain.Subscribe;
 import hotsource.model.notice.NoticeService;
 import hotsource.model.notice_comment.NoticeCommentService;
 import hotsource.model.notice_like.NoticeLikeService;
 import hotsource.model.seller.SellerService;
+import hotsource.model.subscribe.SubscribeService;
 import hotsource.model.user.UserService;
 
 @Controller
@@ -36,6 +38,9 @@ public class SellerController {
 	
 	@Autowired
 	private NoticeLikeService noticeLikeService;
+	
+	@Autowired
+	private SubscribeService subscribeService;
 	
 	// 작가 페이지
 	@RequestMapping(value= "/seller", method=RequestMethod.GET)
@@ -58,11 +63,14 @@ public class SellerController {
 		NoticeComment noticeComment = noticeCommentService.select(notice_comment_id);
 		NoticeLike noticeLike = noticeLikeService.select(notice_like_id);
 		
+		int subscribeCount = subscribeService.selectSubCount(seller_id);
+		
 		//4단계: 저장 
 		model.addAttribute("seller", seller);
 		model.addAttribute("notice", notice);
 		model.addAttribute("noticeComment", noticeComment);		
 		model.addAttribute("noticeLike", noticeLike);		
+		model.addAttribute("subscribeCount", subscribeCount);		
 
 		return mav;
 	}

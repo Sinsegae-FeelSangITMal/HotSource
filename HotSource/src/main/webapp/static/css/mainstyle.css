@@ -1403,6 +1403,196 @@ a:focus {
 	마이 페이지 - 끝
 \*----------------------------*/
 
+/*----------------------------*\
+	작가 페이지 - 시작 
+\*----------------------------*/
+
+/* 작가 페이지 tap 스타일 시작 */
+.tab-btn {
+	background: none;
+	border: none;
+	font-weight: bold;
+	font-size: 1.1rem;
+	padding: 10px 20px;
+	cursor: pointer;
+	color: #333;
+	border-bottom: 3px solid transparent;
+}
+
+.tab-btn.active {
+	color: #e53935;
+	border-bottom: 3px solid #e53935;
+}
+
+.tab-content {
+	display: none;
+	background-color: white;
+	transition: all 0.3s ease-in-out;
+	height: auto; /* 고정 높이 제거 */
+	padding: 20px 0; /* 위아래 여백 추가 */
+}
+
+.tab-content.active {
+  	display: block;
+}
+
+.tap-artist-card {
+  display: block;
+  justify-content: center; /* 중앙 정렬 */
+  margin-top: 30px;
+  gap: 20px; /* tap-artist-card와 내부 요소 사이 여백 */
+}
+
+.seller-rating {
+   position: relative;
+   width: 180px;
+   background: transparent;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   gap: .3em;
+   padding: 5px;
+   overflow: hidden;
+}
+
+.seller-rating-result {
+   position: absolute;
+   top: 0;
+   left: 0;
+   transform: translateY(-10px) translateX(-5px);
+   z-index: -9;
+   font: 3em Arial, Helvetica, sans-serif;
+   color: #ebebeb8e;
+   pointer-events: none;
+}
+
+.seller-rating-star {
+   font-size: 1.3em;
+   cursor: pointer;
+   color: #dabd18b2;
+   transition: filter linear .3s;
+}
+
+.seller-rating-star:hover {
+   filter: drop-shadow(1px 1px 4px gold);
+}
+
+
+
+
+/* 작가페이지 - 공지 List Tap 스타일 시작 */
+.list-custom-card {
+	width: 100%;
+	aspect-ratio: 4 / 2; /* 가로:세로 비율을 2:1로 설정 */
+	max-width: 300px;
+	margin: 12px;
+}
+
+.list-asset-image {
+	width: 50%;
+	height: 50%;
+	box-sizing: border-box;
+	padding: 2px;
+	border: 1px solid #ccc;
+	object-fit: cover;
+}
+
+.list-image-grid {
+	display: flex;
+	flex-wrap: wrap;
+	width: 100%;
+	height: 100%;
+}
+/* 작가페이지 - 공지 List Tap 스타일 끝 */
+
+/* 작가페이지 - 공지 Post Tap 스타일 시작 */
+.seller-post-card {
+  background-color: white;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 0 10px #ccc;
+  
+  width: 100%;
+  border-radius: 10px;
+}
+
+.seller-post-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.seller-post-avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+}
+
+.seller-post-info {
+  margin-left: 10px;
+  display: flex;
+}
+
+.seller-post-author {
+  margin: 0;
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.seller-post-time {
+  font-size: 0.85rem;
+  color: gray;
+}
+
+.seller-post-body {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.seller-post-image {
+  width: 200px;
+  height: auto;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+}
+
+.seller-post-title {
+  font-weight: bold;
+  font-size: 1.1rem;
+  margin-bottom: 10px;
+}
+
+.seller-post-description {
+  font-size: 0.85rem;
+  color: #333;
+}
+
+.seller-post-footer {
+  margin-top: 15px;
+  display: flex;
+  gap: 15px;
+}
+
+.like-btn, .dislike-btn, .comment-btn, .send-btn {
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 1rem;
+  color: #666;
+  transition: color 0.2s ease-in-out;
+}
+
+.like-btn.active i, .dislike-btn.active i {
+  color: red;
+}
+/* 작가페이지 - 공지 Post Tap 스타일 끝 */
+
+/*----------------------------*\
+	작가 페이지 - 끝
+\*----------------------------*/
+
 .slider_section .carousel-indicators.mine {
   position: unset;
   width: 100px;

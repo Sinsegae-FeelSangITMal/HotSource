@@ -6,4 +6,6 @@ public interface SubscribeService {
 	public List selectAll();
 	public List selectByUserId(int user_id);
 	public List selectBySellerId(int seller_id);
+	
+	public int selectSubCount(int seller_id);
 }

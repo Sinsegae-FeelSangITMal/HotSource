@@ -26,4 +26,9 @@ public class MybatisSubscribeDAO implements SubscribeDAO {
 	public List selectByUserId(int user_id) {
 		return sqlSessionTemplate.selectList("Subscribe.selectByUserId", user_id);
 	}
+
+	@Override
+	public int selectSubCount(int seller_id) {
+		return sqlSessionTemplate.selectOne("Subscribe.selectSubCount", seller_id);
+	}
 }
