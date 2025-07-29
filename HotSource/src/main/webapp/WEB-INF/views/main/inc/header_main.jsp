@@ -112,21 +112,7 @@
 					<!-- 장바구니 끝 -->
 					
 					<div class="nav-item dropdown">
-						
-					
-						<% if(loginUser == null){ %>
-							<a href="/user/login">Login / Register</a>
-						<%} else { %>
-						<!-- My Account 메뉴 시작 -->
-						<a href="#" class="nav-link dropdown-toggle" role="button" id="pages" data-toggle="dropdown" aria-expanded="false"><%= loginUser.getUser_name() %></a>
-							<!-- 드롭다운 메뉴 시작 -->
-							<div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                        		<li><a href="/main/mypage" class="dropdown-item">My Page </a></li>
-                        		<li><a href="/seller/notice/list" class="dropdown-item">Dashboard </a></li>
-                        		<li><a href="index.html" class="dropdown-item">Log-out </a></li>
-							</div>
-							<!-- 드롭다운 메뉴 끝 -->
-						<% } %>
+						<%@ include file="login_menu.jsp" %>
                    	</div>
 					<!-- My Account 메뉴 끝 -->
 		          

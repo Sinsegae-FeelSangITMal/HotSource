@@ -27,6 +27,8 @@ import com.github.scribejava.apis.GoogleApi20;
 import com.github.scribejava.core.builder.ServiceBuilder;
 import com.github.scribejava.core.oauth.OAuth20Service;
 
+import hotsource.model.user.KakaoApi20;
+import hotsource.model.user.NaverApi20;
 import lombok.extern.slf4j.Slf4j;
 
 
@@ -38,13 +40,31 @@ import lombok.extern.slf4j.Slf4j;
 public class UserWebConfig {
 	
 	@Value("${google.clientId}")
-	private String clientId;
+	private String goo_clientId;
 
 	@Value("${google.clientSecret}")
-	private String clientSecret;
+	private String goo_clientSecret;
 
 	@Value("${google.redirectUri}")
-	private String redirectUri;
+	private String goo_redirectUri;
+	
+	@Value("${naver.clientId}")
+	private String nav_clientId;
+
+	@Value("${naver.clientSecret}")
+	private String nav_clientSecret;
+
+	@Value("${naver.redirectUri}")
+	private String nav_redirectUri;
+	
+	@Value("${kakao.clientId}")
+	private String kak_clientId;
+
+	@Value("${kakao.clientSecret}")
+	private String kak_clientSecret;
+
+	@Value("${kakao.redirectUri}")
+	private String kak_redirectUri;
 
 	@Bean
 	public InternalResourceViewResolver internalResourceViewResolver() {
@@ -56,15 +76,38 @@ public class UserWebConfig {
 
 	@Bean
 	public OAuth20Service googleAuthService() {
-		// 클라이언트 ID, Secret, 콜백 주소, 리소스owner 접근 범위
-		//여기에 코드추가해야함 
-		ServiceBuilder builder = new ServiceBuilder(clientId);
-		builder.apiSecret(clientSecret); // 값 입력
+		ServiceBuilder builder = new ServiceBuilder(goo_clientId);
+		builder.apiSecret(goo_clientSecret); 
 		builder.defaultScope("email profile openid");
-		builder.callback(redirectUri);
-		log.debug("redirectURI:" +redirectUri);
+		builder.callback(goo_redirectUri);
 		return builder.build(GoogleApi20.instance());
 	}
+	
+	@Bean
+	public OAuth20Service naverAuthService() {
+		ServiceBuilder builder = new ServiceBuilder(nav_clientId);
+		builder.apiSecret(nav_clientSecret); 
+		builder.defaultScope("name email");
+		builder.callback(nav_redirectUri);
+		return builder.build(NaverApi20.instance());
+	}
+	
+	@Bean
+	public OAuth20Service kakaoAuthService() {
+		ServiceBuilder builder = new ServiceBuilder("17fbbd3919d84dd713885493b975de2a");
+		builder.apiSecret("yILPf0YMbfmyA0bPUEiNC9tneFwkQNeQ");
+		builder.defaultScope("profile_nickname profile_image");
+		builder.callback("http://localhost:8889/user/callback/sns/kakao");
+		return builder.build(KakaoApi20.instance());
+	}
+//	@Bean
+//	public OAuth20Service kakaoAuthService() {
+//		ServiceBuilder builder = new ServiceBuilder(kak_clientId);
+//		builder.apiSecret(kak_clientSecret);
+//		builder.defaultScope("profile_nickname profile_image");
+//		builder.callback(kak_redirectUri);
+//		return builder.build(KakaoApi20.instance());
+//	}
 }
 
 

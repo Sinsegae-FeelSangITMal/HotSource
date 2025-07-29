@@ -12,11 +12,16 @@ public class UserServiceImpl implements UserService{
 	private UserDAO userDAO;
 	
 	@Override
+	public User selectById(String id) {
+		return userDAO.selectById(id);
+	}
+	@Override
 	public void regist(User user) {
 		
 		userDAO.insert(user);
 		
-		// 이메일 발
+		// 이메일 발송
 	}
+
 
 }

@@ -14,6 +14,11 @@ public class MybatisUserDAO implements UserDAO{
 	private SqlSessionTemplate sqlSessionTemplate;
 	
 	@Override
+	public User selectById(String id) {
+		return sqlSessionTemplate.selectOne("User.selectById", id);
+	}
+	
+	@Override
 	public void insert(User user) throws UserException {
 		
 		int result = sqlSessionTemplate.insert("User.insert",user);
