@@ -1,5 +1,9 @@
+<%@page import="hotsource.domain.User"%>
 <%@ page contentType="text/html; charset=UTF-8"%>
 
+<% 
+	User loginUser = (User) session.getAttribute("user");
+%>
 <header class="header_section">
 	<div class="">		<!-- container엿음 -->
 		<nav class="navbar navbar-expand-lg custom_nav-container ">
@@ -107,17 +111,9 @@
 					</div>
 					<!-- 장바구니 끝 -->
 					
-					<!-- My Account 메뉴 시작 -->
 					<div class="nav-item dropdown">
-						<a href="#" class="nav-link dropdown-toggle" role="button" id="pages" data-toggle="dropdown" aria-expanded="false">My Account</a>
-							<!-- 드롭다운 메뉴 시작 -->
-							<div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                        		<li><a href="/main/mypage" class="dropdown-item">My Page </a></li>
-                        		<li><a href="index.html" class="dropdown-item">Dashboard </a></li>
-                        		<li><a href="index.html" class="dropdown-item">Log-out </a></li>
-							</div>
-							<!-- 드롭다운 메뉴 끝 -->
-                     	</div>
+						<%@ include file="login_menu.jsp" %>
+                   	</div>
 					<!-- My Account 메뉴 끝 -->
 		          
 				</div>

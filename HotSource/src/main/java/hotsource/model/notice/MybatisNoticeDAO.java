@@ -28,13 +28,13 @@ public class MybatisNoticeDAO implements NoticeDAO{
 	}
 
 	@Override
-	public Notice select(int notice_id) {
+	public Notice select(long notice_id) {
 		return sqlSessionTemplate.selectOne("Notice.select", notice_id);
 	}
 
 	@Override
 	public void insert(Notice notice) throws NoticeException{
-		int result = sqlSessionTemplate.insert("Notice.insert", notice);
+		long result = sqlSessionTemplate.insert("Notice.insert", notice);
 		if(result < 1) {
 			log.error("글 등록 실패");
 			throw new NoticeException("글 등록 실패");
@@ -47,7 +47,7 @@ public class MybatisNoticeDAO implements NoticeDAO{
 	}
 
 	@Override
-	public void delete(int notice_id) {
+	public void delete(long notice_id) {
 		
 	}
 }

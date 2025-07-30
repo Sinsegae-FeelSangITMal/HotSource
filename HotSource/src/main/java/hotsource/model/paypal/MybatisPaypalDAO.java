@@ -20,12 +20,12 @@ public class MybatisPaypalDAO implements PaypalDAO {
 	}
 
 	@Override
-	public Paypal select(int paypal_id) {
+	public Paypal select(long paypal_id) {
 		return sqlSessionTemplate.selectOne("Paypal.select", paypal_id);
 	}
 
 	@Override
-	public Paypal selectBySellerId(int seller_id) {
+	public Paypal selectBySellerId(long seller_id) {
 		return sqlSessionTemplate.selectOne("Paypal.selectBySellerId", seller_id);
 	}
 }

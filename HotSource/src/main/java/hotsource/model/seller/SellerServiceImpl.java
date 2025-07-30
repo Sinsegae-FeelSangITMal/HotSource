@@ -19,12 +19,12 @@ public class SellerServiceImpl implements SellerService {
 	}
 
 	@Override
-	public Seller select(int user_id) {
+	public Seller select(long user_id) {
 		return sellerDAO.select(user_id);
 	}
 
 	@Override
-	public Seller selectByUserId(int user_id) {
+	public Seller selectByUserId(long user_id) {
 		return sellerDAO.selectByUserId(user_id);
 	}
 }

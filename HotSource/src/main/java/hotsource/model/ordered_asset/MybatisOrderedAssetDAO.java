@@ -20,12 +20,12 @@ public class MybatisOrderedAssetDAO implements OrderedAssetDAO {
 	}
 
 	@Override
-	public OrderedAsset select(int order_asset_id) {
+	public OrderedAsset select(long order_asset_id) {
 		return sqlSessionTemplate.selectOne("OrderedAsset.select", order_asset_id);
 	}
 
 	@Override
-	public List selectByOrderId(int order_id) {
+	public List selectByOrderId(long order_id) {
 		return sqlSessionTemplate.selectList("OrderedAsset.selectByOrderId", order_id);
 	}
 }

@@ -5,8 +5,7 @@ import java.util.List;
 public interface SubscribeDAO {
 	
 	public List selectAll();
-	public List selectByUserId(int user_id);
-	public List selectBySellerId(int seller_id);
-	
+	public List selectByUserId(long user_id);
+	public List selectBySellerId(long seller_id);
 	public int selectSubCount(int seller_id);
 }

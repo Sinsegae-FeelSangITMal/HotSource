@@ -8,6 +8,6 @@ import hotsource.domain.NoticeLike;
 public interface NoticeLikeService {
 
 	public List selectAll();
-	public NoticeLike select(int notice_like_id);
+	public NoticeLike select(long notice_like_id);
 	
 }

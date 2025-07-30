@@ -13,7 +13,7 @@ public class MybatisUserKeywordMappingDAO implements UserKeywordMappingDAO{
 	private SqlSessionTemplate sqlSessionTemplate;
 	
 	@Override
-	public List selectByUserId(int user_id) {
+	public List selectByUserId(long user_id) {
 		return sqlSessionTemplate.selectList("UserKeywordMapping.selectByUserId", user_id);
 	}
 }

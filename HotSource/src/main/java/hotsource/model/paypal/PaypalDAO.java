@@ -6,6 +6,6 @@ import hotsource.domain.Paypal;
 
 public interface PaypalDAO {
 	public List selectAll();
-	public Paypal select(int paypal_id);
-	public Paypal selectBySellerId(int seller_id);
+	public Paypal select(long paypal_id);
+	public Paypal selectBySellerId(long seller_id);
 }

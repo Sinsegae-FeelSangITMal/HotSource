@@ -6,6 +6,6 @@ import hotsource.domain.OrderedAsset;
 
 public interface OrderedAssetService {
 	public List selectAll();
-	public OrderedAsset select(int order_asset_id);
-	public List selectByOrderId(int order_id);
+	public OrderedAsset select(long order_asset_id);
+	public List selectByOrderId(long order_id);
 }

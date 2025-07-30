@@ -13,7 +13,7 @@ public class MybatisReviewLikeDAO implements ReviewLikeDAO {
 	private SqlSessionTemplate sqlSessionTemplate;
 	
 	@Override
-	public List selectByReviewId(int review_id) {
+	public List selectByReviewId(long review_id) {
 		return sqlSessionTemplate.selectList("ReviewLike.selectByReviewId", review_id);
 	}
 }

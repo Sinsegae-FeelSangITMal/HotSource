@@ -3,18 +3,18 @@
 <mapper namespace="Notice">
 	
 	<sql id="columns">
-		notice_id, title, content, create_date, notice_img_url  <!--  ,seller_id -->
+		notice_id, title, content, create_date  <!-- notice_img_url ,seller_id -->
 	</sql>
 
 	<select id="selectAll" resultType="Notice">
 		select <include refid="columns"/> from notice				
 	</select>
 	
-	<select id="select" parameterType="int" resultType="Notice">
-		select <include refid="columns"/> from notice	where notice_id=#{notice_id}	
+	<select id="select" parameterType="long" resultType="Notice">
+		select <include refid="columns"/> from notice where notice_id=#{notice_id}	
 	</select>
 	
-	<insert id="regist" parameterType="Notice">
+	<insert id="insert" parameterType="Notice">
 		insert into notice(title, seller_id, content) values(#{title}, 1, #{content})
 	</insert>
 	
@@ -23,7 +23,7 @@
 		where notice_id=#{notice_id}
 	</update>
 	
-	<delete id="delete" parameterType="int">
+	<delete id="delete" parameterType="long">
 		delete from notice where notice_id=#{notice_id}
 	</delete>
 	

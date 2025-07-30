@@ -12,7 +12,7 @@ public class AssetKeywordMappingServiceImpl implements AssetKeywordMappingServic
 	private AssetKeywordMappingDAO assetKeywordMappingDAO;
 	
 	@Override
-	public List selectByAssetId(int asset_id) {
+	public List selectByAssetId(long asset_id) {
 		return assetKeywordMappingDAO.selectByAssetId(asset_id);
 	}
 }

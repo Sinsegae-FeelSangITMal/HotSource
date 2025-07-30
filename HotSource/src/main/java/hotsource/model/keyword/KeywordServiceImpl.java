@@ -19,7 +19,7 @@ public class KeywordServiceImpl implements KeywordService {
 	}
 
 	@Override
-	public Keyword select(int keyword_id) {
+	public Keyword select(long keyword_id) {
 		return keywordDAO.select(keyword_id);
 	}
 }

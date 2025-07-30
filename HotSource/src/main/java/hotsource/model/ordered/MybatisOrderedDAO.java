@@ -20,12 +20,12 @@ public class MybatisOrderedDAO implements OrderedDAO {
 	}
 
 	@Override
-	public Ordered select(int order_id) {
+	public Ordered select(long order_id) {
 		return sqlSessionTemplate.selectOne("Ordered.select", order_id);
 	}
 
 	@Override
-	public List selectByUserId(int user_id) {
+	public List selectByUserId(long user_id) {
 		return sqlSessionTemplate.selectList("Ordered.selectByUserId", user_id);
 	}
 }

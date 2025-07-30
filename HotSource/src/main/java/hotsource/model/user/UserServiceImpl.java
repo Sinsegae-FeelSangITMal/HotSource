@@ -6,16 +6,51 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import hotsource.domain.User;
+import hotsource.exception.UserNotFoundException;
+import hotsource.util.PasswordUtil;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
+@Slf4j
 public class UserServiceImpl implements UserService{
 
 	@Autowired
 	private UserDAO userDAO;
-
+	
+	@Autowired
+	private PasswordUtil passwordUtil;
+	
+	@Override
+	public User selectById(String id) {
+		return userDAO.selectById(id);
+	}
+	@Override
 	public void regist(User user) {
+		
+		if(user.getSnsProvider() == null) {
+			String salt = passwordUtil.generateSalt();
+			
+			String hashedPassword = passwordUtil.hashPassword(user.getPassword(), salt);
+			
+			user.setSalt(salt);
+			user.setPassword(hashedPassword);
+		}
+		
 		userDAO.insert(user);
-		// 이메일 ㅅ발
+	}
+	@Override
+	public User login(User user) throws UserNotFoundException{
+		
+		log.debug("User_email :"+user.getUser_email());
+		
+		User obj = userDAO.selectByEmail(user.getUser_email());
+		
+		String dbHash = passwordUtil.hashPassword(user.getPassword(), obj.getSalt());
+		
+		if(dbHash.equals(obj.getPassword()) == false) {
+			throw new UserNotFoundException("로그인 정보가 올바르지 않습니다");
+		}
+		return obj;
 	}
 
 	@Override
@@ -24,12 +59,12 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public User select(int user_id) {
+	public User select(long user_id) {
 		return userDAO.select(user_id);
 	}
 
 	@Override
-	public List selectByRoleId(int role_id) {
+	public List selectByRoleId(long role_id) {
 		return userDAO.selectByRoleId(role_id);
 	}
 }

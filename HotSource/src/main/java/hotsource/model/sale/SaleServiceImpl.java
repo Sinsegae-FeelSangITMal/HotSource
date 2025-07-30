@@ -19,12 +19,12 @@ public class SaleServiceImpl implements SaleService {
 	}
 
 	@Override
-	public Sale select(int sale_id) {
+	public Sale select(long sale_id) {
 		return saleDAO.select(sale_id);
 	}
 
 	@Override
-	public Sale selectByAssetId(int asset_id) {
+	public Sale selectByAssetId(long asset_id) {
 		return saleDAO.selectByAssetId(asset_id);
 	}
 }

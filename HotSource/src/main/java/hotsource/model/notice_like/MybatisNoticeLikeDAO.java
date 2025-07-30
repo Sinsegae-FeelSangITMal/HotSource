@@ -23,7 +23,7 @@ public class MybatisNoticeLikeDAO implements NoticeLikeDAO{
 	}
 
 	@Override
-	public NoticeLike select(int notice_like_id) {
+	public NoticeLike select(long notice_like_id) {
 		return sqlSessionTemplate.selectOne("NoticeLike.select", notice_like_id);
 	}
 

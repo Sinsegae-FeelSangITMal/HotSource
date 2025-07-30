@@ -19,12 +19,12 @@ public class OrderedAssetServiceImpl implements OrderedAssetService {
 	}
 
 	@Override
-	public OrderedAsset select(int order_asset_id) {
+	public OrderedAsset select(long order_asset_id) {
 		return orderedAssetDAO.select(order_asset_id);
 	}
 
 	@Override
-	public List selectByOrderId(int order_id) {
+	public List selectByOrderId(long order_id) {
 		return orderedAssetDAO.selectByOrderId(order_id);
 	}
 }

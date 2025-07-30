@@ -13,7 +13,7 @@ public class MybatisAssetKeywordMappingDAO implements AssetKeywordMappingDAO{
 	private SqlSessionTemplate sqlSessionTemplate;
 	
 	@Override
-	public List selectByAssetId(int asset_id) {
+	public List selectByAssetId(long asset_id) {
 		return sqlSessionTemplate.selectList("AssetKeywordMapping.selectByAssetId", asset_id);
 	}
 }

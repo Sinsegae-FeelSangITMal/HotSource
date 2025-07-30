@@ -18,12 +18,12 @@ public class MybatisSubscribeDAO implements SubscribeDAO {
 	}
 
 	@Override
-	public List selectBySellerId(int seller_id) {
+	public List selectBySellerId(long seller_id) {
 		return sqlSessionTemplate.selectList("Subscribe.selectBySellerId", seller_id);
 	}
 
 	@Override
-	public List selectByUserId(int user_id) {
+	public List selectByUserId(long user_id) {
 		return sqlSessionTemplate.selectList("Subscribe.selectByUserId", user_id);
 	}
 

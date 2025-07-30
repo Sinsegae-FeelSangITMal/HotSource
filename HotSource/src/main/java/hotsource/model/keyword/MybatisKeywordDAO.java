@@ -20,7 +20,7 @@ public class MybatisKeywordDAO implements KeywordDAO {
 	}
 
 	@Override
-	public Keyword select(int keyword_id) {
+	public Keyword select(long keyword_id) {
 		return sqlSessionTemplate.selectOne("Keyword.select", keyword_id);
 	}
 }

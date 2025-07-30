@@ -11,6 +11,7 @@ public class OrderedAsset {
 	private int asset_price;
 	private int asset_discount;
 	private int asset_pay;
+	
 	private Ordered ordered;				// FK
 	private Asset asset;					// FK
 }

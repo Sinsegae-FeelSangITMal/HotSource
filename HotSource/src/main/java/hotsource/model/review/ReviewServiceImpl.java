@@ -19,22 +19,22 @@ public class ReviewServiceImpl implements ReviewService {
 	}
 
 	@Override
-	public Review select(int review_id) {
+	public Review select(long review_id) {
 		return reviewDAO.select(review_id);
 	}
 
 	@Override
-	public List selectByAssetId(int asset_id) {
+	public List selectByAssetId(long asset_id) {
 		return reviewDAO.selectByAssetId(asset_id);
 	}
 
 	@Override
-	public List selectByUserId(int user_id) {
+	public List selectByUserId(long user_id) {
 		return reviewDAO.selectByUserId(user_id);
 	}
 
 	@Override
-	public Review selectByOrderedAssetId(int order_asset_id) {
+	public Review selectByOrderedAssetId(long order_asset_id) {
 		return reviewDAO.selectByOrderedAssetId(order_asset_id);
 	}
 
