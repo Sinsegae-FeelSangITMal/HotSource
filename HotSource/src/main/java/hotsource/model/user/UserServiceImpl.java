@@ -4,12 +4,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import hotsource.domain.User;
+import hotsource.exception.UserNotFoundException;
+import hotsource.util.PasswordUtil;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
+@Slf4j
 public class UserServiceImpl implements UserService{
 
 	@Autowired
 	private UserDAO userDAO;
+	
+	@Autowired
+	private PasswordUtil passwordUtil;
 	
 	@Override
 	public User selectById(String id) {
@@ -18,9 +25,30 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public void regist(User user) {
 		
-		userDAO.insert(user);
+		if(user.getSnsProvider() == null) {
+			String salt = passwordUtil.generateSalt();
+			
+			String hashedPassword = passwordUtil.hashPassword(user.getPassword(), salt);
+			
+			user.setSalt(salt);
+			user.setPassword(hashedPassword);
+		}
 		
-		// 이메일 발송
+		userDAO.insert(user);
+	}
+	@Override
+	public User login(User user) throws UserNotFoundException{
+		
+		log.debug("User_email :"+user.getUser_email());
+		
+		User obj = userDAO.selectByEmail(user.getUser_email());
+		
+		String dbHash = passwordUtil.hashPassword(user.getPassword(), obj.getSalt());
+		
+		if(dbHash.equals(obj.getPassword()) == false) {
+			throw new UserNotFoundException("로그인 정보가 올바르지 않습니다");
+		}
+		return obj;
 	}
 
 

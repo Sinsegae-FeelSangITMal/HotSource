@@ -34,7 +34,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = {"hotsource.controller.user"})
+@ComponentScan(basePackages = {"hotsource.controller.user, hotsource.util"})
 @PropertySource("classpath:application.properties") 
 @Slf4j
 public class UserWebConfig {
@@ -91,23 +91,14 @@ public class UserWebConfig {
 		builder.callback(nav_redirectUri);
 		return builder.build(NaverApi20.instance());
 	}
-	
 	@Bean
 	public OAuth20Service kakaoAuthService() {
-		ServiceBuilder builder = new ServiceBuilder("17fbbd3919d84dd713885493b975de2a");
-		builder.apiSecret("yILPf0YMbfmyA0bPUEiNC9tneFwkQNeQ");
+		ServiceBuilder builder = new ServiceBuilder(kak_clientId);
+		builder.apiSecret(kak_clientSecret);
 		builder.defaultScope("profile_nickname profile_image");
-		builder.callback("http://localhost:8889/user/callback/sns/kakao");
+		builder.callback(kak_redirectUri);
 		return builder.build(KakaoApi20.instance());
 	}
-//	@Bean
-//	public OAuth20Service kakaoAuthService() {
-//		ServiceBuilder builder = new ServiceBuilder(kak_clientId);
-//		builder.apiSecret(kak_clientSecret);
-//		builder.defaultScope("profile_nickname profile_image");
-//		builder.callback(kak_redirectUri);
-//		return builder.build(KakaoApi20.instance());
-//	}
 }
 
 

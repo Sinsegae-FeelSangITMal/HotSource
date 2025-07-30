@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -62,6 +63,23 @@ public class UserController {
 	public String getRegistForm() {
 		return "user/join";
 	}
+	
+	@PostMapping("/regist")
+	public String regist(User user) {
+		userService.regist(user);
+
+	    return "redirect:/user/login";
+	}
+	
+	@PostMapping("/login")
+	public String homeLogin(User user, HttpSession session) {
+		User obj = userService.login(user);
+		session.setAttribute("user", obj);
+		
+		return "redirect:/main/index";
+	}
+
+	
 	
 	/* --------------------------
 	 *  Google Login API

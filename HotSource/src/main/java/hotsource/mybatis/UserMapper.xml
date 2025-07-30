@@ -6,9 +6,13 @@
 		select * from user where id = #{id}
 	</select>
 	
+	<select id="selectByEmail" parameterType="String" resultType="User">
+		select * from user where user_email = #{user_email}
+	</select>
+	
 	<insert id="insert" parameterType="User">
-		insert into user(id, user_name, user_email, role_id, sns_provider_id)
-		values(#{id}, #{user_name}, #{user_email}, 1, #{snsProvider.sns_provider_id})
+		insert into user(id, user_name, user_email, password, user_nickname, salt, role_id, sns_provider_id)
+		values(#{id}, #{user_name}, #{user_email}, #{password}, #{user_nickname}, #{salt}, 1, #{snsProvider.sns_provider_id})
 	</insert>
 	
 	

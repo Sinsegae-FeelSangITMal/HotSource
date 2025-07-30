@@ -13,6 +13,7 @@ public class User {
 	private String user_nickname;
 	private String profile_img_url;
 	private String create_date;
+	private String salt;
 	
 	private Role role;
 	private SnsProvider snsProvider;
