@@ -1,7 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 
 <%
-	int limit = request.getAttribute("assetCount");
+	int limit = (int) request.getAttribute("assetCount");
 %>
 
 <div class="product-grid">

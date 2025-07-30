@@ -10,7 +10,7 @@
 		select <include refid="columns"/> from notice_comment
 	</select>
 	
-	<select id="select" parameterType="int" resultType="NoticeComment">
+	<select id="select" parameterType="long" resultType="NoticeComment">
 		select <include refid="columns"/> from notice_comment
 		where	notice_comment_id = #{notice_comment_id}
 	</select>
@@ -24,7 +24,7 @@
 		where notice_comment_id=#{notice_comment_id}
 	</update>
 	
-	<delete id="delete" parameterType="int">
+	<delete id="delete" parameterType="long">
 		delete from notice_comment where notice_comment_id=#{notice_comment_id}
 	</delete>
 </mapper>
