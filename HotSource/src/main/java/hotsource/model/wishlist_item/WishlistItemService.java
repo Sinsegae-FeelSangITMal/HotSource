@@ -1,0 +1,8 @@
+package hotsource.model.wishlist_item;
+
+import java.util.List;
+
+public interface WishlistItemService {
+	public List selectAll();
+	public List selectByWishlistId(long wishlist_id);
+}

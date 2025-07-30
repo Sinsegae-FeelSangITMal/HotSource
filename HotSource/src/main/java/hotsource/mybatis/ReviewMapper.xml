@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Review">
+	
+	<sql id="columns">
+		review_id, rate, comment, create_date, update_date, user_id, asset_id, order_asset_id
+	</sql>
+	
+	<resultMap			type="Review"					id="joinMap">
+		<id 					column="review_id"			property="review_id"/>
+		<result				column="rate"					property="rate"/>
+		<result				column="comment"			property="comment"/>
+		<result				column="create_date"		property="create_date"/>
+		<result				column="update_date"		property="update_date"/>
+		<association	column="user_id"				property="user"					javaType="User"					select="User.select"/>
+		<association	column="asset_id"				property="asset"				javaType="Asset"				select="Asset.select"/>
+		<association	column="order_asset_id"	property="orderedAsset"	javaType="OrderedAsset"	select="OrderedAsset.select"/>
+	</resultMap>
+	
+	<select id="selectAll" resultMap="joinMap">
+		SELECT <include refid="columns"/> FROM review
+	</select>
+	
+	<select id="select" resultMap="joinMap" parameterType="int">
+		SELECT <include refid="columns"/> FROM review WHERE review_id=#{review_id}
+	</select>
+	
+	<select id="selectByUserId" resultMap="joinMap" parameterType="int">
+		SELECT <include refid="columns"/> FROM review WHERE user_id=#{user_id}
+	</select>
+	
+	<select id="selectByAssetId" resultMap="joinMap" parameterType="int">
+		SELECT <include refid="columns"/> FROM review WHERE asset_id=#{asset_id}
+	</select>
+	
+	<select id="selectByOrderedAssetId" resultMap="joinMap" parameterType="int">
+		SELECT <include refid="columns"/> FROM review WHERE order_asset_id=#{order_asset_id}
+	</select>
+	
+</mapper>

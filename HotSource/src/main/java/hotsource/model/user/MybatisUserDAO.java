@@ -1,13 +1,17 @@
 package hotsource.model.user;
 
+import java.util.List;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
 
 import hotsource.domain.User;
 import hotsource.exception.UserException;
 import hotsource.exception.UserNotFoundException;
 
+@Primary
 @Repository
 public class MybatisUserDAO implements UserDAO {
 
@@ -26,6 +30,21 @@ public class MybatisUserDAO implements UserDAO {
 		if (result < 1) {
 			throw new UserException("사용자 등록 실패");
 		}
+	}
+
+	@Override
+	public List selectAll() {
+		return sqlSessionTemplate.selectList("User.selectAll");
+	}
+
+	@Override
+	public User select(long user_id) {
+		return sqlSessionTemplate.selectOne("User.select", user_id);
+	}
+
+	@Override
+	public List selectByRoleId(long role_id) {
+		return sqlSessionTemplate.selectList("User.selectByRoleId", role_id);
 	}
 
 	@Override

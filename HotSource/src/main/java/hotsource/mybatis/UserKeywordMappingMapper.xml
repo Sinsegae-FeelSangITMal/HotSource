@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="UserKeywordMapping">
+	
+	<sql id="columns">
+		user_keyword_mapping_id, user_id, keyword_id
+	</sql>
+	
+	<resultMap			type="UserKeywordMapping"					id="joinMap">
+		<id 					column="user_keyword_mapping_id"		property="user_keyword_mapping_id"/>
+		<association	column="user_id"		property="user"			javaType="User"		select="User.select"/>
+	</resultMap>
+	
+	<select id="selectByUserId" resultMap="joinMap" parameterType="int">
+		SELECT <include refid="columns"/> FROM user_keyword_mapping WHERE user_id=#{user_id}
+	</select>
+	
+</mapper>

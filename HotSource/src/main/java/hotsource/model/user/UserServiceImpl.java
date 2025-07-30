@@ -1,5 +1,7 @@
 package hotsource.model.user;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -51,5 +53,18 @@ public class UserServiceImpl implements UserService{
 		return obj;
 	}
 
+	@Override
+	public List selectAll() {
+		return userDAO.selectAll();
+	}
 
+	@Override
+	public User select(long user_id) {
+		return userDAO.select(user_id);
+	}
+
+	@Override
+	public List selectByRoleId(long role_id) {
+		return userDAO.selectByRoleId(role_id);
+	}
 }

@@ -1,5 +1,6 @@
 <% if (loginUser == null) { %>
-  <a href="/user/login">Login / Register</a>
+  <a href="/user/login"><span>Login</span></a>
+  <a href="/user/register"><span>Register</span></a>
 <% } else { %>
   <!-- My Account 메뉴 시작 -->
   <a href="#" class="nav-link dropdown-toggle" role="button" id="pages" data-toggle="dropdown" aria-expanded="false">

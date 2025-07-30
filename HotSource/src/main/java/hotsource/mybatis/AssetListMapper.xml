@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="AssetList">
+
+    <!-- 공통 컬럼 정의 -->
+    <sql id="columns">
+        asset_list_id, title, description, is_public, create_date, seller_id
+    </sql>
+
+    <!-- ResultMap: Seller 객체는 ID만 매핑 -->
+    <resultMap id="AssetListResultMap" type="AssetList">
+        <id property="asset_list_id" column="asset_list_id"/>
+        <result property="title" column="title"/>
+        <result property="description" column="description"/>
+        <result property="is_public" column="is_public"/>
+        <result property="create_date" column="create_date"/>
+        
+        <association property="seller" javaType="Seller">
+            <id property="seller_id" column="seller_id"/>
+        </association>
+    </resultMap>
+
+    <!-- 1. 전체 목록 -->
+    <select id="selectAll" resultMap="AssetListResultMap">
+        SELECT <include refid="columns"/>
+        FROM asset_list
+    </select>
+
+    <!-- 2. 단일 조회 -->
+    <select id="select" parameterType="long" resultMap="AssetListResultMap">
+        SELECT <include refid="columns"/>
+        FROM asset_list
+        WHERE asset_list_id = #{asset_list_id}
+    </select>
+
+    <!-- 3. 등록 -->
+    <insert id="insert" parameterType="AssetList">
+        INSERT INTO asset_list (
+            title, description, is_public, seller_id
+        ) VALUES (
+            #{title}, #{description}, #{is_public}, #{seller.seller_id}
+        )
+    </insert>
+
+    <!-- 4. 수정 -->
+    <update id="update" parameterType="AssetList">
+        UPDATE asset_list
+        SET title = #{title},
+            description = #{description},
+            is_public = #{is_public}
+        WHERE asset_list_id = #{asset_list_id}
+    </update>
+
+    <!-- 5. 삭제 -->
+    <delete id="delete" parameterType="long">
+        DELETE FROM asset_list
+        WHERE asset_list_id = #{asset_list_id}
+    </delete>
+
+    <!-- 6. 특정 판매자의 전체 리스트 조회 -->
+    <select id="selectBySellerId" parameterType="long" resultMap="AssetListResultMap">
+        SELECT <include refid="columns"/>
+        FROM asset_list
+        WHERE seller_id = #{seller_id}
+    </select>
+
+</mapper>

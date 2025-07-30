@@ -24,7 +24,7 @@ public class NoticeServiceImpl implements NoticeService{
 		return noticeDAO.selectAll(); // DAO의 메서드 호출
 	}
 
-	public Notice select(int notice_id) {
+	public Notice select(long notice_id) {
 		return noticeDAO.select(notice_id);
 	}
 
@@ -37,7 +37,7 @@ public class NoticeServiceImpl implements NoticeService{
 		
 	}
 
-	public void delete(int notice_id) {
+	public void delete(long notice_id) {
 		
 	}
 

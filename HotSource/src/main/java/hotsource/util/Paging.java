@@ -7,8 +7,6 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Component;
 
 import lombok.Data;
-import lombok.extern.slf4j.Slf4j;
-import lombok.Data;
 
 /*		 복잡한 페이징 처리 로직을 담당하는 유틸 클래스 		*/
 @Data

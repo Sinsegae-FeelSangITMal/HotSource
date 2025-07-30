@@ -1,25 +1,10 @@
 package hotsource.spring.config;
 
-import javax.naming.NamingException;
-import javax.sql.DataSource;
-
-import org.apache.ibatis.session.SqlSessionFactory;
-import org.hibernate.SessionFactory;
-import org.mybatis.spring.SqlSessionFactoryBean;
-import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.jdbc.datasource.DataSourceTransactionManager;
-import org.springframework.jndi.JndiTemplate;
-import org.springframework.orm.hibernate5.HibernateTransactionManager;
-import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
-import org.springframework.transaction.PlatformTransactionManager;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
@@ -38,7 +23,6 @@ import lombok.extern.slf4j.Slf4j;
 @PropertySource("classpath:application.properties") 
 @Slf4j
 public class UserWebConfig {
-	
 	@Value("${google.clientId}")
 	private String goo_clientId;
 
@@ -65,7 +49,7 @@ public class UserWebConfig {
 
 	@Value("${kakao.redirectUri}")
 	private String kak_redirectUri;
-
+	
 	@Bean
 	public InternalResourceViewResolver internalResourceViewResolver() {
 		InternalResourceViewResolver resolver = new InternalResourceViewResolver();
@@ -73,7 +57,7 @@ public class UserWebConfig {
 		resolver.setSuffix(".jsp");
 		return resolver;
 	}
-
+	
 	@Bean
 	public OAuth20Service googleAuthService() {
 		ServiceBuilder builder = new ServiceBuilder(goo_clientId);
@@ -92,7 +76,7 @@ public class UserWebConfig {
 		return builder.build(NaverApi20.instance());
 	}
 	@Bean
-	public OAuth20Service kakaoAuthService() {
+	public OAuth20Service kakaoAuthService() { // kakao 안됨 
 		ServiceBuilder builder = new ServiceBuilder(kak_clientId);
 		builder.apiSecret(kak_clientSecret);
 		builder.defaultScope("profile_nickname profile_image");

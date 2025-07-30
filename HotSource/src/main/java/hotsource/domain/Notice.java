@@ -1,23 +1,21 @@
 package hotsource.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import java.sql.Timestamp;
+import java.util.List;
 
 import lombok.Data;
 
 @Data
-@Entity
-@Table(name="notice")
 public class Notice {
-	// 컬럼 바꿔야함
-
-	@Id
-	private int notice_id;
+	private long notice_id;
 	private String title;
 	private String content;
-	private String create_date;
+	private Timestamp create_date;
 	private String notice_img_url;
 	
-	// private Seller seller;
+	private Seller seller; //1:1 관계 (mybatis 에서 association 으로 매핑)
+
+    // 하나의 공지는 여러 댓글을 보유할 수 있다  1:多 관계 (mybatis 에서 collection 수집)
+    private List<NoticeComment> commentList;
+    private List<NoticeLike> likeList;
 }

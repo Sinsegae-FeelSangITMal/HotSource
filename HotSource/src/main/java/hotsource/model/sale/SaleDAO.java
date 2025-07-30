@@ -1,0 +1,11 @@
+package hotsource.model.sale;
+
+import java.util.List;
+
+import hotsource.domain.Sale;
+
+public interface SaleDAO {
+	public List selectAll();
+	public Sale select(long sale_id);
+	public Sale selectByAssetId(long asset_id);
+}
