@@ -63,6 +63,7 @@
 	  <% if (result_re) {%> 
 		<%@ include file="search_resource_all.jsp" %>
       <%} %>
+      <%@ include file="search_resource_all.jsp" %>
       <!-- 목록 출력 끝 -->
     </section>
     <!-- 검색 결과 섹션 끝 -->
