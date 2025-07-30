@@ -77,14 +77,16 @@
 				</div>
 				<div class="col-md-4">
 					<p class="text-muted">Works</p>
-					<p class="fw-bold mb-0 fs-5">## 작업수 ##</p>
+					<p class="fw-bold mb-0 fs-5"><%= request.getAttribute("assetCount") %></p>
 				</div>
 				<div class="col-md-4">
 					<p class="text-muted">Reviews</p>
 					<!-- 별점 -->
-					<!-- <p class="fw-bold mb-0 fs-5"> ##리뷰⭐⭐⭐⭐⭐</p> -->
 					<div class="seller-rating">
-					    <span class="seller-rating-result"></span> 
+					    <span class="seller-rating-result"></span>
+					    <p class="fw-bold mb-0 fs-5">
+					    	<%= request.getAttribute("assetRate") != null ? request.getAttribute("assetRate") : "0.0" %>
+					    </p>
 					    <i class="seller-rating-star far fa-star"></i>
 					    <i class="seller-rating-star far fa-star"></i>
 					    <i class="seller-rating-star far fa-star"></i>

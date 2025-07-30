@@ -26,6 +26,11 @@ public class AssetServiceImpl implements AssetService {
 	public List selectBySellerId(int seller_id) {
 		return assetDAO.selectBySellerId(seller_id);
 	}
+	
+	@Override
+	public int selectCount(int seller_id) {
+		return assetDAO.selectCount(seller_id);
+	}
 
 	@Override
 	public void regist(Asset asset) {
@@ -41,4 +46,5 @@ public class AssetServiceImpl implements AssetService {
 	public void delete(int asset_id) {
 		
 	}
+
 }

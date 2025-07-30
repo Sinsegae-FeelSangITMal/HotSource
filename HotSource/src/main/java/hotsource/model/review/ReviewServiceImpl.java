@@ -37,4 +37,9 @@ public class ReviewServiceImpl implements ReviewService {
 	public Review selectByOrderedAssetId(int order_asset_id) {
 		return reviewDAO.selectByOrderedAssetId(order_asset_id);
 	}
+
+//	@Override
+//	public double selectAvgRate(int seller_id) {
+//		return reviewDAO.selectAvgRate(seller_id);
+//	}
 }

@@ -1,7 +1,8 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
-
 <%
-	int limit = request.getAttribute("assetCount");
+    // assetCount를 int로 안전하게 변환
+    Integer assetCount = (Integer) request.getAttribute("assetCount");
+    int limit = (assetCount != null) ? assetCount : 0;
 %>
 
 <div class="product-grid">
@@ -20,7 +21,7 @@
       <a href=""><img src="/static/images/test1.gif" alt="썸네일" /></a>
     </div>
     <div class="product-meta mini">
-      <a href=""><h6 class="author">작가 이름</h6></a>
+      <a href=""><h6 class="author">작가 이름<%= request.getAttribute("assetCount") %></h6></a>
       <a href=""><h6 class="title">새로 나온 리소스</h6></a>
       <h6 class="review"><span class="star">★</span> 4.5 (13)</h6>
       <% if (false) %><span class="price free">FREE</span>

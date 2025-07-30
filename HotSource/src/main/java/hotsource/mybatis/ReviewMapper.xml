@@ -6,14 +6,15 @@
 		review_id, rate, comment, create_date, update_date, user_id, asset_id, order_asset_id
 	</sql>
 	
-	<resultMap			type="Review"					id="joinMap">
-		<id 					column="review_id"			property="review_id"/>
-		<result				column="rate"					property="rate"/>
-		<result				column="comment"			property="comment"/>
-		<result				column="create_date"		property="create_date"/>
-		<result				column="update_date"		property="update_date"/>
-		<association	column="user_id"				property="user"					javaType="User"					select="User.select"/>
-		<association	column="asset_id"				property="asset"				javaType="Asset"				select="Asset.select"/>
+	<resultMap			type="Review"			id="joinMap">
+		<id 			column="review_id"		property="review_id"/>
+		<result			column="rate"			property="rate"/>
+		<result			column="comment"		property="comment"/>
+		<result			column="create_date"	property="create_date"/>
+		<result			column="update_date"	property="update_date"/>
+		
+		<association	column="user_id"		property="user"			javaType="User"			select="User.select"/>
+		<association	column="asset_id"		property="asset"		javaType="Asset"		select="Asset.select"/>
 		<association	column="order_asset_id"	property="orderedAsset"	javaType="OrderedAsset"	select="OrderedAsset.select"/>
 	</resultMap>
 	
@@ -37,4 +38,13 @@
 		SELECT <include refid="columns"/> FROM review WHERE order_asset_id=#{order_asset_id}
 	</select>
 	
+	<!-- 
+	<select id="selectAvgRate" parameterType="int" resultType="double">
+		select 	AVG(rate)
+		from 	review r
+			   ,asset  a
+		where 	r.asset_id = a.asset_id
+		and 	a.seller_id = #{seller_id}
+	</select>
+	 -->
 </mapper>

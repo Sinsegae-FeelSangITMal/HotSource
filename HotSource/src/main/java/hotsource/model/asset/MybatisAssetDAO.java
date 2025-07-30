@@ -29,6 +29,11 @@ public class MybatisAssetDAO implements AssetDAO{
 	}
 
 	@Override
+	public int selectCount(int seller_id) {
+		return sqlSessionTemplate.selectOne("Asset.selectCount", seller_id);
+	}
+	
+	@Override
 	public void regist(Asset asset) {
 		
 	}
@@ -42,5 +47,6 @@ public class MybatisAssetDAO implements AssetDAO{
 	public void delete(int asset_id) {
 		
 	}
+
 
 }

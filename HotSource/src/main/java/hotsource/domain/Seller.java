@@ -24,6 +24,7 @@ public class Seller {
 	private User user;
 	
 	private List<Asset> assetList;
+	private List<Review> reviewList;
 	private List<OrderedAsset> orderAssetList;
 	private List<Notice> noticeList;
 	private List<Subscribe> subscribeList;
