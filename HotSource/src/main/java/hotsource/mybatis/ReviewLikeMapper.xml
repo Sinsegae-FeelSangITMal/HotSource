@@ -12,7 +12,7 @@
 		<association	column="review_id"			property="review"		javaType="Review"		select="Review.select"/>
 	</resultMap>
 	
-	<select id="selectByReviewId" resultMap="joinMap" parameterType="int">
+	<select id="selectByReviewId" resultMap="joinMap" parameterType="long">
 		SELECT <include refid="columns"/> FROM review_like WHERE review_id=#{review_id}
 	</select>
 	

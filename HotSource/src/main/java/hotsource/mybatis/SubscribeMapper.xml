@@ -20,15 +20,15 @@
 		SELECT <include refid="columns"/> FROM subscribe
 	</select>
 	
-	<select id="selectByUserId" resultMap="joinMap" parameterType="int">
+	<select id="selectByUserId" resultMap="joinMap" parameterType="long">
 		SELECT <include refid="columns"/> FROM subscribe WHERE user_id=#{user_id}
 	</select>
 	
-	<select id="selectBySellerId" resultMap="joinMap" parameterType="int">
+	<select id="selectBySellerId" resultMap="joinMap" parameterType="long">
 		SELECT <include refid="columns"/> FROM subscribe WHERE seller_id=#{seller_id}
 	</select>
 	
-	<select id="selectSubCount" resultType="int" parameterType="int">
+	<select id="selectSubCount" resultType="int" parameterType="long">
 		SELECT count(user_id) FROM subscribe WHERE seller_id=#{seller_id}
 	</select>
 	

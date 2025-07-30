@@ -19,7 +19,7 @@
 	    </association>
 	</resultMap>
 	
-	<select id="select" parameterType="int" resultMap="noticeLikeResultMap">
+	<select id="select" parameterType="long" resultMap="noticeLikeResultMap">
 		
 		<!-- 방법 2) resultMap 사용하기 -->
 		select <include refid="columns"/> from notice_like where notice_like_id=#{notice_like_id}

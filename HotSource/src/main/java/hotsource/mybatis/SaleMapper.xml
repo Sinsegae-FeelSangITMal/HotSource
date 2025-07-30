@@ -20,11 +20,11 @@
 		SELECT <include refid="columns"/> FROM sale
 	</select>
 	
-	<select id="select" resultMap="joinMap" parameterType="int">
+	<select id="select" resultMap="joinMap" parameterType="long">
 		SELECT <include refid="columns"/> FROM sale WHERE sale_id=#{sale_id}
 	</select>
 	
-	<select id="selectByAssetId" resultMap="joinMap" parameterType="int">
+	<select id="selectByAssetId" resultMap="joinMap" parameterType="long">
 		SELECT <include refid="columns"/> FROM sale WHERE asset_id=#{asset_id}
 	</select>
 	

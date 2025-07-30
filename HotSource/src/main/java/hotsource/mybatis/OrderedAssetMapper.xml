@@ -22,11 +22,11 @@
 		SELECT <include refid="columns"/> FROM ordered_asset
 	</select>
 	
-	<select id="select" resultMap="joinOrderAssetMap" parameterType="int">
+	<select id="select" resultMap="joinOrderAssetMap" parameterType="long">
 		SELECT <include refid="columns"/> FROM ordered_asset WHERE order_asset_id=#{order_asset_id}
 	</select>
 	
-	<select id="selectByOrderId" resultMap="joinOrderAssetMap" parameterType="int">
+	<select id="selectByOrderId" resultMap="joinOrderAssetMap" parameterType="long">
 		SELECT <include refid="columns"/> FROM ordered_asset WHERE order_id=#{order_id}
 	</select>
 	

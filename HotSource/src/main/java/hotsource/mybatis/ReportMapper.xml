@@ -25,12 +25,12 @@
 		SELECT <include refid="columns"/> FROM report
 	</select>
 	
-	<select id="select" resultMap="joinMap" parameterType="int">
+	<select id="select" resultMap="joinMap" parameterType="long">
 		SELECT <include refid="columns"/> FROM report WHERE report_id=#{report_id}
 	</select>
 	
 	
-	<select id="selectBySellerId" resultMap="joinMap" parameterType="int">
+	<select id="selectBySellerId" resultMap="joinMap" parameterType="long">
 		SELECT <include refid="columns"/> FROM report WHERE seller_id=#{target_id}
 	</select>
 	 -->

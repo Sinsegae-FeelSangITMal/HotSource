@@ -44,7 +44,7 @@
     </select>
     
     <!-- 에셋 개수 조회 -->
-    <select id="selectCount" parameterType="int" resultType="int">
+    <select id="selectCount" parameterType="long" resultType="int">
     	SELECT count(asset_id) FROM asset WHERE seller_id=#{seller_id}
     </select>
     

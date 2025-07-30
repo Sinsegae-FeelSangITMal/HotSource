@@ -18,11 +18,11 @@
 		SELECT <include refid="columns"/> FROM wishlist
 	</select>
 	
-	<select id="select" resultMap="joinMap" parameterType="int">
+	<select id="select" resultMap="joinMap" parameterType="long">
 		SELECT <include refid="columns"/> FROM wishlist WHERE wishlist_id=#{wishlist_id}
 	</select>
 	
-	<select id="selectByUserId" resultMap="joinMap" parameterType="int">
+	<select id="selectByUserId" resultMap="joinMap" parameterType="long">
 		SELECT <include refid="columns"/> FROM wishlist WHERE user_id=#{user_id}
 	</select>
 	

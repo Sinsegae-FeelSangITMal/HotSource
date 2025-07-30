@@ -17,11 +17,11 @@
 		SELECT <include refid="columns"/> FROM cart
 	</select>
 	
-	<select id="select" resultMap="joinMap" parameterType="int">
+	<select id="select" resultMap="joinMap" parameterType="long">
 		SELECT <include refid="columns"/> FROM cart WHERE cart_id=#{cart_id}
 	</select>
 	
-	<select id="selectByUserId" resultMap="joinMap" parameterType="int">
+	<select id="selectByUserId" resultMap="joinMap" parameterType="long">
 		SELECT <include refid="columns"/> FROM cart WHERE user_id=#{user_id}
 	</select>
 	

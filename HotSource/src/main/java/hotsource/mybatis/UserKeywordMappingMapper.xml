@@ -11,7 +11,7 @@
 		<association	column="user_id"		property="user"			javaType="User"		select="User.select"/>
 	</resultMap>
 	
-	<select id="selectByUserId" resultMap="joinMap" parameterType="int">
+	<select id="selectByUserId" resultMap="joinMap" parameterType="long">
 		SELECT <include refid="columns"/> FROM user_keyword_mapping WHERE user_id=#{user_id}
 	</select>
 	

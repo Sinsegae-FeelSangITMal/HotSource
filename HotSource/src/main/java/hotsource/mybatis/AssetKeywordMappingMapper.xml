@@ -11,7 +11,7 @@
 		<association	column="asset_id"		property="asset"			javaType="Asset"		select="Asset.select"/>
 	</resultMap>
 	
-	<select id="selectByAssetId" resultMap="joinMap" parameterType="int">
+	<select id="selectByAssetId" resultMap="joinMap" parameterType="long">
 		SELECT <include refid="columns"/> FROM asset_keyword_mapping WHERE asset_id=#{asset_id}
 	</select>
 	

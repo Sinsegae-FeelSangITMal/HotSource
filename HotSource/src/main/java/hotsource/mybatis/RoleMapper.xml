@@ -6,7 +6,7 @@
 		SELECT * FROM role
 	</select>
 	
-	<select id="select" resultType="Role" parameterType="int">
+	<select id="select" resultType="Role" parameterType="long">
 		SELECT * FROM role WHERE role_id=#{role_id}
 	</select>
 	

@@ -17,7 +17,7 @@
 		SELECT <include refid="columns"/> FROM wishlist_item
 	</select>
 	
-	<select id="selectByWishlistId" resultMap="joinMap" parameterType="int">
+	<select id="selectByWishlistId" resultMap="joinMap" parameterType="long">
 		SELECT <include refid="columns"/> FROM wishlist_item WHERE wishlist_id=#{wishlist_id}
 	</select>
 	

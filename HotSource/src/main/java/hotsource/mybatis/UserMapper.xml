@@ -30,11 +30,11 @@
 		SELECT <include refid="columns"/> FROM user
 	</select>
 	
-	<select id="select" resultMap="roleMap" parameterType="int">
+	<select id="select" resultMap="roleMap" parameterType="long">
 		SELECT <include refid="columns"/> FROM user WHERE user_id=#{user_id}
 	</select>
 	
-	<select id="selectByRoleId" resultMap="roleMap" parameterType="int">
+	<select id="selectByRoleId" resultMap="roleMap" parameterType="long">
 		SELECT <include refid="columns"/> FROM user WHERE role_id=#{role_id}
 	</select>
 

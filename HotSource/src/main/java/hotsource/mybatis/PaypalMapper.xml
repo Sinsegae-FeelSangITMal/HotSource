@@ -19,11 +19,11 @@
 		SELECT <include refid="columns"/> FROM paypal
 	</select>
 	
-	<select id="select" resultMap="joinMap" parameterType="int">
+	<select id="select" resultMap="joinMap" parameterType="long">
 		SELECT <include refid="columns"/> FROM paypal WHERE paypal_id=#{paypal_id}
 	</select>
 	
-	<select id="selectBySellerId" resultMap="joinMap" parameterType="int">
+	<select id="selectBySellerId" resultMap="joinMap" parameterType="long">
 		SELECT <include refid="columns"/> FROM paypal WHERE seller_id=#{seller_id}
 	</select>
 	

@@ -22,24 +22,24 @@
 		SELECT <include refid="columns"/> FROM review
 	</select>
 	
-	<select id="select" resultMap="joinMap" parameterType="int">
+	<select id="select" resultMap="joinMap" parameterType="long">
 		SELECT <include refid="columns"/> FROM review WHERE review_id=#{review_id}
 	</select>
 	
-	<select id="selectByUserId" resultMap="joinMap" parameterType="int">
+	<select id="selectByUserId" resultMap="joinMap" parameterType="long">
 		SELECT <include refid="columns"/> FROM review WHERE user_id=#{user_id}
 	</select>
 	
-	<select id="selectByAssetId" resultMap="joinMap" parameterType="int">
+	<select id="selectByAssetId" resultMap="joinMap" parameterType="long">
 		SELECT <include refid="columns"/> FROM review WHERE asset_id=#{asset_id}
 	</select>
 	
-	<select id="selectByOrderedAssetId" resultMap="joinMap" parameterType="int">
+	<select id="selectByOrderedAssetId" resultMap="joinMap" parameterType="long">
 		SELECT <include refid="columns"/> FROM review WHERE order_asset_id=#{order_asset_id}
 	</select>
 	
 	<!-- 
-	<select id="selectAvgRate" parameterType="int" resultType="double">
+	<select id="selectAvgRate" parameterType="long" resultType="double">
 		select 	AVG(rate)
 		from 	review r
 			   ,asset  a

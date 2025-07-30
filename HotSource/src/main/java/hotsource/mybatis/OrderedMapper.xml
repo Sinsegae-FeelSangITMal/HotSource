@@ -20,11 +20,11 @@
 		SELECT <include refid="columns"/> FROM ordered
 	</select>
 	
-	<select id="select" resultMap="joinOrderMap" parameterType="int">
+	<select id="select" resultMap="joinOrderMap" parameterType="long">
 		SELECT <include refid="columns"/> FROM ordered WHERE order_id=#{order_id}
 	</select>
 	
-	<select id="selectByUserId" resultMap="joinOrderMap" parameterType="int">
+	<select id="selectByUserId" resultMap="joinOrderMap" parameterType="long">
 		SELECT <include refid="columns"/> FROM ordered WHERE user_id=#{user_id}
 	</select>
 	

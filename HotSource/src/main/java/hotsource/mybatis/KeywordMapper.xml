@@ -10,7 +10,7 @@
 		SELECT <include refid="columns"/> FROM keyword
 	</select>
 	
-	<select id="select" resultType="Keyword" parameterType="int">
+	<select id="select" resultType="Keyword" parameterType="long">
 		SELECT <include refid="columns"/> FROM keyword WHERE keyword_id=#{keyword_id}
 	</select>
 	
