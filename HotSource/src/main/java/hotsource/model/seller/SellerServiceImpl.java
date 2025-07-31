@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import hotsource.domain.Seller;
+import hotsource.exception.SellerException;
 
 @Service
 public class SellerServiceImpl implements SellerService {
@@ -26,5 +27,10 @@ public class SellerServiceImpl implements SellerService {
 	@Override
 	public Seller selectByUserId(long user_id) {
 		return sellerDAO.selectByUserId(user_id);
+	}
+
+	@Override
+	public void regist(Seller seller) throws SellerException {
+		sellerDAO.insert(seller);
 	}
 }
