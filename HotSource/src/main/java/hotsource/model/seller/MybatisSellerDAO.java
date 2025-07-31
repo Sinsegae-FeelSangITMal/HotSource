@@ -21,8 +21,8 @@ public class MybatisSellerDAO implements SellerDAO {
 	}
 
 	@Override
-	public Seller select(long seller_id) {
-		return sqlSessionTemplate.selectOne("Seller.select", seller_id);
+	public Seller selectBySellerId(long seller_id) {
+		return sqlSessionTemplate.selectOne("Seller.selectBySellerId", seller_id);
 	}
 
 	@Override

@@ -22,7 +22,9 @@ import com.github.scribejava.core.oauth.OAuth20Service;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import hotsource.domain.Seller;
 import hotsource.domain.User;
+import hotsource.model.seller.SellerService;
 import hotsource.model.snsprovider.SnsProviderService;
 import hotsource.model.user.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -45,6 +47,9 @@ public class UserController {
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private SellerService sellerService;
 	
 	@Autowired
 	private SnsProviderService snsProviderService;
@@ -74,10 +79,22 @@ public class UserController {
 	
 	@PostMapping("/login")
 	public String homeLogin(User user, HttpSession session) {
-		User obj = userService.login(user);
-		session.setAttribute("user", obj);
-		
-		return "redirect:/main/index";
+	    User obj = userService.login(user); // 로그인 인증
+
+	    if (obj != null) {
+	        session.setAttribute("user", obj);
+
+	        // Seller 정보를 조회해서 세션에 담기
+	        Seller seller = sellerService.selectByUserId(obj.getUser_id());
+	        if (seller != null) {
+	            session.setAttribute("seller", seller);
+	        }
+
+	        return "redirect:/main/index";
+	    }
+
+	    // 로그인 실패 시 처리
+	    return "redirect:/login?error=true";
 	}
 //
 //	

@@ -10,7 +10,7 @@ public interface AssetDAO {
 	public int selectCount(long seller_id);
 	public List selectBySellerId(long seller_id);
 	
-	public void regist(Asset asset);
+	public void insert(Asset asset);
 	public void update(Asset asset);
 	public void delete(long asset_id);
 }

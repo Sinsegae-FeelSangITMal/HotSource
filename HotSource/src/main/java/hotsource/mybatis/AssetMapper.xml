@@ -54,7 +54,7 @@
 	</select>
 
     <!-- 등록 -->
-    <insert id="regist" parameterType="Asset">
+    <insert id="insert" parameterType="Asset">
         INSERT INTO asset (
             subcategory_id, seller_id, title, price, summary, description, youtube_url
         ) VALUES (

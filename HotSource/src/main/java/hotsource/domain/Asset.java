@@ -3,6 +3,8 @@ package hotsource.domain;
 import java.sql.Timestamp;
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import lombok.Data;
 
 @Data
@@ -18,6 +20,7 @@ public class Asset {
 	
     private Seller seller;
     private SubCategory subCategory;
+    private MultipartFile[] photo;
        
 	private List<Review> reviewList;
 	private List<AssetKeywordMapping> keywordList;

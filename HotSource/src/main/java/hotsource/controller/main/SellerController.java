@@ -71,7 +71,7 @@ public class SellerController {
 		ModelAndView mav = new ModelAndView("main/seller/detail");
 		
 		//3단계
-		Seller seller = sellerSerive.select(seller_id);
+		Seller seller = sellerSerive.selectBySellerId(seller_id);
 		Notice notice = noticeService.select(notice_id);
 		NoticeComment noticeComment = noticeCommentService.select(notice_comment_id);
 		NoticeLike noticeLike = noticeLikeService.select(notice_like_id);

@@ -8,7 +8,7 @@
   </a>
   <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
     <li><a href="/main/mypage" class="dropdown-item">My Page</a></li>
-    <li><a href="/seller/dashboard/createProject" class="dropdown-item">Dashboard</a></li>
+    <li><a href="/seller/dashboard/assetList" class="dropdown-item">Dashboard</a></li>
     <li><a href="/user/logout" class="dropdown-item">Log-out</a></li>
   </div>
 <% } %>

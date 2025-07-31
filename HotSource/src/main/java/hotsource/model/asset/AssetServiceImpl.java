@@ -4,14 +4,19 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import hotsource.domain.Asset;
+import hotsource.util.FileManager;
 
 @Service
 public class AssetServiceImpl implements AssetService {
 	
 	@Autowired
 	private AssetDAO assetDAO;
+	
+	@Autowired
+	private FileManager fileManager;
 	
 	@Override
 	public List selectAll() {
@@ -33,8 +38,9 @@ public class AssetServiceImpl implements AssetService {
 	}
 
 	@Override
-	public void regist(Asset asset) {
-		
+	@Transactional
+	public void regist(Asset asset, String savePath) {
+		assetDAO.insert(asset);
 	}
 
 	@Override

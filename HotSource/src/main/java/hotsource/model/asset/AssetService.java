@@ -10,7 +10,7 @@ public interface AssetService {
 	public List selectBySellerId(long seller_id);
 	public int selectCount(long seller_id);
 	
-	public void regist(Asset asset);
+	public void regist(Asset asset, String savePath);
 	public void update(Asset asset);
 	public void delete(long asset_id);
 }

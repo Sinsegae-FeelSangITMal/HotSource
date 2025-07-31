@@ -1,5 +1,6 @@
 package hotsource.controller.seller;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import hotsource.domain.Seller;
 import hotsource.domain.User;
+import hotsource.exception.SellerException;
 import hotsource.model.seller.SellerService;
 import lombok.extern.slf4j.Slf4j;
 
@@ -30,8 +32,7 @@ public class DashboardSellerController {
 	@PostMapping("/sellerCreate")
 	public ModelAndView sellerCreate(
 	    Seller seller,
-//	    @RequestParam("profile_img_url") MultipartFile file,
-	    HttpSession session) {
+	    HttpSession session, HttpServletRequest request) {
 
 	    ModelAndView mav = new ModelAndView();
 
@@ -43,8 +44,17 @@ public class DashboardSellerController {
 	        // 세션 사용자 연동
 	        User user = (User) session.getAttribute("user");
 	        seller.setUser(user);
-
-	        sellerService.regist(seller);
+	        
+	        String savePath = request.getServletContext().getRealPath("/seller");
+	        
+	        try {
+	        	sellerService.regist(seller, savePath);
+	        } catch(SellerException e) {
+	        	// sellerService.remove(seller, savePath);
+	        	e.printStackTrace();
+	        }
+	        session.setAttribute("seller", seller);
+	        
 	        mav.setViewName("redirect:/seller/dashboard/createProject");
 
 	    } catch(Exception e) {

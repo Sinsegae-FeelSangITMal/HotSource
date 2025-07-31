@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import hotsource.domain.Asset;
+import hotsource.exception.AssetException;
 
 @Repository
 public class MybatisAssetDAO implements AssetDAO{
@@ -34,8 +35,11 @@ public class MybatisAssetDAO implements AssetDAO{
 	}
 	
 	@Override
-	public void regist(Asset asset) {
-		
+	public void insert(Asset asset) throws AssetException{
+		int result = sqlSessionTemplate.insert("Asset.insert", asset);
+		if(result < 1 ) {
+			throw new AssetException("등록 실패");
+		}
 	}
 
 	@Override

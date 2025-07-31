@@ -23,8 +23,8 @@ public class Paging {
 	private int num; 					// 페이지당 시작 번호 
 	
 	// 변수를 조합하여 계산 로직을 작성
-	public void init(int test, List list, HttpServletRequest request) {
-		totalRecord = test;	
+	public void init(List list, HttpServletRequest request) {
+		totalRecord = list.size();	
 		totalPage = (int) Math.ceil((float) totalRecord / pageSize) ;
 		if (request.getParameter("currentPage") != null)		// 페이지가 넘어올 때만
 			currentPage= Integer.parseInt(request.getParameter("currentPage"));

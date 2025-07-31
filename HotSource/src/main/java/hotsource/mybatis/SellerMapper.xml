@@ -30,18 +30,22 @@
 		select <include refid="columns"/> from seller
 	</select>
 	
-	<select id="select" parameterType="long" resultMap="joinMap">
+	<select id="selectBySellerId" parameterType="long" resultMap="joinMap">
+		select <include refid="columns"/> from seller where seller_id = #{seller_id}
+	</select>
+	
+	<select id="selectByUserId" parameterType="long" resultMap="joinMap">
 		select <include refid="columns"/> from seller where user_id = #{user_id}
 	</select>
 	
 		<!-- #{user.user_id}, profile_img_url이거로 변경해야 -->
 	<insert id="insert" parameterType="Seller">
 		insert into seller (
-			user_id, seller_name, seller_nickname, seller_bio, seller_insta_url, seller_email,
+			user_id, seller_name, seller_nickname, seller_bio, seller_insta_url, seller_email, profile_img_url,
 			bank_name, account_number, is_active
 		)
 		values (
-			1, #{seller_name}, #{seller_nickname}, #{seller_bio}, #{seller_insta_url}, #{seller_email},
+			#{user.user_id}, #{seller_name}, #{seller_nickname}, #{seller_bio}, #{seller_insta_url}, #{seller_email}, #{profile_img_url},
 			#{bank_name}, #{account_number}, true
 		)
 	</insert>
