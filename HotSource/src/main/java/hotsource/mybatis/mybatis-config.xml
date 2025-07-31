@@ -51,9 +51,7 @@
 		<mapper resource="hotsource/mybatis/AssetListMapper.xml" />
 		<mapper resource="hotsource/mybatis/AssetMapper.xml" />
 		<mapper resource="hotsource/mybatis/AssetViewMapper.xml" />
-		
-		<!-- <mapper resource="hotsource/mybatis/CartMapper.xml" /> -->
-		
+		<mapper resource="hotsource/mybatis/CartMapper.xml" />
 		<mapper resource="hotsource/mybatis/KeywordMapper.xml" />
 		<mapper resource="hotsource/mybatis/NoticeCommentMapper.xml" />
 		<mapper resource="hotsource/mybatis/NoticeLikeMapper.xml" />

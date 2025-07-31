@@ -5,7 +5,7 @@
 <mapper namespace="Asset">
 
     <sql id="columns">
-        asset_id, subcategory_id, seller_id, title, price, summary,
+        asset_id, subcategory_id, seller_id, title, price, summary, 
         description, youtube_url, create_date, view_count
     </sql>
 
@@ -19,15 +19,15 @@
         <result property="youtube_url" column="youtube_url"/>
         <result property="create_date" column="create_date"/>
         <result property="view_count" column="view_count"/>
-
+ 
         <!-- 외래키는 객체 대신 ID만 담김 -->
-        <association property="seller" javaType="Seller">
-            <id property="seller_id" column="seller_id"/>
-        </association>
-
+        <association column="seller_id" property="seller" javaType="Seller" select="Seller.select"/>
+           
         <association property="subCategory" javaType="SubCategory">
             <id property="subcategory_id" column="subcategory_id"/>
         </association>
+        
+        <association column="sale_id" property="sale" javaType="Sale" select="Sale.selectValidByAssetId"></association>
         
         <collection property="reviewList" column="asset_id" javaType="java.util.List" ofType="Review" select="Review.selectByAssetId"/>
     </resultMap>
@@ -52,6 +52,7 @@
     <select id="selectBySellerId" parameterType="long" resultMap="AssetResultMap">
 		SELECT <include refid="columns"/> FROM asset WHERE seller_id = #{seller_id}
 	</select>
+
 
     <!-- 등록 -->
     <insert id="regist" parameterType="Asset">

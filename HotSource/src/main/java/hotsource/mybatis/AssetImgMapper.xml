@@ -33,6 +33,14 @@
         FROM asset_img
         WHERE asset_img_id = #{asset_img_id}
     </select>
+    
+    <!-- 썸네일 조회 -->
+    <select id="selectThumbnailByAssetId" parameterType="long" resultType="AssetImg">
+    	select <include refid="columns"/> 
+    	from asset_img 
+    	where asset_id = #{asset_id} 
+    	and is_thumb = true;
+    </select>
 
     <!-- 3. 등록 -->
     <insert id="insert" parameterType="AssetImg">
