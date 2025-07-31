@@ -3,6 +3,31 @@ function countChecked(){
 	let count = $(".cart-check:checked").length;
 	$("#selectedCount").text(count);
 }
+
+function calculateTotals(){
+	let total = 0;
+	let subtotal = 0;
+	
+	$(".cart-check:checked").each(function(){
+		//$ Jquery 객체임을 표시 (jquery 객체는 js dom api와 jquery 특화 메서드를 모두 사용 가능 )
+		$row = $(this).closest("tr");
+		
+		//정가 
+		origin = parseInt($row.find(".original-price").text().replace(/[$,]/g, "").trim());
+		subtotal += origin;
+		
+		//할인 적용된 최종 가격 
+		total += (
+				$row.find(".sale-price").is(":visible") 
+				? parseInt($row.find(".sale-price").text().replace(/[$,]/g, "").trim())
+				: origin
+			);
+	});
+	
+	 $(".cart__total__procced li:contains('Subtotal') span").text(subtotal);
+	 $(".cart__total__procced li:contains('Total') span").text(total);
+}
+
 function removeFromCart(bt){
 	const cartId = $(bt).closest(".cart-item-wrapper").find(".cart-id").val();
 	console.log(cartId);
@@ -51,6 +76,9 @@ function removeSelectedFromCart(){
 }
 
 $(()=>{
+	
+	calculateTotals();
+
 	//전체 체크박스 클릭시 전체 선택/해제  
 	$(".cart-header-check").change(function(){
 		const isChecked = $(this).is(":checked");
@@ -66,6 +94,7 @@ $(()=>{
 		// 개별 체크박스가 변경될 때 → 전체 선택 상태도 맞춰주기
 		$(".cart-header-check").prop("checked", total === checked);
 		countChecked();
+		calculateTotals();
 	});
 	
 	//한 건 삭제 이벤트
@@ -84,3 +113,6 @@ $(()=>{
 	});
 	
 });
+
+
+
