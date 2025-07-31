@@ -27,7 +27,7 @@ public class SubscribeServiceImpl implements SubscribeService {
 	}
 
 	@Override
-	public int selectSubCount(int seller_id) {
+	public int selectSubCount(long seller_id) {
 		return subscribeDAO.selectSubCount(seller_id);
 	}
 }

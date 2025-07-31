@@ -67,7 +67,7 @@ public class SellerController {
 	//상세요청 처리 
 	@GetMapping("/seller/detail")
 	@ResponseBody
-	public ModelAndView getDetail(int seller_id, int notice_id, int notice_comment_id, int notice_like_id, Model model) {
+	public ModelAndView getDetail(long seller_id, long notice_id, long notice_comment_id, long notice_like_id, Model model) {
 		ModelAndView mav = new ModelAndView("main/seller/detail");
 		
 		//3단계

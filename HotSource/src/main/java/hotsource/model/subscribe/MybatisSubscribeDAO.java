@@ -28,7 +28,7 @@ public class MybatisSubscribeDAO implements SubscribeDAO {
 	}
 
 	@Override
-	public int selectSubCount(int seller_id) {
+	public int selectSubCount(long seller_id) {
 		return sqlSessionTemplate.selectOne("Subscribe.selectSubCount", seller_id);
 	}
 }
