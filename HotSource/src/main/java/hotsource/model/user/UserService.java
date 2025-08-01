@@ -5,7 +5,7 @@ import java.util.List;
 import hotsource.domain.User;
 
 public interface UserService {
-
+	
 	public User selectById(String id);
 	public List selectAll();
 	public User select(long user_id);

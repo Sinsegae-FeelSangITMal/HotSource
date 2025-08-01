@@ -34,6 +34,11 @@ public class UserServiceImpl implements UserService{
 			
 			user.setSalt(salt);
 			user.setPassword(hashedPassword);
+		} else {
+			// OAuth 로그인 → 가짜 비밀번호 및 salt 생성
+			String salt = passwordUtil.generateSalt();
+			user.setSalt("Oauth");
+			user.setPassword("Oauth");
 		}
 		
 		userDAO.insert(user);

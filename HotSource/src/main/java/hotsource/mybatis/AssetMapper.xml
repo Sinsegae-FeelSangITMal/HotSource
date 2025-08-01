@@ -21,7 +21,7 @@
         <result property="view_count" column="view_count"/>
  
         <!-- 외래키는 객체 대신 ID만 담김 -->
-        <association column="seller_id" property="seller" javaType="Seller" select="Seller.select"/>
+        <association column="seller_id" property="seller" javaType="Seller" select="Seller.selectBySellerId"/>
            
         <association property="subCategory" javaType="SubCategory">
             <id property="subcategory_id" column="subcategory_id"/>
@@ -55,6 +55,7 @@
 
 
     <!-- 등록 -->
+    <!-- seller_id 변경해야함 -->
     <insert id="insert" parameterType="Asset">
         INSERT INTO asset (
             subcategory_id, seller_id, title, price, summary, description, youtube_url
@@ -63,7 +64,11 @@
             #{seller.seller_id},
             #{title}, #{price}, #{summary}, #{description}, #{youtube_url}
         )
-    </insert>
+        <!-- insert 시키자 마자, 현재 세션에서 일으킨 pk의 최대값  -->
+		<selectKey keyColumn="asset_id" keyProperty="asset_id" resultType="long" order="AFTER">
+			select last_insert_id() as asset_id
+		</selectKey>
+	</insert>
 
     <!-- 수정 -->
     <update id="update" parameterType="Asset">

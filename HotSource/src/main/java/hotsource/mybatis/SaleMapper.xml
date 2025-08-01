@@ -32,5 +32,10 @@
 		AND CURDATE() BETWEEN start_date AND end_date
 	</select>
 	
+	<insert id="insert" parameterType="Sale">
+		insert into sale(asset_id, sale_value, start_date, end_date)
+		values (#{asset_id}, #{sale_value},  NOW(), DATE_ADD(NOW(), INTERVAL 1 MONTH))
+	</insert>
+	
 	
 </mapper>

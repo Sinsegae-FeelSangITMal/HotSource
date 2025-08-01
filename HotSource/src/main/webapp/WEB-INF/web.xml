@@ -23,8 +23,8 @@
 	</filter>
 	
 	<filter-mapping>
-	    <filter-name>SellerLoginCheckFilter</filter-name>
-	    <url-pattern>/seller/*</url-pattern>
+		<filter-name>SellerLoginCheckFilter</filter-name>
+		<url-pattern>/seller/*</url-pattern>
 	</filter-mapping>
 	
 	<filter>

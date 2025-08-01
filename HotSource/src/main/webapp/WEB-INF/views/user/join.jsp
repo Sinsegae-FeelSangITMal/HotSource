@@ -21,7 +21,7 @@
       <h2 class="text-3xl font-bold mb-2 text-left">Sign Up</h2>
       <p class="text-sm text-gray-400 mb-6 text-left">Create your <strong>HotSource</strong> account</p>
 
-      <form action="/user/regist" method="post" class="space-y-4">
+      <form action="/main/user/regist" method="post" class="space-y-4">
         <input type="text" name="id" placeholder="User ID"
                class="w-full bg-[#1e1f26] border border-gray-600 text-white px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-400" required>
 
@@ -43,7 +43,7 @@
 
       <div class="mt-6 text-center text-sm text-gray-400">
         Already have an account?
-        <a href="/user/login" class="text-blue-400 hover:underline">Login here</a>
+        <a href="/main/user/login" class="text-blue-400 hover:underline">Login here</a>
       </div>
     </div>
   </div>

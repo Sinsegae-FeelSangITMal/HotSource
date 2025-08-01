@@ -26,6 +26,10 @@ public class FileManager{
 		try {
 			for(int i=0; i <photo.length; i++) {
 				String ori = photo[i].getOriginalFilename();
+				if (ori == null || ori.isEmpty()) {
+				    log.warn("원본 파일명이 null이거나 비어있습니다. index={}", i);
+				    continue;
+				}
 				String ext = ori.substring(ori.lastIndexOf(".")+1, ori.length());
 				String filename = UUID.randomUUID().toString() + "." + ext;
 				log.debug("filename:"+filename);

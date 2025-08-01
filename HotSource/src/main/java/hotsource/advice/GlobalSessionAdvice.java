@@ -1,4 +1,4 @@
-package advice;
+package hotsource.advice;
 
 import javax.servlet.http.HttpSession;
 

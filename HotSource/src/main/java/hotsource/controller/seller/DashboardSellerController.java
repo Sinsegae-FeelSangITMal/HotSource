@@ -55,7 +55,7 @@ public class DashboardSellerController {
 	        }
 	        session.setAttribute("seller", seller);
 	        
-	        mav.setViewName("redirect:/seller/dashboard/createProject");
+	        mav.setViewName("redirect:/seller/dashboard/assetCreate");
 
 	    } catch(Exception e) {
 	        log.error("등록 실패", e);

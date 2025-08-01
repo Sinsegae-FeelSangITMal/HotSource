@@ -1,4 +1,4 @@
-package hotsource.controller.user;
+package hotsource.controller.main.user;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

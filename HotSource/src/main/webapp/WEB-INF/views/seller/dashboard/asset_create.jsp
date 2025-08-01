@@ -1,4 +1,8 @@
+<%@page import="hotsource.domain.Asset"%>
 <%@ page contentType="text/html; charset=UTF-8" %>
+<%
+	Asset asset = (Asset) request.getAttribute("asset");
+%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -145,7 +149,7 @@
 
   <div class="content-wrapper">
     <section class="content">
-      <form method="post" action="/asset/create" enctype="multipart/form-data">
+      <form id="form1">
         <div class="container">
 
           <!-- 왼쪽 폼 영역 -->
@@ -165,7 +169,7 @@
             
              <div class="form-section">
               <label for="subcategory">SubCategory</label>
-              <select id="subcategory" name="subcategory" class="form-control">
+              <select id="subcategory" name="subCategory.subcategory_id" class="form-control">
               </select>
             </div>
 
@@ -180,7 +184,7 @@
 
             <div class="form-section">
               <label for="sale">Sale</label>
-              <select id="sale" name="sale" class="form-control">
+              <select id="sale" name="sale.sale_value" class="form-control">
                 <option value="">Select discount</option>
                 <option value="0">No Sale</option>
                 <option value="10">10%</option>
@@ -221,22 +225,33 @@
                         placeholder="summary&#10;&#10;description&#10;&#10;#desc #desc #desc"></textarea>
             </div>
 
-            <button type="submit" class="btn-submit">Create new project</button>
+            <button type="button" class="btn-submit" id="bt_regist">Create new Asset</button>
           </div>
 
           <!-- 오른쪽 이미지 미리보기 영역 -->
           <div class="right-preview">
-            <div class="preview-box">
-              <label for="thumbnail">Thumbnail</label>
-              <input type="file" id="thumbnail" name="thumbnail" accept="image/*" />
+     	     <div class="form-section">
+              <label for="youtube_url">youtubeUrl</label>
+              <input type="text" id="youtube_url" name="youtube_url" class="form-control"
+                     placeholder="youtube_url" />
             </div>
-
-            <div class="preview-box">
-              <label for="screenshots">Screenshots</label>
-              <input type="file" id="screenshots" name="screenshots" accept="image/*" multiple />
-              <small class="form-note">Upload 3~5 images recommended</small>
-            </div>
-          </div>
+             <div class="preview-box">
+               <div class="input-group">
+               
+                 <div class="custom-file">                      
+                   <input type="file" class="custom-file-input" name="photo" id="photo" multiple="multiple">
+                   <label class="custom-file-label" for="exampleInputFile">에셋 이미지 선택 </label>
+                 </div>
+                 
+                 <div class="input-group-append">
+                   <span class="input-group-text">Upload</span>
+                 </div>
+               </div>
+               
+               <div id="preview" style="width:100%;">
+               </div>
+               
+             </div>
         </div>
       </form>
     </section>
@@ -244,6 +259,7 @@
 </div>
 
 <%@ include file="../inc/footer_link.jsp" %>
+<script src="/static/admin/custom/ProductImg.js"></script>
 <script>
 	function printCategory(obj, list){
 		let tag="<option value='0'>카테고리 선택</option>";
@@ -261,7 +277,7 @@
 	
 	function getTopCategory(){
 		$.ajax({
-			url:"asset/topcategory/list",
+			url:"/main/asset/topcategory/list",
 			type:"get",
 			success:function(result, status, xhr){ //200번대의 성공 응답 시, 이 함수 실행
 				console.log("서버로부터 받은 결과는 ", result);
@@ -273,16 +289,93 @@
 		});
 	}
 	
-	function getSubCategory(topcategory_id){
+	 function getSubCategory(topcategory_id){
 		$.ajax({
-			url :"/admin/admin/subcategory/list?topcategory_id="+topcategory_id,
+			url :"/main/asset/subcategory/list?topcategory_id="+topcategory_id,
 			type:"get",
 			success:function(result, status, xhr){
 				console.log(result);
 				printCategory("#subcategory",result);
 			}
 		});
+	} 
+	 
+	let selectedFile=[];
+	
+	function regist(){
+		//기존 폼을 이용하되, file 컴포넌트 파라미터만 새로 교체(selectedFile 배열로 대체)
+		//js에서 프로그래밍 적 form 생성 
+		let formData = new FormData(document.getElementById("form1"));
+		
+		//formData 동기/비동기 둘다 지원하지만, 대부분은 비동기방식을 많이 씀 
+		//Jquery Ajax 자체에서 formData 를 비동기방식으로 간단하게 사용할 수 있는 코드를 지원 
+		//기존 photo 버리고, 우리가 선언한 배열로 대체 
+		//formData.append("email", "zino11198@naver.com"); // <input type="text" name="email">
+		//formData는 개발자가 명시하지 않아도, 디폴트로 multipart/form-data 가 지정되어 잇음
+		
+		formData.delete("photo");//기존의 photo 파라미터 제거하기 append의 반대
+		
+		for(let i=0;i<selectedFile.length;i++){
+			formData.append("photo", selectedFile[i]); 
+		}
+		
+		//파일마저도 비동기로 업로드 가능!!!
+		$.ajax({
+			url:"/main/asset/regist",
+			type:"post",
+			data:formData,
+			processData:false, /*form 이루는 대상으로 , 문자열로 변환되는 것을 방지(바이너리 파일포함때문)*/
+			contentType:false, /*브라우저가 자동으로 content-type 을 설정하도록 하는 것 방지*/
+			success:function(result, status, xhr){
+				if(result.status === "success") {
+		            alert("업로드 성공");
+		            window.location.href = "/seller/dashboard/assetList";  // 고정 URL 이동
+		        } else {
+		            alert("업로드 실패");
+		        }
+			},
+			error:function(xhr, status, err){
+				alert(err);
+			}
+		});
 	}
+	 
+	$(()=>{
+	  	getTopCategory(); //상위 카테고리 가져오기 
+	  	
+	  	 $("#topcategory").change(function(){
+				getSubCategory($(this).val());
+		});
+	  	
+	  	 //파일 컴포넌트의 값 변경 시 이벤트 연결 
+		   $("#photo").change(function(e){
+				console.log(e);
+				//e.target.files 안에는 브라우저가 읽어들인, 파일의 정보가 배열유사 객체인 FileList에 담겨져 있다.
+				
+				let files=e.target.files;//배열 유사 객체 얻기
+				
+				//첨부된 파일 수 만큼 반복
+				for(let i=0;i<files.length;i++){
+					selectedFile[i]=files[i]; //읽기 전용에 들어있었던 각 file들을,우리만의 배열로 옮기자 
+					
+					//파일을 읽기위한 스트림 객체 생성 
+					const reader = new FileReader();
+					
+					reader.onload=function(e){ //파일을 스트림으로 읽어들인 정보가 e에 들어있음 
+						console.log("읽은 결과 ", e);		
+						
+						//개발자 정의 클래스 인스턴스 생성 container, src, width, height 
+						let productImg = new ProductImg(document.getElementById("preview"), files[i], e.target.result, 100,100);
+					}				
+					reader.readAsDataURL(files[i]); //지정한 파일을 읽기
+				}
+		   });
+	  	 
+		 //등록버튼 이벤트 연결 
+		   $("#bt_regist").click(()=>{		
+				regist();
+		   });
+	});
 
   const dropZone = document.getElementById("dropZone");
   const fileInput = document.getElementById("uploadFiles");
