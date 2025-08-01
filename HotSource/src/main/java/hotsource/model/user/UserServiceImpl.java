@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import hotsource.domain.User;
+import hotsource.exception.UserException;
 import hotsource.exception.UserNotFoundException;
 import hotsource.util.PasswordUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -20,24 +21,6 @@ public class UserServiceImpl implements UserService{
 	@Autowired
 	private PasswordUtil passwordUtil;
 	
-	@Override
-	public User selectById(String id) {
-		return userDAO.selectById(id);
-	}
-	@Override
-	public void regist(User user) {
-		
-		if(user.getSnsProvider() == null) {
-			String salt = passwordUtil.generateSalt();
-			
-			String hashedPassword = passwordUtil.hashPassword(user.getPassword(), salt);
-			
-			user.setSalt(salt);
-			user.setPassword(hashedPassword);
-		}
-		
-		userDAO.insert(user);
-	}
 	@Override
 	public User login(User user) throws UserNotFoundException{
 		
@@ -64,7 +47,32 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
+	public User selectById(String id) {
+		return userDAO.selectById(id);
+	}
+	
+	@Override
 	public List selectByRoleId(long role_id) {
 		return userDAO.selectByRoleId(role_id);
+	}
+	
+	@Override
+	public void regist(User user) {
+		
+		if(user.getSnsProvider() == null) {
+			String salt = passwordUtil.generateSalt();
+			
+			String hashedPassword = passwordUtil.hashPassword(user.getPassword(), salt);
+			
+			user.setSalt(salt);
+			user.setPassword(hashedPassword);
+		}
+		
+		userDAO.insert(user);
+	}
+	
+	@Override
+	public void update(User user) throws UserException {
+		userDAO.update(user);
 	}
 }

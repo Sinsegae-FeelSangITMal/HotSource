@@ -15,4 +15,9 @@
 		SELECT <include refid="columns"/> FROM asset_keyword_mapping WHERE asset_id=#{asset_id}
 	</select>
 	
+	<insert id="insert" parameterType="AssetKeywordMapping">
+		INSERT INTO
+		asset_keyword_mapping (asset_id, keyword_id)
+		VALUES (#{asset.asset_id}, #{keyword.keyword_id})
+	</insert>
 </mapper>

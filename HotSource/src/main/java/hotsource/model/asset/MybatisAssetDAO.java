@@ -7,13 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import hotsource.domain.Asset;
+import hotsource.exception.AssetException;
 
 @Repository
-public class MybatisAssetDAO implements AssetDAO{
+public class MybatisAssetDAO implements AssetDAO {
 
 	@Autowired
 	private SqlSessionTemplate sqlSessionTemplate;
-	
+
 	@Override
 	public List selectAll() {
 		return sqlSessionTemplate.selectList("Asset.selectAll");
@@ -23,7 +24,7 @@ public class MybatisAssetDAO implements AssetDAO{
 	public Asset select(long asset_id) {
 		return sqlSessionTemplate.selectOne("Asset.select", asset_id);
 	}
-	
+
 	public List selectBySellerId(long seller_id) {
 		return sqlSessionTemplate.selectList("Asset.selectBySellerId", seller_id);
 	}
@@ -32,21 +33,42 @@ public class MybatisAssetDAO implements AssetDAO{
 	public int selectCount(long seller_id) {
 		return sqlSessionTemplate.selectOne("Asset.selectCount", seller_id);
 	}
-	
+
 	@Override
-	public void regist(Asset asset) {
-		
+	public List selectHot(long topcategory_id) {
+		return sqlSessionTemplate.selectList("Asset.selectHot", topcategory_id);
+	}
+
+	@Override
+	public List selectNew(long topcategory_id) {
+		return sqlSessionTemplate.selectList("Asset.selectNew", topcategory_id);
+	}
+
+	@Override
+	public List selectFree(long topcategory_id) {
+		return sqlSessionTemplate.selectList("Asset.selectFree", topcategory_id);
+	}
+
+	@Override
+	public List selectSale(long topcategory_id) {
+		return sqlSessionTemplate.selectList("Asset.selectSale", topcategory_id);
+	}
+
+	@Override
+	public void insert(Asset asset) throws AssetException{
+		int result = sqlSessionTemplate.insert("Asset.insert", asset);
+		if (result < 1)
+			throw new AssetException("상품 등록 실패");
 	}
 
 	@Override
 	public void update(Asset asset) {
-		
+
 	}
 
 	@Override
 	public void delete(long asset_id) {
-		
-	}
 
+	}
 
 }

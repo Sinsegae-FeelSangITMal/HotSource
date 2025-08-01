@@ -30,7 +30,13 @@
 		select <include refid="columns"/> from seller
 	</select>
 	
-	<select id="select" resultMap="joinMap">
-		select <include refid="columns"/> from seller where user_id = #{user_id}
+	
+	
+	
+	<select id="select" resultType="Seller" parameterType="long">
+		SELECT <include refid="columns"/>
+		FROM seller
+		WHERE seller_id = #{seller_id}
 	</select>
+	
 </mapper>

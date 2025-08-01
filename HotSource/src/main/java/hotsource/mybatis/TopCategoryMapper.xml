@@ -2,8 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="TopCategory">
 	
-	<select id="selectAll" resultType="TopCategory">
-		select * from topcategory
+	<sql id="columns">
+		topcategory_id, top_name
+	</sql>
+	
+	<select id="select" resultType="TopCategory">
+		SELECT <include refid="columns"/> FROM topcategory WHERE topcategory_id = ${topcategory_id}
 	</select>
 	
 </mapper>
