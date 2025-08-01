@@ -20,6 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 import hotsource.domain.AssetImg;
 import hotsource.domain.Sale;
 import hotsource.model.asset_file.AssetFileDAO;
+import hotsource.exception.AssetException;
 import hotsource.model.asset_img.AssetImgDAO;
 import hotsource.model.sale.SaleDAO;
 import hotsource.model.sale.SaleService;
@@ -27,7 +28,7 @@ import hotsource.model.sale.SaleService;
 @Service
 @Slf4j
 public class AssetServiceImpl implements AssetService {
-	
+
 	@Autowired
 	private AssetDAO assetDAO;
 	
@@ -59,7 +60,7 @@ public class AssetServiceImpl implements AssetService {
 	public List selectBySellerId(long seller_id) {
 		return assetDAO.selectBySellerId(seller_id);
 	}
-	
+
 	@Override
 	public int selectCount(long seller_id) {
 		return assetDAO.selectCount(seller_id);
@@ -108,10 +109,32 @@ public class AssetServiceImpl implements AssetService {
 	    assetFileDAO.insert(assetFilesList);
 	}
 
+	public List selectHot(long topcategory_id) {
+		return assetDAO.selectHot(topcategory_id);
+	}
+
+	@Override
+	public List selectNew(long topcategory_id) {
+		return assetDAO.selectNew(topcategory_id);
+	}
+
+	@Override
+	public List selectFree(long topcategory_id) {
+		return assetDAO.selectFree(topcategory_id);
+	}
+
+	@Override
+	public List selectSale(long topcategory_id) {
+		return assetDAO.selectSale(topcategory_id);
+	}
+	
 	@Override
 	@Transactional
-	public void regist(Asset asset) {
+	public void regist(Asset asset) throws AssetException{
+		// DB에 데이터 등록 (+PK값 자동 추출)
 		assetDAO.insert(asset);
+		
+		// 서버에 이미지 등록
 		
 		  // Sale 정보가 있다면 저장
 	    if (asset.getSale() != null && asset.getSale().getSale_value() != 0) {
@@ -123,12 +146,12 @@ public class AssetServiceImpl implements AssetService {
 
 	@Override
 	public void update(Asset asset) {
-		
+
 	}
 
 	@Override
 	public void delete(long asset_id) {
-		
+
 	}
 
 	@Override
@@ -141,12 +164,4 @@ public class AssetServiceImpl implements AssetService {
 			return asset.getPrice() -(asset.getPrice() * sale.getSale_value() / 100); 
 		}
 	}
-
-	@Override
-	public AssetImg getThumbnail(long asset_id) {
-		return assetImgDAO.selectThumbnailByAssetId(asset_id);
-	}
-	
-	
-	
 }

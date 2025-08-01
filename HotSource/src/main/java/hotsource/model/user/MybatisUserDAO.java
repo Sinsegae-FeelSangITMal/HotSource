@@ -19,20 +19,6 @@ public class MybatisUserDAO implements UserDAO {
 	private SqlSessionTemplate sqlSessionTemplate;
 
 	@Override
-	public User selectById(String id) {
-		return sqlSessionTemplate.selectOne("User.selectById", id);
-	}
-
-	@Override
-	public void insert(User user) throws UserException {
-
-		int result = sqlSessionTemplate.insert("User.insert", user);
-		if (result < 1) {
-			throw new UserException("사용자 등록 실패");
-		}
-	}
-
-	@Override
 	public List selectAll() {
 		return sqlSessionTemplate.selectList("User.selectAll");
 	}
@@ -40,6 +26,11 @@ public class MybatisUserDAO implements UserDAO {
 	@Override
 	public User select(long user_id) {
 		return sqlSessionTemplate.selectOne("User.select", user_id);
+	}
+
+	@Override
+	public User selectById(String id) {
+		return sqlSessionTemplate.selectOne("User.selectById", id);
 	}
 
 	@Override
@@ -56,6 +47,21 @@ public class MybatisUserDAO implements UserDAO {
 		}
 
 		return user;
+	}
+
+	@Override
+	public void insert(User user) throws UserException {
+
+		int result = sqlSessionTemplate.insert("User.insert", user);
+		if (result < 1) 
+			throw new UserException("사용자 등록 실패");
+	}
+	
+	@Override
+	public void update(User user) throws UserException {
+		int result = sqlSessionTemplate.update("User.update", user);
+		if(result < 1)
+			throw new UserException("사용자 등록 실패");
 	}
 
 }

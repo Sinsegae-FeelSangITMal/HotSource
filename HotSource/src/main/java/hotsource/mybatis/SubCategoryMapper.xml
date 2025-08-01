@@ -9,5 +9,11 @@
 	<select id="select" parameterType="int" resultType="SubCategory">
 		select * from subcategory where subcategory_id = #{subcategory_id}
 	</select>
-	
+	<!-- 
+	<select id="selectTopCategoryId" parameterType="long" resultType="joinMap">
+		SELECT subcategory_id, sub_name, topcategory_id
+		FROM subcategory
+		WHERE subcategory_id = ${subcategory_id}
+	</select>
+	 -->
 </mapper>

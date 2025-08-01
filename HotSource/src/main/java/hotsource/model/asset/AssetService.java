@@ -14,6 +14,10 @@ public interface AssetService {
 	public Asset select(long asset_id);
 	public List selectBySellerId(long seller_id);
 	public int selectCount(long seller_id);
+	public List selectHot(long topcategory_id);
+	public List selectNew(long topcategory_id);
+	public List selectFree(long topcategory_id);
+	public List selectSale(long topcategory_id);
 	
 	public void saveAssetFiles(Long assetId, MultipartFile[] photoFiles, MultipartFile[] projectFiles, HttpServletRequest request);
 
@@ -23,5 +27,4 @@ public interface AssetService {
 	
 	//할인 적용된 가격 구하기 (10000원에서 20%할인해서 최종 가격 : 8000원 반환)
 	public int getDiscountPrice(Asset asset); 
-	public AssetImg getThumbnail(long asset_id);
 }

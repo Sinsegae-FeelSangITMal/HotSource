@@ -11,5 +11,6 @@ public interface UserService {
 	public User select(long user_id);
 	public List selectByRoleId(long role_id);
 	public void regist(User user);
+	public void update(User user);
 	public User login(User user);
 }

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import hotsource.domain.User;
+import hotsource.exception.UserException;
 import hotsource.exception.UserNotFoundException;
 import hotsource.util.PasswordUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -20,10 +21,6 @@ public class UserServiceImpl implements UserService{
 	@Autowired
 	private PasswordUtil passwordUtil;
 	
-	@Override
-	public User selectById(String id) {
-		return userDAO.selectById(id);
-	}
 	@Override
 	public void regist(User user) {
 		
@@ -43,12 +40,15 @@ public class UserServiceImpl implements UserService{
 		
 		userDAO.insert(user);
 	}
+	
 	@Override
 	public User login(User user) throws UserNotFoundException{
 		
 		log.debug("User_email :"+user.getUser_email());
 		
 		User obj = userDAO.selectByEmail(user.getUser_email());
+		
+		log.debug("lslfsldlfslogin obj :" + obj);
 		
 		String dbHash = passwordUtil.hashPassword(user.getPassword(), obj.getSalt());
 		
@@ -69,7 +69,18 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
+	public User selectById(String id) {
+		return userDAO.selectById(id);
+	}
+	
+	@Override
 	public List selectByRoleId(long role_id) {
 		return userDAO.selectByRoleId(role_id);
+	}
+	
+	
+	@Override
+	public void update(User user) throws UserException {
+		userDAO.update(user);
 	}
 }

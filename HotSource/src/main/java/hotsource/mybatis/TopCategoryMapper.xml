@@ -13,8 +13,12 @@
 		select topcategory_id, top_name from topcategory
 	</select>
 	
+	<sql id="columns">
+		topcategory_id, top_name
+	</sql>
+	
 	<select id="select" parameterType="int" resultType="TopCategory">
-		select * from topcategory where topcategory_id=#{topcategory_id}
+		SELECT <include refid="columns"/> FROM topcategory WHERE topcategory_id = ${topcategory_id}
 	</select>
 	
 </mapper>

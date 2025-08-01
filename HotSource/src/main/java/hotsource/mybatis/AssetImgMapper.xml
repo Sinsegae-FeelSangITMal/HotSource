@@ -74,4 +74,21 @@
         DELETE FROM asset_img WHERE asset_id = #{asset_id}
     </delete>
 
+
+
+
+    <!-- 썸네일 이미지 조회 -->
+	<resultMap 			id="thumbMap" 				type="AssetImg">
+		<id 					property="asset_img_id" 	column="asset_img_id"/>
+		<result 			property="asset_img_url" 	column="asset_img_url"/>
+		<result 			property="is_thumb" 			column="is_thumb"/>
+	</resultMap>
+    
+   <select 	id="selectThumb" parameterType="long" resultMap="thumbMap">
+        SELECT 	<include refid="columns"/>
+        FROM 	asset_img
+        WHERE 	asset_id = ${asset_id}
+        	AND is_thumb = 1
+    </select>
+
 </mapper>

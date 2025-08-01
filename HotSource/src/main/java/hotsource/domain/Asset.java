@@ -16,9 +16,11 @@ public class Asset {
 	private String description;
 	private String youtube_url;
 	private Timestamp create_date;
-	private int view_count;	
+	private int view_count;
+	private float rate_avg;
 	
 	private Sale sale; // 유효한 세일, null인 경우 적용 가능한 sale이 없는 것임
+	private AssetImg thumbnail;  // 썸네일 용도
     private Seller seller;
     private SubCategory subCategory;
     
@@ -26,4 +28,7 @@ public class Asset {
 	private List<AssetKeywordMapping> keywordList;
 	private List<AssetFile> fileList;
 	private List<AssetImg> imgList;
+	private List<Sale> saleList;
+
+	private MultipartFile[] photo;
 }

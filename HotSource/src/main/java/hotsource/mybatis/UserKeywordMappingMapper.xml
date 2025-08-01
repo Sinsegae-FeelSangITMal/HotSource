@@ -8,11 +8,14 @@
 	
 	<resultMap			type="UserKeywordMapping"					id="joinMap">
 		<id 					column="user_keyword_mapping_id"		property="user_keyword_mapping_id"/>
-		<association	column="user_id"		property="user"			javaType="User"		select="User.select"/>
+		<association	column="user_id"			property="user"			javaType="User"				select="User.select"/>
+		<association	column="keyword_id"	property="keyword"	javaType="Keyword"		select="Keyword.select"/>
 	</resultMap>
 	
 	<select id="selectByUserId" resultMap="joinMap" parameterType="long">
-		SELECT <include refid="columns"/> FROM user_keyword_mapping WHERE user_id=#{user_id}
+		SELECT <include refid="columns"/>
+		FROM user_keyword_mapping
+		WHERE user_id=#{user_id}
 	</select>
 	
 </mapper>
