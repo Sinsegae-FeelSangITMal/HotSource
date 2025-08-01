@@ -17,5 +17,4 @@ public interface AssetService {
 	
 	//할인 적용된 가격 구하기 (10000원에서 20%할인해서 최종 가격 : 8000원 반환)
 	public int getDiscountPrice(Asset asset); 
-	public AssetImg getThumbnail(long asset_id);
 }

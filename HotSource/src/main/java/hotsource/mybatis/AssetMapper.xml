@@ -19,7 +19,7 @@
         <result property="youtube_url" column="youtube_url"/>
         <result property="create_date" column="create_date"/>
         <result property="view_count" column="view_count"/>
- 
+
         <!-- 외래키는 객체 대신 ID만 담김 -->
         <association column="seller_id" property="seller" javaType="Seller" select="Seller.select"/>
            
@@ -28,7 +28,7 @@
         </association>
         
         <association column="sale_id" property="sale" javaType="Sale" select="Sale.selectValidByAssetId"></association>
-        
+        <association column = "asset_id" property="thumbnail" javaType="AssetImg" select = "AssetImg.selectThumbnailByAssetId"></association>
         <collection property="reviewList" column="asset_id" javaType="java.util.List" ofType="Review" select="Review.selectByAssetId"/>
     </resultMap>
 

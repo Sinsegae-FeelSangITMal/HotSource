@@ -17,6 +17,7 @@ public class Asset {
 	private int view_count;	
 	
 	private Sale sale; // 유효한 세일, null인 경우 적용 가능한 sale이 없는 것임
+	private AssetImg thumbnail;  // 썸네일 용도
     private Seller seller;
     private SubCategory subCategory;
     
