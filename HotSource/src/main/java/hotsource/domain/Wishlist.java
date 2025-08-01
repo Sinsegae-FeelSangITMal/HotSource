@@ -2,6 +2,7 @@
 package hotsource.domain;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 import lombok.Data;
 
@@ -11,6 +12,6 @@ public class Wishlist {
 	private String list_name;
 	private String description;
 	private Timestamp create_date;
-	
 	private User user;
+	private List<WishlistItem>  itemList; 
 }

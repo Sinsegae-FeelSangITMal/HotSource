@@ -8,6 +8,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import hotsource.domain.Asset;
 import hotsource.util.FileManager;
+import hotsource.domain.AssetImg;
+import hotsource.domain.Sale;
+import hotsource.model.asset_img.AssetImgDAO;
+import hotsource.model.sale.SaleService;
 
 @Service
 public class AssetServiceImpl implements AssetService {
@@ -17,6 +21,11 @@ public class AssetServiceImpl implements AssetService {
 	
 	@Autowired
 	private FileManager fileManager;
+	
+	private AssetImgDAO assetImgDAO;
+	
+	@Autowired 
+	private SaleService saleService;
 	
 	@Override
 	public List selectAll() {
@@ -52,4 +61,23 @@ public class AssetServiceImpl implements AssetService {
 	public void delete(long asset_id) {
 		
 	}
+
+	@Override
+	public int getDiscountPrice(Asset asset) {
+		Sale sale = saleService.selectByAssetId(asset.getAsset_id());
+		
+		if(sale == null) {
+			return 0;
+		}else {
+			return asset.getPrice() -(asset.getPrice() * sale.getSale_value() / 100); 
+		}
+	}
+
+	@Override
+	public AssetImg getThumbnail(long asset_id) {
+		return assetImgDAO.selectThumbnailByAssetId(asset_id);
+	}
+	
+	
+	
 }
