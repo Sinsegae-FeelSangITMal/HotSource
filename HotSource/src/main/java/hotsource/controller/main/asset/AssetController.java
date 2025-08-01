@@ -36,6 +36,7 @@ public class AssetController {
 	        @RequestParam(name = "sale", required = false) Integer salePercent,
 	        HttpServletRequest request,
 	        HttpSession session) {
+		log.debug("에셋 등록시 seller :"+ (Seller) session.getAttribute("seller"));
 
 	    asset.setSeller((Seller) session.getAttribute("seller"));
 
