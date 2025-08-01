@@ -6,6 +6,14 @@
 		notice_comment_id, notice_id, user_id, content, create_date
 	</sql>
 	
+	<resultMap id="joinMap" type="NoticeComment">
+	    <id property="notice_comment_id" column="notice_comment_id"/>
+	    <result property="notice_id" column="notice_id"/>
+	    <result property="user_id" column="user_id"/>
+	    <result property="content" column="content"/>
+	    <result property="create_date" column="create_date"/>
+	</resultMap>
+	
 	<select id="selectAll" resultType="NoticeComment">
 		select <include refid="columns"/> from notice_comment
 	</select>
@@ -13,6 +21,10 @@
 	<select id="select" parameterType="long" resultType="NoticeComment">
 		select <include refid="columns"/> from notice_comment
 		where	notice_comment_id = #{notice_comment_id}
+	</select>
+	
+	<select id="selectByNoticeId" resultMap="joinMap" parameterType="long">
+		SELECT <include refid="columns"/> FROM notice_comment WHERE notice_id=#{notice_id}
 	</select>
 	
 	<insert id="insert" parameterType="NoticeComment">

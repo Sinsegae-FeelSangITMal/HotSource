@@ -31,6 +31,11 @@ public class NoticeCommentServiceImpl implements NoticeCommentService{
 	}
 
 	@Override
+	public List selectByNoticeId(long notice_comment_id) {
+		return noticeCommentDAO.selectByNoticeId(notice_comment_id);
+	}
+
+	@Override
 	public void regist(NoticeComment noticeComment) {
 
 	}
@@ -44,4 +49,5 @@ public class NoticeCommentServiceImpl implements NoticeCommentService{
 	public void delete(long notice_comment_id) {
 
 	}
+
 }

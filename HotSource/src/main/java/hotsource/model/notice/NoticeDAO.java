@@ -13,6 +13,7 @@ public interface NoticeDAO {
 
 	public List selectAll();
 	public Notice select(long notice_id);
+	public List selectBySellerId(long seller_id);
 	public void insert(Notice notice);
 	public void update(Notice notice);
 	public void delete(long notice_id);

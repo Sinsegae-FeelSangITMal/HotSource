@@ -24,6 +24,7 @@
 		<association column="user_id" 	property="user" javaType="User" select="User.select"/>
 		<!-- 1:N 관계 -->
 		<collection property="assetList" column="seller_id" javaType="java.util.List" ofType="Asset" select="Asset.selectBySellerId"/>
+		<collection property="noticeList" column="seller_id" javaType="java.util.List" ofType="Notice" select="Notice.selectBySellerId"/>
 	</resultMap>
 	
 	<select id="selectAll" resultMap="joinMap">

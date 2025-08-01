@@ -8,11 +8,9 @@
 <%
 	Seller seller = (Seller)request.getAttribute("seller");
 	List<Asset> assetList = (List<Asset>)request.getAttribute("assetList");
+	List<Notice> noticeList = (List<Notice>)request.getAttribute("noticeList");
 
 	User user = (User)request.getAttribute("user");
-	Notice notice = (Notice)request.getAttribute("notice");
-	NoticeLike noticeLike = (NoticeLike)request.getAttribute("noticeLike");
-	NoticeComment noticeComment = (NoticeComment)request.getAttribute("noticeComment");
 %>
 <%
 	boolean result = true;			// false로 변경 시 검색 결과 없을 경우의 화면 볼 수 있음
@@ -185,36 +183,21 @@
 		<% } else { %>
 		    <p>등록된 에셋이 없습니다.</p>
 		<% } %>
-
-		<% if (notice != null) { %>
-			Notice ID:
-			<%= notice.getNotice_id() %>, <br> Notice Content:
-			<%= notice.getContent()%>
-			<br>
+		
+		<% if (noticeList != null) { %>
+		    <ul>
+		    <% for (Notice notice : noticeList) { %>
+		        <li>
+		            <strong>공지명:</strong> <%= notice.getTitle() %><br>
+		            <hr>
+		        </li>
+		    <% } %>
+		    </ul>
 		<% } else { %>
-			<h3>Notice 객체가 없습니다.</h3>
+		    <p>등록된 공지가 없습니다.</p>
 		<% } %>
 
-		<% if (noticeLike != null) { %>
-			NoticeLike isLike:
-			<%= noticeLike.is_like() %>, <br> NoticeLike userID:
-			<%= noticeLike.getUser().getUser_id()%>, <br> NoticeLike
-			userName:
-			<%= noticeLike.getUser().getUser_name()%>
-			<br>
-		<% } else { %>
-			<h3>NoticeLike 객체가 없습니다.</h3>
-		<% } %>
-
-		<% if (noticeComment != null) { %>
-			NoticeComment ID:
-			<%= noticeComment.getNotice_comment_id()%>, <br> NoticeComment
-			Content:
-			<%= noticeComment.getContent()%>
-			<br>
-		<% } else { %>
-			<h3>NoticeComment 객체가 없습니다.</h3>
-		<% } %>
+		
 	</div>
 	<!-- 데이터 매핑 테스트 영역 끝 -->
 

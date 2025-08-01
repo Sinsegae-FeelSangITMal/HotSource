@@ -67,17 +67,15 @@ public class SellerController {
 	//상세요청 처리 
 	@GetMapping("/seller/detail")
 	@ResponseBody
-	public ModelAndView getDetail(long seller_id, long notice_id, long notice_comment_id, long notice_like_id, Model model) {
+	public ModelAndView getDetail(long seller_id, Model model) {
 		ModelAndView mav = new ModelAndView("main/seller/detail");
 		
 		//3단계
 		Seller seller = sellerSerive.select(seller_id);
 		
 		List<Asset> assetList = assetService.selectBySellerId(seller_id);
-		
-		Notice notice = noticeService.select(notice_id);
-		NoticeComment noticeComment = noticeCommentService.select(notice_comment_id);
-		NoticeLike noticeLike = noticeLikeService.select(notice_like_id);
+		List<Notice> noticeList = noticeService.selectBySellerId(seller_id);
+		List<NoticeComment> noticeCommentList = noticeCommentService.selectByNoticeId(seller_id);
 		
 		// 구독자 수 count
 		int subscribeCount = subscribeService.selectSubCount(seller_id);
@@ -102,9 +100,9 @@ public class SellerController {
 		//4단계: 저장 
 		model.addAttribute("seller", seller);
 		model.addAttribute("assetList", assetList);
-		model.addAttribute("notice", notice);
-		model.addAttribute("noticeComment", noticeComment);		
-		model.addAttribute("noticeLike", noticeLike);		
+		model.addAttribute("noticeList", noticeList);
+		model.addAttribute("noticeCommentList", noticeCommentList);
+				
 		model.addAttribute("subscribeCount", subscribeCount);	
 		
 		model.addAttribute("assetCount", assetCount);

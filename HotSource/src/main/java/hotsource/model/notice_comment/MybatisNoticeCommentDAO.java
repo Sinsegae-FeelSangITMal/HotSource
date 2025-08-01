@@ -31,6 +31,11 @@ public class MybatisNoticeCommentDAO implements NoticeCommentDAO{
 	public NoticeComment select(long notice_comment_id) {
 		return sqlSessionTemplate.selectOne("NoticeComment.select", notice_comment_id);
 	}
+	
+	@Override
+	public List selectByNoticeId(long notice_comment_id) {
+		return sqlSessionTemplate.selectList("NoticeComment.selectByNoticeId", notice_comment_id);
+	}
 
 	@Override
 	public void regist(NoticeComment noticeComment) {
@@ -46,4 +51,5 @@ public class MybatisNoticeCommentDAO implements NoticeCommentDAO{
 	public void delete(long notice_comment_id) {
 		
 	}
+
 }

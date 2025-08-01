@@ -28,6 +28,11 @@ public class NoticeServiceImpl implements NoticeService{
 		return noticeDAO.select(notice_id);
 	}
 
+	@Override
+	public List selectBySellerId(long seller_id) {
+		return noticeDAO.selectBySellerId(seller_id);
+	}
+	
 	@Transactional
 	public void regist(Notice notice) throws NoticeException{
 		noticeDAO.insert(notice);
@@ -40,5 +45,6 @@ public class NoticeServiceImpl implements NoticeService{
 	public void delete(long notice_id) {
 		
 	}
+
 
 }
