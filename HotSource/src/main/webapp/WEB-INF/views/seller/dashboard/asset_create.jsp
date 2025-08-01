@@ -12,7 +12,7 @@
     }
 
     .container {
-      max-width: 1300px;
+      max-width: 1000px;
       margin: 50px auto;
       display: flex;
       gap: 10px;
@@ -158,10 +158,14 @@
             </div>
 
             <div class="form-section">
-              <label for="category">Classification</label>
-              <select id="category" name="category" class="form-control">
-                <option value="Image">Image</option>
-                <option value="Music">Music</option>
+              <label for="topcategory">TopCategory</label>
+              <select id="topcategory" name="topcategory" class="form-control">
+              </select>
+            </div>
+            
+             <div class="form-section">
+              <label for="subcategory">SubCategory</label>
+              <select id="subcategory" name="subcategory" class="form-control">
               </select>
             </div>
 
