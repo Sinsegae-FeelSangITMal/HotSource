@@ -99,7 +99,7 @@
 
     <div class="upload-section">
         <h2>Upload your first game</h2>
-        <form action="/project/create" method="get">
+        <form action="/seller/dashboard/assetCreate" method="get">
             <button type="submit">Create new project</button>
         </form>
         <p>Nah, take me to the games feed</p>

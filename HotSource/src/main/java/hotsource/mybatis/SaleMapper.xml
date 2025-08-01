@@ -3,17 +3,15 @@
 <mapper namespace="Sale">
 	
 	<sql id="columns">
-		sale_id, sale_type, sale_value, start_date, end_date, create_date, asset_id
+		sale_id, sale_value, start_date, end_date, create_date, asset_id
 	</sql>
 	
 	<resultMap 			type="Sale" 					id="joinMap">
 		<id 					column="sale_id" 			property="sale_id"/>
-		<result 			column="sale_type" 		property="sale_type"/>
 		<result 			column="sale_value" 		property="sale_value"/>
 		<result 			column="start_date" 		property="start_date"/>
 		<result 			column="end_date" 		property="end_date"/>
 		<result 			column="create_date" 	property="create_date"/>
-		<association 	column="asset_id" 		property="asset" 			javaType="Asset" 		select="Asset.select"/>
 	</resultMap>
 	
 	<select id="selectAll" resultMap="joinMap">
@@ -27,5 +25,17 @@
 	<select id="selectByAssetId" resultMap="joinMap" parameterType="long">
 		SELECT <include refid="columns"/> FROM sale WHERE asset_id=#{asset_id}
 	</select>
+	
+	<!-- 현재 날짜 기준으로 유효한 할인 정보 조회 -->
+	<select id="selectValidByAssetId" resultMap="joinMap" parameterType="long">
+		SELECT <include refid="columns"/> FROM sale WHERE asset_id=#{asset_id}  
+		AND CURDATE() BETWEEN start_date AND end_date
+	</select>
+	
+	<insert id="insert" parameterType="Sale">
+		insert into sale(asset_id, sale_value, start_date, end_date)
+		values (#{asset_id}, #{sale_value},  NOW(), DATE_ADD(NOW(), INTERVAL 1 MONTH))
+	</insert>
+	
 	
 </mapper>

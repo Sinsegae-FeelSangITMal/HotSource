@@ -14,6 +14,7 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jndi.JndiTemplate;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 /*
  * 애플리케이션 Scope 수준에서 관리될 빈즈들의 대한 설정파일
@@ -49,6 +50,13 @@ public class RootConfig{
 		@Bean
 		public SqlSessionTemplate sqlSessionTemplate() throws Exception {
 			return new SqlSessionTemplate(sqlSessionFactory());
+		}
+		
+		@Bean
+		public CommonsMultipartResolver multipartResolver() {
+			CommonsMultipartResolver resolver = new CommonsMultipartResolver();
+			resolver.setMaxUploadSize(10*1024*1024); // 10M
+			return resolver;
 		}
 		
 }

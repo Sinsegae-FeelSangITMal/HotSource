@@ -27,4 +27,9 @@ public class SaleServiceImpl implements SaleService {
 	public Sale selectByAssetId(long asset_id) {
 		return saleDAO.selectByAssetId(asset_id);
 	}
+
+	@Override
+	public Sale selectValidByAssetId(long asset_id) {
+		return saleDAO.selectByAssetId(asset_id);
+	}
 }

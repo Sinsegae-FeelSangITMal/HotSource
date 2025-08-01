@@ -6,13 +6,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class DashboardController {
 
-	@GetMapping("/dashboard/projectList")
+	@GetMapping("/dashboard/assetList")
 	public String getListPage() {
-		return "/seller/dashboard/projectList";
+		return "/seller/dashboard/asset_list";
 	}
 	
-	@GetMapping("/dashboard/createProject")
+	@GetMapping("/dashboard/assetCreate")
 	public String getCreatePage() {
-		return "/seller/dashboard/createProject";
+		return "/seller/dashboard/asset_create";
 	}
 }

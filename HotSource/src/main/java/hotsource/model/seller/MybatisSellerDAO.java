@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import hotsource.domain.Seller;
+import hotsource.exception.SellerException;
 
 @Repository
 public class MybatisSellerDAO implements SellerDAO {
@@ -20,12 +21,22 @@ public class MybatisSellerDAO implements SellerDAO {
 	}
 
 	@Override
-	public Seller select(long seller_id) {
-		return sqlSessionTemplate.selectOne("Seller.select", seller_id);
+	public Seller selectBySellerId(long seller_id) {
+		return sqlSessionTemplate.selectOne("Seller.selectBySellerId", seller_id);
 	}
 
 	@Override
 	public Seller selectByUserId(long user_id) {
 		return sqlSessionTemplate.selectOne("Seller.selectByUserId", user_id);
 	}
+
+	@Override
+	public void insert(Seller seller) throws SellerException{
+		int result = sqlSessionTemplate.insert("Seller.insert", seller);
+		if(result < 1) {
+			throw new SellerException("판매자 등록 실패");
+		}
+	}
+	
+	
 }

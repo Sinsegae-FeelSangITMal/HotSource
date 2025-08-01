@@ -28,4 +28,16 @@ public class MybatisSaleDAO implements SaleDAO {
 	public Sale selectByAssetId(long asset_id) {
 		return sqlSessionTemplate.selectOne("Sale.selectByAssetId", asset_id);
 	}
+
+	@Override
+	public Sale selectValidByAssetId(long asset_id) {
+		return sqlSessionTemplate.selectOne("Sale.selectValidByAssetId", asset_id);
+	}
+
+	@Override
+	public void insert(Sale sale) {
+		sqlSessionTemplate.insert("Sale.insert", sale);
+	}
+	
+	
 }

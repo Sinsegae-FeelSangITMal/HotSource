@@ -71,11 +71,12 @@ public class SellerController {
 		ModelAndView mav = new ModelAndView("main/seller/detail");
 		
 		//3단계
-		Seller seller = sellerSerive.select(seller_id);
-		
+		Seller seller = sellerSerive.selectBySellerId(seller_id);
+
 		List<Asset> assetList = assetService.selectBySellerId(seller_id);
 		List<Notice> noticeList = noticeService.selectBySellerId(seller_id);
 		List<NoticeComment> noticeCommentList = noticeCommentService.selectByNoticeId(seller_id);
+
 		
 		// 구독자 수 count
 		int subscribeCount = subscribeService.selectSubCount(seller_id);
