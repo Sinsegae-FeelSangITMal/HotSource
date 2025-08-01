@@ -32,7 +32,7 @@
 	</select>
 	
 	<select id="selectByUserId" resultMap="joinMap" parameterType="long">
-		SELECT <include refid="columns"/> FROM wishlist WHERE user_id=#{user_id} 
+		SELECT <include refid="columns"/> FROM wishlist WHERE user_id=#{user_id} order by create_date desc
 	</select>
 	
 </mapper>

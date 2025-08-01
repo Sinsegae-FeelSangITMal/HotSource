@@ -27,4 +27,10 @@ public class WishlistServiceImpl implements WishlistService {
 	public List selectByUserId(long user_id) {
 		return wishlistDAO.selectByUserId(user_id);
 	}
+
+	@Override
+	public void regist(Wishlist wishlist){
+		wishlistDAO.insert(wishlist);
+		
+	}
 }
