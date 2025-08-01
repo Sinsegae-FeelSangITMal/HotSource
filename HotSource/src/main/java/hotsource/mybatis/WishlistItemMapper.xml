@@ -7,11 +7,14 @@
 	</sql>
 	
 	<resultMap 		type="WishlistItem" 				id="joinMap">
-		<id 					column="wishlist_item_id" 	property="wishlist_item_id"/>
-		<result 			column="create_date" 			property="create_date"/>
-		<association 	column="asset_id"					property="asset"			javaType="Asset"			select="Asset.select"/>
-		<association 	column="wishlist_id"				property="wishlist"		javaType="Wishlist"		select="Wishlist.select"/>
+		<id 			column="wishlist_item_id" 		property="wishlist_item_id"/>
+		<result 		column="create_date" 			property="create_date"/>
+		<association 	column="asset_id"				property="asset"			javaType="Asset"		select="Asset.select"/>
 	</resultMap>
+	
+	 <select id="select" parameterType="long" resultMap="joinMap">
+	 	select <include refid="columns"/> from wishlist_item where wishlist_item_id = #{wishlist_item_id}
+	 </select>
 	
 	<select id="selectAll" resultMap="joinMap">
 		SELECT <include refid="columns"/> FROM wishlist_item
