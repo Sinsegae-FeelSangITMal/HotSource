@@ -1443,6 +1443,7 @@ a:focus {
   gap: 20px; /* tap-artist-card와 내부 요소 사이 여백 */
 }
 
+/* 작가 페이지 - 별점 표시*/
 .seller-rating {
    position: relative;
    width: 180px;
@@ -1453,6 +1454,7 @@ a:focus {
    gap: .3em;
    padding: 5px;
    overflow: hidden;
+   text-align: center;
 }
 
 .seller-rating-result {
@@ -1476,6 +1478,7 @@ a:focus {
 .seller-rating-star:hover {
    filter: drop-shadow(1px 1px 4px gold);
 }
+
 
 
 

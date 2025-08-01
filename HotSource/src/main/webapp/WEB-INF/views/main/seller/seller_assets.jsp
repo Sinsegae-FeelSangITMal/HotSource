@@ -8,9 +8,6 @@
 <%
 	List testList = new ArrayList<>(50); 
 	paging.init(50, testList, request);
-	
-	//boolean result_re = true;			// false로 변경 시 검색 결과 없을 경우의 화면 볼 수 있음
-	//boolean isPurchased_re = true;
 %>
 
   <!-- 리소스 검색 결과 페이지 -->

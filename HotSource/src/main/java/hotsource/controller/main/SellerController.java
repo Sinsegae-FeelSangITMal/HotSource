@@ -72,6 +72,9 @@ public class SellerController {
 		
 		//3단계
 		Seller seller = sellerSerive.select(seller_id);
+		
+		List<Asset> assetList = assetService.selectBySellerId(seller_id);
+		
 		Notice notice = noticeService.select(notice_id);
 		NoticeComment noticeComment = noticeCommentService.select(notice_comment_id);
 		NoticeLike noticeLike = noticeLikeService.select(notice_like_id);
@@ -86,6 +89,7 @@ public class SellerController {
 		//double assetRate = reviewService.selectAvgRate(seller_id);
 		double assetRate = 0.0;
 		if (seller.getAssetList() != null) {
+			// 작가의 전체 에셋 평균 리뷰 별점
 		    assetRate = seller.getAssetList().stream()
 		        .filter(asset -> asset.getReviewList() != null)
 		        .flatMap(asset -> asset.getReviewList().stream())
@@ -93,15 +97,16 @@ public class SellerController {
 		        .average()
 		        .orElse(0.0);
 		}
-		
 		log.debug("assetRate : " + assetRate);
 		
 		//4단계: 저장 
 		model.addAttribute("seller", seller);
+		model.addAttribute("assetList", assetList);
 		model.addAttribute("notice", notice);
 		model.addAttribute("noticeComment", noticeComment);		
 		model.addAttribute("noticeLike", noticeLike);		
-		model.addAttribute("subscribeCount", subscribeCount);		
+		model.addAttribute("subscribeCount", subscribeCount);	
+		
 		model.addAttribute("assetCount", assetCount);
 		model.addAttribute("assetRate", assetRate);
 

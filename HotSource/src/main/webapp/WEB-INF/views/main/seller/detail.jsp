@@ -1,3 +1,4 @@
+<%@page import="hotsource.domain.Asset"%>
 <%@page import="hotsource.domain.User"%>
 <%@page import="hotsource.domain.NoticeComment"%>
 <%@page import="hotsource.domain.NoticeLike"%>
@@ -5,8 +6,10 @@
 <%@page import="hotsource.domain.Seller"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
-	User user = (User)request.getAttribute("user");
 	Seller seller = (Seller)request.getAttribute("seller");
+	List<Asset> assetList = (List<Asset>)request.getAttribute("assetList");
+
+	User user = (User)request.getAttribute("user");
 	Notice notice = (Notice)request.getAttribute("notice");
 	NoticeLike noticeLike = (NoticeLike)request.getAttribute("noticeLike");
 	NoticeComment noticeComment = (NoticeComment)request.getAttribute("noticeComment");
@@ -14,6 +17,12 @@
 <%
 	boolean result = true;			// false로 변경 시 검색 결과 없을 경우의 화면 볼 수 있음
 	boolean isPurchased = true;
+	
+	// 별점 가져오기
+	double assetRate = 0.0;
+	if (request.getAttribute("assetRate") != null) {
+		assetRate = Double.parseDouble(request.getAttribute("assetRate").toString());
+	}
 %>
 <!DOCTYPE html>
 <html>
@@ -44,7 +53,7 @@
 
 	<!-- 판매자 프로필 카드 영역 시작 -->
 	<section class="seller-profile py-5">
-		<div class="container bg-white shadow rounded p-4" style="max-width: 900px; margin: auto;">
+		<div class="container bg-white shadow rounded p-4 overflow-hidden" style="max-width: 1100px; margin: auto;">
 			<div class="row align-items-center">
 				<!-- 프로필 이미지 -->
 				<div class="col-md-3 text-center mb-3 mb-md-0">
@@ -61,10 +70,14 @@
 
 					<!-- SNS 및 이메일 -->
 					<p class="mb-2">
-						<i class="bi bi-instagram"></i> &nbsp
-						<%= seller.getSeller_insta_url() %>
-						<br> <i class="bi bi-envelope"></i> &nbsp
-						<%= seller.getSeller_email() %>
+						<i class="bi bi-instagram"></i> &nbsp;
+						<a href="<%= seller.getSeller_insta_url() != null ? seller.getSeller_insta_url() : "-" %>"  style="color: red; ">
+							<%= seller.getSeller_insta_url() != null ? seller.getSeller_insta_url() : "-" %>
+						</a>
+						
+						<br> 
+						<i class="bi bi-envelope"></i> &nbsp;
+						<%= seller.getSeller_email() != null ? seller.getSeller_email() : "-" %>
 					</p>
 				</div>
 			</div>
@@ -82,28 +95,39 @@
 				<div class="col-md-4">
 					<p class="text-muted">Reviews</p>
 					<!-- 별점 -->
-					<div class="seller-rating">
-					    <span class="seller-rating-result"></span>
-					    <p class="fw-bold mb-0 fs-5">
-					    	<%= request.getAttribute("assetRate") != null ? request.getAttribute("assetRate") : "0.0" %>
-					    </p>
-					    <i class="seller-rating-star far fa-star"></i>
-					    <i class="seller-rating-star far fa-star"></i>
-					    <i class="seller-rating-star far fa-star"></i>
-					    <i class="seller-rating-star far fa-star"></i>
-					    <i class="seller-rating-star far fa-star"></i>
+					<div class="seller-rating mx-auto">
+					    <span class="seller-rating-result"><%= assetRate %>/5</span>
+					    <p class="fw-bold mb-0 fs-5"><%= assetRate %></p>
+					
+					    <%	for (int i = 1; i <= 5; i++) {
+					            if (assetRate >= i) {
+					                // 꽉 찬 별
+					    %>			<i class="fas fa-star seller-rating-star"></i>
+					    <%		} else if (assetRate >= i - 0.5) {
+					                // 반 별
+					    %>			<i class="fas fa-star-half-alt seller-rating-star"></i>
+					    <%		} else {
+					                // 빈 별
+					    %>			<i class="far fa-star seller-rating-star"></i>
+					    <%		}
+					        }
+					    %>
 					</div>
 				</div>
+					
+					
+					
 			</div>
-
 			<!-- 버튼 -->
 			<div class="text-center mt-3">
-				<button id="follow-btn" class="follow-btn false me-2">+ Follow</button>
-				<button id="donation-btn" class="donation-btn">
-					<i class="bi bi-cash-coin"></i>Donation
-				</button>
+					<button id="follow-btn" class="follow-btn false me-2">+ Follow</button>
+					<button id="donation-btn" class="donation-btn">
+						<i class="bi bi-cash-coin"></i>Donation
+					</button>
+				</div>
 			</div>
 		</div>
+
 	</section>
 	<!-- 판매자 프로필 카드 영역 끝 -->
 
@@ -144,6 +168,23 @@
 	<div>
 		<h1>작가 상세 페이지</h1>
 		<h3><%= seller.getSeller_name() %></h3>
+		
+		<% if (assetList != null) { %>
+		    <ul>
+		    <% for (Asset asset : assetList) { %>
+		        <li>
+		            <strong>에셋명:</strong> <%= asset.getTitle() %><br>
+		            <strong>가격:</strong> <%= asset.getPrice() %>원<br>
+		            <strong>설명:</strong> <%= asset.getDescription() %><br>
+		            <strong>조회수:</strong> <%= asset.getView_count() %><br>
+		            <strong>작성일:</strong> <%= asset.getCreate_date() %><br>
+		            <hr>
+		        </li>
+		    <% } %>
+		    </ul>
+		<% } else { %>
+		    <p>등록된 에셋이 없습니다.</p>
+		<% } %>
 
 		<% if (notice != null) { %>
 			Notice ID:
@@ -227,38 +268,68 @@
 		    	});
 		  	});
 		});
+		
+		// 별점 클릭 함수 시작 ---------------------------------------------------------------
+		const ratingStars = [...document.getElementsByClassName("seller-rating-star")];
+		const ratingResult = document.querySelector(".seller-rating-result");
+
+		printRatingResult(ratingResult);
+
+		function executeRating(stars, resultStar) {
+			const starsLength = stars.length;
+			let selectedRating = parseFloat(resultStar.textContent); // 초기값 고정
+
+			stars.forEach((star, index) => {
+				star.addEventListener("mousemove", (e) => {
+					const rect = star.getBoundingClientRect();
+					const offsetX = e.clientX - rect.left;
+					const isHalf = offsetX < rect.width / 2;
+					const rating = isHalf ? index + 0.5 : index + 1;
+
+					highlightStars(stars, rating);
+					printRatingResult(resultStar, rating);
+				});
+
+				star.addEventListener("click", (e) => {
+					const rect = star.getBoundingClientRect();
+					const offsetX = e.clientX - rect.left;
+					const isHalf = offsetX < rect.width / 2;
+					const rating = isHalf ? index + 0.5 : index + 1;
+
+					selectedRating = rating; // 🔥 클릭한 값을 저장
+					highlightStars(stars, rating);
+					printRatingResult(resultStar, rating);
+				});
+			});
+
+			// 마우스가 별점 영역 벗어나면 클릭된 값으로 고정 표시
+			const container = document.querySelector(".seller-rating");
+			container.addEventListener("mouseleave", () => {
+				highlightStars(stars, selectedRating);
+				printRatingResult(resultStar, selectedRating);
+			});
+		}
+
+		function highlightStars(stars, score) {
+			stars.forEach((star, i) => {
+				if (score >= i + 1) {
+					star.className = "seller-rating-star fas fa-star"; // full star
+				} else if (score >= i + 0.5) {
+					star.className = "seller-rating-star fas fa-star-half-alt"; // half star
+				} else {
+					star.className = "seller-rating-star far fa-star"; // empty star
+				}
+			});
+		}
+
+		function printRatingResult(resultStar, num = 0) {
+			resultStar.textContent = `${num}/5`;
+		}
+
+		executeRating(ratingStars, ratingResult);
+		// 별점 클릭 함수 끝 ---------------------------------------------------------------
 	});
-	
-	// 별점
-	const ratingStars = [...document.getElementsByClassName("seller-rating-star")];
-	const ratingResult = document.querySelector(".seller-rating-result");
-	
-	printRatingResult(ratingResult);
-	
-	function executeRating(stars, resultStar) {
-	   const starClassActive = "seller-rating-star fas fa-star";
-	   const starClassUnactive = "seller-rating-star far fa-star";
-	   const starsLength = stars.length;
-	   let i;
-	   stars.map((star) => {
-	      star.onclick = () => {
-	         i = stars.indexOf(star);
-	
-	         if (star.className.indexOf(starClassUnactive) !== -1) {
-	            printRatingResult(resultStar, i + 1);
-	            for (i; i >= 0; --i) stars[i].className = starClassActive;
-	         } else {
-	            printRatingResult(resultStar, i);
-	            for (i; i < starsLength; ++i) stars[i].className = starClassUnactive;
-	         }
-	      };
-	   });
-	}
-	
-	function printRatingResult(resultStar, num = 0) {
-		resultStar.textContent = `${num}/5`;
-	}
-	
-	executeRating(ratingStars, ratingResult);
+
+
 </script>
 </html>
