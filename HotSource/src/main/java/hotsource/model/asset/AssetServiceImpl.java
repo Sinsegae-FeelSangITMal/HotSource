@@ -67,12 +67,4 @@ public class AssetServiceImpl implements AssetService {
 			return asset.getPrice() -(asset.getPrice() * sale.getSale_value() / 100); 
 		}
 	}
-
-	@Override
-	public AssetImg getThumbnail(long asset_id) {
-		return assetImgDAO.selectThumbnailByAssetId(asset_id);
-	}
-	
-	
-	
 }

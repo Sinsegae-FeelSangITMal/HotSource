@@ -1,3 +1,4 @@
+<%@page import="hotsource.domain.Asset"%>
 <%@page import="hotsource.domain.AssetImg"%>
    <%@page import="hotsource.domain.Cart"%>
 <%@page import="java.util.List"%>
@@ -5,7 +6,6 @@
 <%
 	List<Cart> cartList = (List)request.getAttribute("cartList");
 	List<Integer> discountList = (List)request.getAttribute("discountList");
-	List<AssetImg> thumbnailList = (List)request.getAttribute("thumbnailList");
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -179,9 +179,8 @@
 		});
 	}
 	<% for (int i = 0; i < cartList.size(); i++) {
-		Cart cart = cartList.get(i);
-		AssetImg thumb = thumbnailList.get(i); %>
-		getImgList(<%= cart.getAsset().getAsset_id() %>, "<%= thumb.getAsset_img_url() %>");
+		Asset asset = cartList.get(i).getAsset(); %>
+		getImgList( <%= asset.getAsset_id() %>, "<%= asset.getThumbnail().getAsset_img_url() %>");
 	<% } %>
 </script>
     

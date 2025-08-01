@@ -45,18 +45,13 @@ public class CartController {
 		
 		for(int i = 0; i < carts.size(); i++) {
 			discountList.add(assetService.getDiscountPrice(carts.get(i).getAsset()));
-			thumbnailList.add(assetService.getThumbnail(carts.get(i).getAsset().getAsset_id()));
-			log.debug("썸네일 이미지 파일명=" + thumbnailList.get(i).getAsset_img_url());
 		}
-		log.debug("썸네일개수="+thumbnailList.size());
 		
 		mav.addObject("cartList", carts);
 		mav.addObject("discountList", discountList);
-		mav.addObject("thumbnailList", thumbnailList);
 		
 		return mav;
 	}
-	
 	
 	@PostMapping("/cart/delete")
 	@ResponseBody
