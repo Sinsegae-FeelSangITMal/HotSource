@@ -62,7 +62,6 @@
 			        		<%for(int i = 0; i < num ; i++){ %>
 			        		<%	Asset asset = w.getItemList().get(i).getAsset(); %>
 			        			<img class="thumb" 
-			        				 id="thumb_<%=asset.getAsset_id() %>" 
 			        				 src="" 
 			        				 alt="" 
 			        				 style="border-radius:0px"
@@ -95,10 +94,13 @@
 		<%@ include file="../inc/footer_link.jsp" %>
 		<script type="text/javascript">
 			//비동기 방식으로, 서버의 이미지를 다운로드 받기 
-			function getImgList(asset_id, filename){
+			function getImgList(img){
+			    const assetId = img.dataset.assetId;
+			    const filename = img.dataset.filename;
 				console.log("넘겨받은 파일명은 ", filename);
+				
 				$.ajax({
-					url:"/data/asset_img/" + asset_id + "/" + filename, 
+					url:"/data/asset_img/" + assetId + "/" + filename, 
 					type:"GET",
 					//서버로부터 가져온 이미지 정보는 img src로 표현되려면, 
 					//1) 서버로 부터 가져온 정보를 Blob 형태로 가져와서
@@ -116,12 +118,7 @@
 						
 						const reader = new FileReader();
 						reader.onload=function(e){
-							
-							const imgTag = document.querySelector("#thumb_" + asset_id);
-							if (imgTag) {
-								imgTag.src = e.target.result;
-								console.log(imgTag.src);
-							}
+							img.src = e.target.result;
 						}
 						reader.readAsDataURL(file);//대상 파일 읽기 
 					}
@@ -129,9 +126,7 @@
 			}
 			
 			document.querySelectorAll("img.thumb").forEach(img => {
-			    const assetId = img.dataset.assetId;
-			    const filename = img.dataset.filename;
-			    getImgList(assetId, filename);
+			    getImgList(img);
 			});
 			
 			function createWishlist(){
@@ -203,7 +198,6 @@
 			$("#saveBtn").click(function(){
 				createWishlist();
 			});
-			
 		
 		</script>
     
