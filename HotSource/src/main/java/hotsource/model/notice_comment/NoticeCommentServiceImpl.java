@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import hotsource.domain.Notice;
 import hotsource.domain.NoticeComment;
+import hotsource.exception.NoticeCommentException;
 import hotsource.exception.NoticeException;
 
 @Slf4j
@@ -35,9 +36,9 @@ public class NoticeCommentServiceImpl implements NoticeCommentService{
 		return noticeCommentDAO.selectByNoticeId(notice_comment_id);
 	}
 
-	@Override
-	public void regist(NoticeComment noticeComment) {
-
+	@Transactional
+	public void regist(NoticeComment noticeComment) throws NoticeCommentException{
+		noticeCommentDAO.regist(noticeComment);
 	}
 
 	@Override

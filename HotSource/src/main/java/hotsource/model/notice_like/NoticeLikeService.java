@@ -9,5 +9,6 @@ public interface NoticeLikeService {
 
 	public List selectAll();
 	public NoticeLike select(long notice_like_id);
+	public List selectByNoticeId(long notice_id);
 	
 }

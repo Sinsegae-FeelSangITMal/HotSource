@@ -30,7 +30,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = {"hotsource.controller.seller", "hotsource.util"})
+@ComponentScan(basePackages = {"hotsource.controller.seller", "hotsource.controller.notice", "hotsource.util"})
 //@Controller, @Service, @Repository, @Component
 public class SellerWebConfig extends WebMvcConfigurerAdapter{
 	

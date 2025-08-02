@@ -7,11 +7,12 @@
 	</sql>
 	
 	<resultMap id="joinMap" type="NoticeComment">
-	    <id property="notice_comment_id" column="notice_comment_id"/>
-	    <result property="notice_id" column="notice_id"/>
-	    <result property="user_id" column="user_id"/>
-	    <result property="content" column="content"/>
-	    <result property="create_date" column="create_date"/>
+	    <id property="notice_comment_id" 	column="notice_comment_id"/>
+	    <result property="content" 			column="content"/>
+	    <result property="create_date" 		column="create_date"/>
+	    
+	    <association	column="notice_id"	property="notice"	javaType="Notice"	select="Notice.select"/>
+	    <association	column="user_id"	property="user"		javaType="User"		select="User.select"/>
 	</resultMap>
 	
 	<select id="selectAll" resultType="NoticeComment">

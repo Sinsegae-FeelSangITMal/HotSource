@@ -75,7 +75,17 @@ public class SellerController {
 
 		List<Asset> assetList = assetService.selectBySellerId(seller_id);
 		List<Notice> noticeList = noticeService.selectBySellerId(seller_id);
-		List<NoticeComment> noticeCommentList = noticeCommentService.selectByNoticeId(seller_id);
+
+		for (Notice notice : noticeList) {
+			// 각각의 공지에 댓글 리스트를 붙여준다
+		    List<NoticeComment> commentList = noticeCommentService.selectByNoticeId(notice.getNotice_id());
+		    notice.setCommentList(commentList);  // Notice 객체에 commentList 필드가 있어야 함
+		    
+		    // 각각의 공지에 좋아요 리스트를 붙여준다
+		    List<NoticeLike> likeList = noticeLikeService.selectByNoticeId(notice.getNotice_id());
+			notice.setLikeList(likeList);  // Notice 객체에 commentList 필드가 있어야 함
+		}
+		
 
 		
 		// 구독자 수 count
@@ -85,7 +95,6 @@ public class SellerController {
 		int assetCount = assetService.selectCount(seller_id);
 		
 		// 작가의 평균 리뷰 평점
-		//double assetRate = reviewService.selectAvgRate(seller_id);
 		double assetRate = 0.0;
 		if (seller.getAssetList() != null) {
 			// 작가의 전체 에셋 평균 리뷰 별점
@@ -102,7 +111,6 @@ public class SellerController {
 		model.addAttribute("seller", seller);
 		model.addAttribute("assetList", assetList);
 		model.addAttribute("noticeList", noticeList);
-		model.addAttribute("noticeCommentList", noticeCommentList);
 				
 		model.addAttribute("subscribeCount", subscribeCount);	
 		

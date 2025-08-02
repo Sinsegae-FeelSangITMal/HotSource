@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import hotsource.domain.Notice;
 import hotsource.domain.NoticeComment;
+import hotsource.exception.NoticeCommentException;
 import hotsource.exception.NoticeException;
 import lombok.extern.slf4j.Slf4j;
 
@@ -38,8 +39,12 @@ public class MybatisNoticeCommentDAO implements NoticeCommentDAO{
 	}
 
 	@Override
-	public void regist(NoticeComment noticeComment) {
-		
+	public void regist(NoticeComment noticeComment) throws NoticeCommentException{
+		long result = sqlSessionTemplate.insert("NoticeComment.insert", noticeComment);
+		if(result < 1) {
+			log.error("댓글 등록 실패");
+			throw new NoticeException("댓글 등록 실패");
+		}
 	}
 
 	@Override

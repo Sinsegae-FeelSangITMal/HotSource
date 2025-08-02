@@ -27,4 +27,9 @@ public class MybatisNoticeLikeDAO implements NoticeLikeDAO{
 		return sqlSessionTemplate.selectOne("NoticeLike.select", notice_like_id);
 	}
 
+	@Override
+	public List selectByNoticeId(long notice_id) {
+		return sqlSessionTemplate.selectList("NoticeLike.selectByNoticeId", notice_id);
+	}
+
 }

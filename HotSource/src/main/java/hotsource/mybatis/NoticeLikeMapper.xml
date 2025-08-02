@@ -7,7 +7,7 @@
 	</sql>
 
 	<!-- 방법 2) resultMap 사용하기 -->
-	<resultMap id="noticeLikeResultMap" type="NoticeLike">
+	<resultMap id="joinMap" type="NoticeLike">
 	    <id property="notice_like_id" column="notice_like_id"/>
 	    <result property="is_like" column="is_like"/>
 	    
@@ -19,13 +19,17 @@
 	    </association>
 	</resultMap>
 	
-	<select id="select" parameterType="long" resultMap="noticeLikeResultMap">
+	<select id="select" parameterType="long" resultMap="joinMap">
 		
 		<!-- 방법 2) resultMap 사용하기 -->
 		select <include refid="columns"/> from notice_like where notice_like_id=#{notice_like_id}
 	</select>
 
-	<select id="selectAll" resultMap="noticeLikeResultMap">
+	<select id="selectAll" resultMap="joinMap">
 		select <include refid="columns"/> from notice_like
+	</select>
+	
+	<select id="selectByNoticeId" resultMap="joinMap" parameterType="long">
+		SELECT <include refid="columns"/> FROM notice_like WHERE notice_id=#{notice_id}
 	</select>
 </mapper>

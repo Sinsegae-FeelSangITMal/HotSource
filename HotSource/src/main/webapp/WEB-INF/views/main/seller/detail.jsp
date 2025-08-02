@@ -14,7 +14,8 @@
 %>
 <%
 	boolean result = true;			// false로 변경 시 검색 결과 없을 경우의 화면 볼 수 있음
-	boolean isPurchased = true;
+	//isPurchased = true;
+	//boolean isPurchased = true;
 	
 	// 별점 가져오기
 	double assetRate = 0.0;
@@ -162,46 +163,7 @@
 	</section>
 	<!-- 버튼 탭 영역 끝 -->
 
-	<!-- 데이터 매핑 테스트 영역 시작-->
-	<div>
-		<h1>작가 상세 페이지</h1>
-		<h3><%= seller.getSeller_name() %></h3>
-		
-		<% if (assetList != null) { %>
-		    <ul>
-		    <% for (Asset asset : assetList) { %>
-		        <li>
-		            <strong>에셋명:</strong> <%= asset.getTitle() %><br>
-		            <strong>가격:</strong> <%= asset.getPrice() %>원<br>
-		            <strong>설명:</strong> <%= asset.getDescription() %><br>
-		            <strong>조회수:</strong> <%= asset.getView_count() %><br>
-		            <strong>작성일:</strong> <%= asset.getCreate_date() %><br>
-		            <hr>
-		        </li>
-		    <% } %>
-		    </ul>
-		<% } else { %>
-		    <p>등록된 에셋이 없습니다.</p>
-		<% } %>
-		
-		<% if (noticeList != null) { %>
-		    <ul>
-		    <% for (Notice notice : noticeList) { %>
-		        <li>
-		            <strong>공지명:</strong> <%= notice.getTitle() %><br>
-		            <hr>
-		        </li>
-		    <% } %>
-		    </ul>
-		<% } else { %>
-		    <p>등록된 공지가 없습니다.</p>
-		<% } %>
-
-		
-	</div>
-	<!-- 데이터 매핑 테스트 영역 끝 -->
-
-
+	
 	<!-- 컨텐츠 영역 끝 -->
 
 	<!-- 푸터 영역 시작 -->

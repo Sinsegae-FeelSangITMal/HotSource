@@ -38,7 +38,7 @@
 		<% } %>
 
 		<% if (result) { %>
-			<%@ include file="../inc/search_resource_mini.jsp"%>
+			<%@ include file="search_resource_mini-seller.jsp"%>
 		<% } %>
 	</section>
 <% } %>
@@ -57,7 +57,7 @@
 		<% } %>
 
 		<% if (result) { %>
-			<%@ include file="../inc/search_resource_mini.jsp"%>
+			<%@ include file="search_resource_mini-seller.jsp"%>
 		<% } %>
 	</section>
 <% } %>

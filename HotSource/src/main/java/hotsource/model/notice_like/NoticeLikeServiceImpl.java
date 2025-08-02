@@ -27,6 +27,11 @@ public class NoticeLikeServiceImpl implements NoticeLikeService{
 		return noticeLikeDAO.select(notice_like_id);
 	}
 
+	@Override
+	public List selectByNoticeId(long notice_id) {
+		return noticeLikeDAO.selectByNoticeId(notice_id);
+	}
+
 
 
 }

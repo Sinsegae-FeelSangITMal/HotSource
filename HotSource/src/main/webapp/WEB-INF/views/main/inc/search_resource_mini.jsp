@@ -8,10 +8,13 @@
 	<%
     List<Asset> list = (List<Asset>) request.getAttribute("resourceList");  // 이름 고정
     List<AssetImg> thumbList = (List<AssetImg>) request.getAttribute("thumbList");
+    
+    boolean isPurchasedAsset = false;
+    
     int max = Math.min(5, list.size());  // 출력 갯수 정하기
     for (int i = 0; i < max; i++) {
         Asset asset = list.get(i);
-        boolean isPurchased = false;
+        isPurchasedAsset = false;
         int salePer = 0;
         if (asset.getSaleList().size() > 0)
             salePer = asset.getSaleList().get(0).getSale_value();
@@ -25,7 +28,7 @@
 	  <div class="product-card mini">
 	    <div class="badge-wrapper">
 	    <%
-		if (isPurchased) {
+		if (isPurchasedAsset) {
 		%>
 		    <span class="badge purchased">PURCHASED</span>
 		<%
