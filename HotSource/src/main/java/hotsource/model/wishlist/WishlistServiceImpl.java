@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import hotsource.domain.Wishlist;
 import hotsource.exception.WishlistException;
 import hotsource.model.wishlist_item.WishlistItemDAO;
+import hotsource.model.wishlist_item.WishlistItemService;
 
 @Service
 public class WishlistServiceImpl implements WishlistService {
@@ -17,7 +18,7 @@ public class WishlistServiceImpl implements WishlistService {
 	private WishlistDAO wishlistDAO;
 	
 	@Autowired
-	private WishlistItemDAO wishlistItemDAO;
+	private WishlistItemService wishlistItemService;
 	
 	@Override
 	public List selectAll() {
@@ -50,7 +51,7 @@ public class WishlistServiceImpl implements WishlistService {
 	@Override
 	@Transactional
 	public void delete(long wishlist_id) throws WishlistException{
-		wishlistItemDAO.deleteByWishlistId(wishlist_id);
+		wishlistItemService.deleteByWishlistId(wishlist_id);
 		wishlistDAO.delete(wishlist_id);
 	}
 	
