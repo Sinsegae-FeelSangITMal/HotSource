@@ -11,5 +11,5 @@ public interface WishlistService {
 	
 	public void regist(Wishlist wishlist);
 	public void update(Wishlist wishlist);
-	
+	public void delete(long wishlist_id);
 }

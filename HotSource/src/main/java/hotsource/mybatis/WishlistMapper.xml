@@ -44,4 +44,8 @@
 			wishlist_id = #{wishlist_id}
 	</update>
 	
+	<delete id="delete" parameterType="long">
+		delete from wishlist where wishlist_id = #{wishlist_id}
+	</delete>
+	
 </mapper>

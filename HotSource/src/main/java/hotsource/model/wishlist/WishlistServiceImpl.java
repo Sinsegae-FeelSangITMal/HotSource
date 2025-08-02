@@ -4,15 +4,20 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import hotsource.domain.Wishlist;
 import hotsource.exception.WishlistException;
+import hotsource.model.wishlist_item.WishlistItemDAO;
 
 @Service
 public class WishlistServiceImpl implements WishlistService {
 	
 	@Autowired
 	private WishlistDAO wishlistDAO;
+	
+	@Autowired
+	private WishlistItemDAO wishlistItemDAO;
 	
 	@Override
 	public List selectAll() {
@@ -30,14 +35,23 @@ public class WishlistServiceImpl implements WishlistService {
 	}
 
 	@Override
+	@Transactional
 	public void regist(Wishlist wishlist)throws WishlistException{
 		wishlistDAO.insert(wishlist);
 		
 	}
 
 	@Override
+	@Transactional
 	public void update(Wishlist wishlist) throws WishlistException{
 		wishlistDAO.update(wishlist);
+	}
+
+	@Override
+	@Transactional
+	public void delete(long wishlist_id) throws WishlistException{
+		wishlistItemDAO.deleteByWishlistId(wishlist_id);
+		wishlistDAO.delete(wishlist_id);
 	}
 	
 	

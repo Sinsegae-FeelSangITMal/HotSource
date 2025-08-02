@@ -141,6 +141,14 @@ Wishlist wishlist = (Wishlist) request.getAttribute("wishlist");
 				} 
 			});
 		}
+		function deleteWishlist(){
+			$("#delete_form input[type='hidden']").val(<%=wishlist.getWishlist_id()%>);
+			$("#delete_form").attr({
+				action: "/main/wishlist/delete",
+				method: "post"
+			});
+			$("#delete_form").submit();
+		}
 			
 		function checkForm() {
 			const title = $("#listTitle").val().trim();
@@ -148,7 +156,8 @@ Wishlist wishlist = (Wishlist) request.getAttribute("wishlist");
 		}
 	
 		// 수정 모달 열기
- 		$("#bt_setting1").click(() => {
+ 		$("#bt_setting1").click(() => { 
+			console.log("click"); 			
 			    $("#listTitle").val("<%=wishlist.getList_name()%>");
 			    $("#listDesc").val("<%=wishlist.getDescription()%>");
 			    $("#titleLength").text("<%=wishlist.getList_name().length()%>/60");
@@ -170,10 +179,24 @@ Wishlist wishlist = (Wishlist) request.getAttribute("wishlist");
 		// 취소
 		$("#cancelBtn").click(function(){
 			$("#modalOverlay").css("display", "none");
+		});
+		
+		$("#delete_modal_a").click(function(){
+			$("#modalOverlay").css("display", "none");
+			
+			$("#deleteModal h6").text("<%=wishlist.getList_name()%>");
+			$("#deleteModal").css("display", "flex");
+		});
+		
+		$("#cancelDelBtn").click(function(){
+			$("#deleteModal").css("display", "none");
+		});
+		
+		$("#deleteBtn").click(function(){
+			console.log("삭제 버튼 클릭");
+			deleteWishlist();
 		})
 		
-		
-
-	</script>
-</body>
+		</script>
+	</body>
 </html>

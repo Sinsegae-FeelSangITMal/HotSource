@@ -46,4 +46,11 @@ public class MybatisWishlistDAO implements WishlistDAO {
 		}
 	}
 
+	@Override
+	public void delete(long wishlist_id) throws WishlistException{
+		int result = sqlSessionTemplate.delete("Wishlist.delete", wishlist_id);
+		if (result < 1) {
+			throw new WishlistException("찜 목록 삭제 실패");
+		}
+	}
 }

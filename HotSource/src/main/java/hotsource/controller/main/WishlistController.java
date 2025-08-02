@@ -53,7 +53,7 @@ public class WishlistController {
 	}
 	
 	@GetMapping("/wishlist/detail")
-	public ModelAndView getWishlist(@RequestParam int wishlist_id, HttpSession session) {
+	public ModelAndView getWishlist(@RequestParam long wishlist_id, HttpSession session) {
 		ModelAndView mav = new ModelAndView("main/wishlist/detail");
 		Wishlist wishlist = wishlistService.select(wishlist_id);
 		
@@ -70,10 +70,15 @@ public class WishlistController {
 	@PostMapping("/wishlist/update")
 	@ResponseBody
 	public String updateWishlist(Wishlist wishlist) {
-		log.debug("test");
 		wishlistService.update(wishlist);
 		
 		return "ok";
+	}
+	
+	@PostMapping("/wishlist/delete")
+	public String deleteWishlist(long wishlist_id) {
+		wishlistService.delete(wishlist_id);
+		return "redirect:/main/wishlist";
 	}
 	
 }

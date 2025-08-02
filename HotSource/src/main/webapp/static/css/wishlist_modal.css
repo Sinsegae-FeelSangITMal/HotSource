@@ -52,8 +52,17 @@ textarea {
   background: white;
 }
 
+#delete_modal_a {
+	display: inline-block;
+	text-decoration: none;
+}
+a#delete_modal_a span:hover {
+  text-decoration: underline; /* 실제 밑줄은 텍스트만 */
+  cursor: pointer;
+}
 
-#saveBtn {
+
+.save {
   background: red;
   border: none;
   color: white;
