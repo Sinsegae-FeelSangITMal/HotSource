@@ -52,16 +52,15 @@ textarea {
   background: white;
 }
 
-.save {
-  border: none;
-  background: #aaa;
-  color: white;
-}
 
-.save.enabled {
+#saveBtn {
   background: red;
+  border: none;
+  color: white;
+  cursor: pointer;
 }
 
 #saveBtn:disabled{
 	cursor: default;
+	background: #aaa;
 }

@@ -35,4 +35,13 @@
 		SELECT <include refid="columns"/> FROM wishlist WHERE user_id=#{user_id} order by create_date desc
 	</select>
 	
+	<update id="update" parameterType="Wishlist">
+		update wishlist  
+		set 
+			list_name = #{list_name}, 
+			description = #{description} 
+		where  
+			wishlist_id = #{wishlist_id}
+	</update>
+	
 </mapper>

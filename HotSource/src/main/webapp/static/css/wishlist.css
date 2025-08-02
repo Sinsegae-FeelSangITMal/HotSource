@@ -7,10 +7,28 @@
 }
 
 .wishlist-header {
+  margin-bottom: 30px;
+}
+
+.wishlist-title-line {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  margin-bottom: 30px;
+  align-items: flex-start; /* 아이콘이 위쪽에 정렬되도록 */
+}
+
+.wishlist-title-text {
+  flex: 1; /* 제목이 줄바꿈 되더라도 공간 확보 */
+}
+
+.wishlist-title-line h2 {
+  margin: 0;
+  word-break: break-word; /* 긴 단어 줄바꿈 허용 */
+}
+
+.wishlist-description {
+  margin-top: 16px;
+  font-size: 16px;
+  color: #666;
 }
 
 .wishlist-list {

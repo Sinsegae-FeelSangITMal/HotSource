@@ -1,0 +1,179 @@
+<%@page import="hotsource.domain.WishlistItem"%>
+<%@page import="java.util.List"%>
+<%@page import="hotsource.domain.Wishlist"%>
+<%@ page contentType="text/html; charset=UTF-8"%>
+<%
+Wishlist wishlist = (Wishlist) request.getAttribute("wishlist");
+%>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>쇼핑몰</title>
+
+<!-- link Font, CSS -->
+<%@ include file="../inc/head_link.jsp"%>
+<link href="/static/css/wishlist.css" type="text/css" rel="stylesheet">
+<link href="/static/css/wishlist_modal.css" type="text/css"
+	rel="stylesheet">
+</head>
+
+<body>
+	<!-- Header -->
+	<div class="hero_area">
+		<%@ include file="../inc/header_search.jsp"%>
+	</div>
+
+	<!-- Breadcrumb Begin -->
+	<div class="breadcrumb-option">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="breadcrumb__links">
+						<a href="/main/index"><i class="fa fa-home"></i> Home</a> <a
+							href="/main/wishlist"> Wish List</a> <span><%=wishlist.getList_name()%>
+						</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Breadcrumb End -->
+
+	<!-- 특정 Wishlist Section Begin -->
+	<div class="wishlist-wrapper">
+		<!-- Wishlist 헤더 -->
+		<div class="wishlist-header">
+			<div class="wishlist-title-line">
+				<div class="wishlist-title-text">
+					<h2><%=wishlist.getList_name()%></h2>
+				</div>
+				<i class="bi bi-gear-fill" id="bt_setting1" style="color: black; font-size: 20px;"></i>
+			</div>
+			<div class="wishlist-description"><%=wishlist.getDescription()%></div>
+		</div>
+		
+		<!-- Asset 목록 시작 -->
+		<div class="product-grid">
+		<%
+			/* List<WishlistItem> list = wishlist.getItemList();
+			for (int i = 0; i < list.size(); i++) {
+		        Asset asset = list.get(i).getAsset();
+		        
+		        boolean isPurchased = false;
+		         */
+		%>
+		<!-- Asset 목록 끝 -->
+
+
+	</div>
+	<!-- Wishlist Section End -->
+
+	<!-- 수정 모달 (기본 숨겨짐) -->
+	<%@ include file="./update_form.jsp"%>
+	<!-- 수정 모달 끝 -->
+	
+	<!-- 푸터 영역 시작 -->
+	<%@ include file="../inc/footer.jsp"%>
+
+	<!-- js plugin -->
+	<%@ include file="../inc/footer_link.jsp"%>
+	
+	<script type="text/javascript">
+		//비동기 방식으로, 서버의 이미지를 다운로드 받기 
+		function getImgList(asset_id, filename){
+			console.log("넘겨받은 파일명은 ", filename);
+			$.ajax({
+				url:"/data/asset_img/" + asset_id + "/" + filename, 
+				type:"GET",
+				//서버로부터 가져온 이미지 정보는 img src로 표현되려면, 
+				//1) 서버로 부터 가져온 정보를 Blob 형태로 가져와서
+				//2) 웹브라우저 지원 객체인 File 로 변환 
+				//3) 이 파일을 읽어들인 후 e.target.result 형태로 img src에 대입
+				//XMLHttpRequest 객체를 이용해야 함
+				xhr: function(){
+					const xhr = new XMLHttpRequest();
+					xhr.responseType="blob"; 
+					return xhr;
+				},
+				success:function(result, status, xhr){
+					console.log("서버로부터 받은 바이너리 정보는 ",result);
+					const file = new File([result], filename, {type: result.type});
+					
+					const reader = new FileReader();
+					reader.onload=function(e){
+						
+						const imgTag = document.querySelector("#thumb_" + asset_id);
+						if (imgTag) {
+							imgTag.src = e.target.result;
+							console.log(imgTag.src);
+						}
+					}
+					reader.readAsDataURL(file);//대상 파일 읽기 
+				}
+			});
+		}
+		
+		document.querySelectorAll("img.thumb").forEach(img => {
+		    const assetId = img.dataset.assetId;
+		    const filename = img.dataset.filename;
+		    getImgList(assetId, filename);
+		});
+
+		
+		function updateWishlist(){
+			
+			let formdata = new FormData(document.querySelector("#wishlist_modal_form"));
+			formdata.append("wishlist_id", "<%=wishlist.getWishlist_id()%>");
+			$.ajax({
+				url:"/main/wishlist/update",
+				type: "post",
+				data: formdata,
+				processData: false,   
+				contentType: false, 
+				success: function(result, status, xhr){
+					$("#modalOverlay").hide();  //모달 숨기기
+					location.reload();
+				},
+				error: function(xhr, status, err){
+					console.log(err);
+				} 
+			});
+		}
+			
+		function checkForm() {
+			const title = $("#listTitle").val().trim();
+			$("#saveBtn").prop("disabled", title === "");
+		}
+	
+		// 수정 모달 열기
+ 		$("#bt_setting1").click(() => {
+			    $("#listTitle").val("<%=wishlist.getList_name()%>");
+			    $("#listDesc").val("<%=wishlist.getDescription()%>");
+			    $("#titleLength").text("<%=wishlist.getList_name().length()%>/60");
+			    $("#modalOverlay").css("display", "flex");
+			    checkForm();
+		});
+
+		// 입력 검사
+		document.getElementById("listTitle").addEventListener("input", () => {
+			$("#titleLength").text($("#listTitle").val().length + "/60");
+			checkForm(); // 기존 저장 버튼 활성화 여부 확인
+		});
+
+		//수정
+		$("#saveBtn").click(function(){
+			updateWishlist();
+		});
+		
+		// 취소
+		$("#cancelBtn").click(function(){
+			$("#modalOverlay").css("display", "none");
+		})
+		
+		
+
+	</script>
+</body>
+</html>

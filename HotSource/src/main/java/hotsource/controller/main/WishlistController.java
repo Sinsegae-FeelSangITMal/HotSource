@@ -25,11 +25,6 @@ public class WishlistController {
 	@Autowired
 	private WishlistService wishlistService;
 	
-	@GetMapping("/wishlist/create")
-	public String getCreateForm() {
-		return "main/wishlist/create_form";
-	}
-	
 	@PostMapping("/wishlist/regist")
 	@ResponseBody
 	public String regist(Wishlist wishlist, HttpSession session) {
@@ -58,12 +53,27 @@ public class WishlistController {
 	}
 	
 	@GetMapping("/wishlist/detail")
-	public ModelAndView getWishlist(@RequestParam int id) {
-		ModelAndView mav = new ModelAndView();
-		Wishlist wishlist = wishlistService.select(id);
-		mav.addObject("wishlist", wishlist);
-		mav.setViewName("main/wishlist/detail");
+	public ModelAndView getWishlist(@RequestParam int wishlist_id, HttpSession session) {
+		ModelAndView mav = new ModelAndView("main/wishlist/detail");
+		Wishlist wishlist = wishlistService.select(wishlist_id);
 		
+		User loginUser = (User)session.getAttribute("user");  //로그인한 유저의 찜 목록이 아니라면 
+		if(loginUser.getUser_id() != wishlist.getUser().getUser_id()) {
+			//예외 발생시키고 ... 흠
+			// 다시 본인 찜 목록으로 돌아가기 
+		}
+		
+		mav.addObject("wishlist", wishlist);
 		return mav;
 	}
+	
+	@PostMapping("/wishlist/update")
+	@ResponseBody
+	public String updateWishlist(Wishlist wishlist) {
+		log.debug("test");
+		wishlistService.update(wishlist);
+		
+		return "ok";
+	}
+	
 }

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import hotsource.domain.Wishlist;
+import hotsource.exception.WishlistException;
 
 @Service
 public class WishlistServiceImpl implements WishlistService {
@@ -29,8 +30,15 @@ public class WishlistServiceImpl implements WishlistService {
 	}
 
 	@Override
-	public void regist(Wishlist wishlist){
+	public void regist(Wishlist wishlist)throws WishlistException{
 		wishlistDAO.insert(wishlist);
 		
 	}
+
+	@Override
+	public void update(Wishlist wishlist) throws WishlistException{
+		wishlistDAO.update(wishlist);
+	}
+	
+	
 }

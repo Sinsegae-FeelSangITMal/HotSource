@@ -11,18 +11,18 @@ import hotsource.exception.WishlistException;
 
 @Repository
 public class MybatisWishlistDAO implements WishlistDAO {
-	
+
 	@Autowired
 	private SqlSessionTemplate sqlSessionTemplate;
-	
+
 	@Override
-	public void insert(Wishlist wishlist) throws WishlistException{
+	public void insert(Wishlist wishlist) throws WishlistException {
 		int result = sqlSessionTemplate.insert("Wishlist.insert", wishlist);
-		if(result < 1) {
+		if (result < 1) {
 			throw new WishlistException("찜 목록 생성 실패");
 		}
 	}
-	
+
 	@Override
 	public List selectAll() {
 		return sqlSessionTemplate.selectList("Wishlist.selectAll");
@@ -38,5 +38,12 @@ public class MybatisWishlistDAO implements WishlistDAO {
 		return sqlSessionTemplate.selectList("Wishlist.selectByUserId", user_id);
 	}
 
-	
+	@Override
+	public void update(Wishlist wishlist) throws WishlistException {
+		int result = sqlSessionTemplate.update("Wishlist.update", wishlist);
+		if (result < 1) {
+			throw new WishlistException("찜 목록 정보 수정 실패");
+		}
+	}
+
 }
