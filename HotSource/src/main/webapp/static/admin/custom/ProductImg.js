@@ -18,7 +18,7 @@ class ProductImg{
 		this.wrapper.style.width=this.width+"px";
 		this.wrapper.style.height=(this.height+20)+"px";
 		this.wrapper.style.display="inline-block";
-		this.wrapper.style.margin=2+"px";
+		this.wrapper.style.margin=10+"px";
 			
 		this.header.innerHTML="<a href='#'>X</a>";
 		this.header.style.textAlign="right";

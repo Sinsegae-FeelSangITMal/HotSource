@@ -31,8 +31,8 @@ public class MybatisAssetImgDAO implements AssetImgDAO{
 	}
 
 	@Override
-	public void insert(AssetImg assetImg) throws AssetImgException{
-		int result = sqlSessionTemplate.insert("AssetImg.insert", assetImg);
+	public void insert( List<AssetImg> assetImgs ) throws AssetImgException{
+		int result = sqlSessionTemplate.insert("AssetImg.insertBatch", assetImgs);
 		if(result < 1) {
 			throw new AssetImgException("에셋 스크린샷 등록 실패");
 		}

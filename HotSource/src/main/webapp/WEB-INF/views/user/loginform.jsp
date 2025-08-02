@@ -21,7 +21,7 @@
       <h2 class="text-3xl font-bold mb-2 text-left">Sign In</h2>
       <p class="text-sm text-gray-400 mb-6 text-left">to continue to <strong>HotSource</strong></p>
 
-      <form action="/user/login" method="post" class="space-y-4">
+      <form action="/main/user/login" method="post" class="space-y-4">
         <input type="text" name="user_email" placeholder="Email"
                class="w-full bg-[#1e1f26] border border-gray-600 text-white px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-400" required>
 
@@ -62,7 +62,7 @@
   
   function login(sns){
   	$.ajax({
-  		url : "/user/" + sns + "/authurl",
+  		url : "/main/user/" + sns + "/authurl",
   		type : "get",
   		success : function(result){
   			location.href=result; 

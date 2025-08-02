@@ -2,6 +2,10 @@ package hotsource.model.asset;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.web.multipart.MultipartFile;
+
 import hotsource.domain.Asset;
 import hotsource.domain.AssetImg;
 
@@ -10,7 +14,13 @@ public interface AssetService {
 	public Asset select(long asset_id);
 	public List selectBySellerId(long seller_id);
 	public int selectCount(long seller_id);
+	public List selectHot(long topcategory_id);
+	public List selectNew(long topcategory_id);
+	public List selectFree(long topcategory_id);
+	public List selectSale(long topcategory_id);
 	
+	public void saveAssetFiles(Long assetId, MultipartFile[] photoFiles, MultipartFile[] projectFiles, HttpServletRequest request);
+
 	public void regist(Asset asset);
 	public void update(Asset asset);
 	public void delete(long asset_id);

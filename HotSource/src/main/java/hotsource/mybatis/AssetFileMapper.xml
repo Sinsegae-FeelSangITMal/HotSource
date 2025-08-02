@@ -34,10 +34,13 @@
     </select>
 
     <!-- 3. 등록 -->
-    <insert id="insert" parameterType="AssetFile">
-        INSERT INTO asset_file (file_url, asset_id)
-        VALUES (#{file_url}, #{asset.asset_id})
-    </insert>
+	<insert id="insert" parameterType="java.util.List">
+	    INSERT INTO asset_file (file_url, asset_id)
+	    VALUES 
+	    <foreach collection="list" item="item" separator=",">
+	        (#{item.file_url}, #{item.asset.asset_id})
+	    </foreach>
+	</insert>
 
     <!-- 4. 수정 -->
     <update id="update" parameterType="AssetFile">

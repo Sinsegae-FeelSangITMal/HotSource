@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
 
 import lombok.Data;
 
@@ -22,6 +23,7 @@ public class Seller {
 	private boolean is_active;
 	
 	private User user;
+	private MultipartFile seller_profile;
 	
 	private List<Asset> assetList;
 	private List<Review> reviewList;
