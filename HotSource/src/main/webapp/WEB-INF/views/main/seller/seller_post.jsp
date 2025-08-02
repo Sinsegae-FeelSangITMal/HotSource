@@ -106,8 +106,12 @@
 	<%--} --%>
 </div>
 
+<!-- 페이지 영역 시작 -->
+<%@ include file="../inc/page.jsp"%>
+<!-- 페이지 영역 끝 -->
+
 <script>
-    $(document).ready(function () {
+    
         $("#btnSubmitComment").click(function () {
             let form = document.getElementById("commentForm");
             let formData = new FormData(form);
@@ -142,9 +146,4 @@
                 }
             });
         });
-    });
 </script>
-
-<!-- 페이지 영역 시작 -->
-<%@ include file="../inc/page.jsp"%>
-<!-- 페이지 영역 끝 -->
