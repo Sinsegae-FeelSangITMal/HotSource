@@ -71,9 +71,7 @@
 		<mapper resource="hotsource/mybatis/TopCategoryMapper.xml" />
 		<mapper resource="hotsource/mybatis/UserKeywordMappingMapper.xml" />
 		<mapper resource="hotsource/mybatis/UserMapper.xml" />
-		<!-- 
 		<mapper resource="hotsource/mybatis/WishlistMapper.xml" />
 		<mapper resource="hotsource/mybatis/WishlistItemMapper.xml" />
-		 -->
 	</mappers>
 </configuration>
