@@ -102,15 +102,117 @@
         
         <collection 	 column="asset_id" 		property="imgList"			javaType="java.util.List"		ofType="AssetImg"		select="AssetImg.selectThumb"/>
     </resultMap> -->
-    
-    <!-- 각 테이블에서 조회하려는 필드가 일부일 때는 직접 컬럼을 매핑하는 방식이 더 적합 -->
+
+<!-- 
+	SELECT 종합 : 파라미터 값을 넘겨받아 필터를 적용할 수 있음
+	<select id="selectFilter" resultMap="mainMap" parameterType="map">
+    	단순 Join이 아닌 조건이 들어가면 Query 작성 필요
+	    SELECT 
+	        a.asset_id, a.title, a.price, a.subcategory_id, a.create_date, a.view_count, a.rate_avg,
+	        s.seller_id, s.seller_name,
+	        sa.sale_value,
+	        i.asset_img_url
+	    FROM asset a
+	    LEFT JOIN subcategory sc ON a.subcategory_id = sc.subcategory_id
+	    LEFT JOIN topcategory tc ON sc.topcategory_id = tc.topcategory_id
+	    LEFT JOIN seller s ON a.seller_id = s.seller_id
+	    LEFT JOIN sale sa ON sa.asset_id = a.asset_id
+	    LEFT JOIN asset_img i ON i.asset_id = a.asset_id AND i.is_thumb = 1
+	    
+		<where>
+			<if test="top_name != null">
+				AND tc.top_name = #{top_name}
+			</if>
+			무료 리소스
+			<if test="price == 'free'">
+				AND a.price = 0
+			</if>
+			유료 리소스
+			<if test="price == 'premium'">
+				AND a.price > 0
+			</if>
+			<if test="seller_id != null">
+				AND a.seller_id = #{seller_id}
+			</if>
+			세일 중인 리소스
+			<if test="sale == true">
+				AND CURDATE() BETWEEN sa.start_date AND sa.end_date
+			</if>
+		</where>
+		
+		<choose>
+			조회수 많은/적은 순
+			<when test="sort == 'view_desc'">
+				ORDER BY a.view_count DESC
+			</when>
+			<when test="sort == 'view_asc'">
+				ORDER BY a.view_count ASC
+			</when>
+		
+			최신/오래된 순
+			<when test="sort == 'newest'">
+				ORDER BY a.create_date DESC
+			</when>
+			<when test="sort == 'oldest'">
+				ORDER BY a.create_date ASC
+			</when>
+		
+			이번 달 조회수 순
+			<when test="sort == 'monthly_view_desc' or sort == 'monthly_view_asc'">
+				ORDER BY (
+					SELECT COUNT(*) FROM asset_view av
+					WHERE av.asset_id = a.asset_id
+					AND MONTH(av.viewed_date) = MONTH(CURDATE())
+					AND YEAR(av.viewed_date) = YEAR(CURDATE())
+				)
+				<choose>
+					<when test="sort == 'monthly_view_desc'">DESC</when>
+					<when test="sort == 'monthly_view_asc'">ASC</when>
+				</choose>
+			</when>
+			
+			현재 세일 중
+			<when test="sort == 'sale_desc'">
+				ORDER BY sa.sale_value DESC
+			</when>
+			
+			기본 정렬
+			<otherwise>
+				ORDER BY a.asset_id DESC
+			</otherwise>
+		</choose>
+	</select>
+ -->
+
+
+
+
+
+
+
+
+
+	<!-- 일단 돌아가니 나중에 JOIN 해체하고 수정,,,, topcategory부터 시작 -->
+	<sql id="mainSql">
+	    SELECT 
+	        a.asset_id, a.title, a.price, a.subcategory_id, a.create_date, a.view_count,
+	        s.seller_id, s.seller_name,
+	        sa.sale_value,
+	        i.asset_img_url
+	    FROM asset a
+	    LEFT JOIN subcategory sc ON a.subcategory_id = sc.subcategory_id
+	    LEFT JOIN topcategory tc ON sc.topcategory_id = tc.topcategory_id
+	    LEFT JOIN seller s ON a.seller_id = s.seller_id
+	    LEFT JOIN sale sa ON sa.asset_id = a.asset_id
+	    LEFT JOIN asset_img i ON i.asset_id = a.asset_id AND i.is_thumb = 1
+	</sql>
+	
 	<resultMap id="mainMap" type="Asset">
 		<id property="asset_id" column="asset_id"/>
 		<result property="title" column="title"/>
 		<result property="price" column="price"/>
 		<result property="create_date" column="create_date"/>
 		<result property="view_count" column="view_count"/>
-		<result property="rate_avg" column="rate_avg"/>
 	
 		<association property="seller" javaType="Seller">
 			<result property="seller_name" column="seller_name"/>
@@ -129,100 +231,6 @@
 			<result property="asset_img_url" column="asset_img_url"/>
 		</collection>
 	</resultMap>
-    
-
-	<!-- SELECT 종합 : 파라미터 값을 넘겨받아 필터를 적용할 수 있음 -->
-	<select id="selectFilter" resultMap="mainMap" parameterType="map">
-    	<!-- 단순 Join이 아닌 조건이 들어가면 Query 작성 필요 -->
-	    SELECT 
-	        a.asset_id, a.title, a.price, a.subcategory_id, a.create_date, a.view_count, a.rate_avg,
-	        s.seller_id, s.seller_name,
-	        sa.sale_value,
-	        i.asset_img_url
-	    FROM asset a
-	    LEFT JOIN subcategory sc ON a.subcategory_id = sc.subcategory_id
-	    LEFT JOIN topcategory tc ON sc.topcategory_id = tc.topcategory_id
-	    LEFT JOIN seller s ON a.seller_id = s.seller_id
-	    LEFT JOIN sale sa ON sa.asset_id = a.asset_id
-	    LEFT JOIN asset_img i ON i.asset_id = a.asset_id AND i.is_thumb = 1
-	    
-		<where>
-			<if test="top_name != null">
-				AND tc.top_name = #{top_name}
-			</if>
-			<!-- 무료 리소스 -->
-			<if test="price == 'free'">
-				AND a.price = 0
-			</if>
-			<!-- 유료 리소스 -->
-			<if test="price == 'premium'">
-				AND a.price > 0
-			</if>
-			<if test="seller_id != null">
-				AND a.seller_id = #{seller_id}
-			</if>
-			<!-- 세일 중인 리소스 -->
-			<if test="sale == true">
-				AND CURDATE() BETWEEN sa.start_date AND sa.end_date
-			</if>
-		</where>
-		
-		<choose>
-			<!-- 조회수 많은/적은 순 -->
-			<when test="sort == 'view_desc'">
-				ORDER BY a.view_count DESC
-			</when>
-			<when test="sort == 'view_asc'">
-				ORDER BY a.view_count ASC
-			</when>
-		
-			<!-- 최신/오래된 순 -->
-			<when test="sort == 'newest'">
-				ORDER BY a.create_date DESC
-			</when>
-			<when test="sort == 'oldest'">
-				ORDER BY a.create_date ASC
-			</when>
-		
-			<!-- 이번 달 조회수 순 -->
-			<when test="sort == 'monthly_view_desc' or sort == 'monthly_view_asc'">
-				ORDER BY (
-					SELECT COUNT(*) FROM asset_view av
-					WHERE av.asset_id = a.asset_id
-					AND MONTH(av.viewed_date) = MONTH(CURDATE())
-					AND YEAR(av.viewed_date) = YEAR(CURDATE())
-				)
-				<choose>
-					<when test="sort == 'monthly_view_desc'">DESC</when>
-					<when test="sort == 'monthly_view_asc'">ASC</when>
-				</choose>
-			</when>
-			
-			<!-- 현재 세일 중 -->
-			<when test="sort == 'sale_desc'">
-				ORDER BY sa.sale_value DESC
-			</when>
-			
-			<!-- 기본 정렬 -->
-			<otherwise>
-				ORDER BY a.asset_id DESC
-			</otherwise>
-		</choose>
-	</select>
-
-	<sql id="mainSql">
-	    SELECT 
-	        a.asset_id, a.title, a.price, a.subcategory_id, a.create_date, a.view_count, a.rate_avg,
-	        s.seller_id, s.seller_name,
-	        sa.sale_value,
-	        i.asset_img_url
-	    FROM asset a
-	    LEFT JOIN subcategory sc ON a.subcategory_id = sc.subcategory_id
-	    LEFT JOIN topcategory tc ON sc.topcategory_id = tc.topcategory_id
-	    LEFT JOIN seller s ON a.seller_id = s.seller_id
-	    LEFT JOIN sale sa ON sa.asset_id = a.asset_id
-	    LEFT JOIN asset_img i ON i.asset_id = a.asset_id AND i.is_thumb = 1
-	</sql>
 
 	<!-- 인기 리소스: 조회수 내림차순 조회 (일단 조회수 순으로만) -->
 	<select id="selectHot" resultMap="mainMap" parameterType="long">

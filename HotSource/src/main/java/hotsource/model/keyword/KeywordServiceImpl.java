@@ -22,4 +22,5 @@ public class KeywordServiceImpl implements KeywordService {
 	public Keyword select(long keyword_id) {
 		return keywordDAO.select(keyword_id);
 	}
+	
 }

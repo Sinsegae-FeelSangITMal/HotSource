@@ -23,4 +23,9 @@ public class MybatisKeywordDAO implements KeywordDAO {
 	public Keyword select(long keyword_id) {
 		return sqlSessionTemplate.selectOne("Keyword.select", keyword_id);
 	}
+	
+	@Override
+	public Keyword selectByName(String keyword_name) {
+		return sqlSessionTemplate.selectOne("Keyword.selectByName", keyword_name);
+	}
 }
