@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.web.multipart.MultipartFile;
 
 import lombok.Data;
+import lombok.ToString;
 
 @Data
 public class Seller {
@@ -25,6 +26,7 @@ public class Seller {
 	private User user;
 	private MultipartFile seller_profile;
 	
+	@ToString.Exclude
 	private List<Asset> assetList;
 	private List<Review> reviewList;
 	private List<OrderedAsset> orderAssetList;

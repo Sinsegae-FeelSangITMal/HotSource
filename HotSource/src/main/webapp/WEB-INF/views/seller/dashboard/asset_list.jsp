@@ -1,5 +1,13 @@
+<%@page import="hotsource.domain.Asset"%>
+<%@page import="java.util.List"%>
 <%@ page contentType="text/html; charset=UTF-8" %>
+ <%
+    List<Asset> list = (List<Asset>) request.getAttribute("assets");
+    boolean hasAssets = (list != null && !list.isEmpty());
+%>
+
 <!DOCTYPE html>
+
 <html>
 <head>
     <title>Creator Dashboard</title>
@@ -97,6 +105,31 @@
         <a href="#">learn more</a>
     </div>
 
+   
+  
+<% if (hasAssets) { %>
+    <%-- asset이 있을 경우: 리스트 출력 --%>
+    <div class="upload-section" style="padding-top: 10px;">
+        <% for (Asset asset : list) { %>
+            <div style="display: flex; align-items: center; border: 1px solid #ccc; padding: 10px; margin-bottom: 10px;">
+                <img src="<%= asset.getThumbnail().getAsset_img_url() %>" alt="Thumbnail" style="width: 80px; height: 80px; object-fit: cover; margin-right: 15px;">
+                <div style="flex-grow: 1;">
+                    <div style="font-weight: bold;"><%= asset.getTitle() %></div>
+                </div>
+                <div style="white-space: nowrap;">
+                    <a href="/seller/asset/edit?id=<%= asset.getAsset_id() %>" style="margin-right: 10px;">Edit</a>
+                    <a href="/seller/asset/analytics?id=<%= asset.getAsset_id() %>" style="margin-right: 10px;">Analytics</a>
+                    <a href="/seller/asset/earnings?id=<%= asset.getAsset_id() %>" style="margin-right: 10px;">Earnings</a>
+                    <a href="/seller/asset/delete?id=<%= asset.getAsset_id() %>">Delete</a>
+                </div>
+            </div>
+        <% } %>
+        <form action="/seller/dashboard/assetCreate" method="get" style="text-align: right; margin-top: 20px;">
+            <button type="submit" style="background-color: #cc092f; color: white; border: none; padding: 10px 20px; font-weight: bold; border-radius: 5px;">Create new project</button>
+        </form>
+    </div>
+<% } else { %>
+    <%-- asset이 없을 경우: 업로드 권장 메시지 --%>
     <div class="upload-section">
         <h2>Upload your first game</h2>
         <form action="/seller/dashboard/assetCreate" method="get">
@@ -104,6 +137,7 @@
         </form>
         <p>Nah, take me to the games feed</p>
     </div>
+<% } %>
 </div>
 </body>
 </html>
