@@ -53,4 +53,5 @@ public class MybatisWishlistDAO implements WishlistDAO {
 			throw new WishlistException("찜 목록 삭제 실패");
 		}
 	}
+
 }

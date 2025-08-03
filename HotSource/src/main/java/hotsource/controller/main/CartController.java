@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import hotsource.domain.Asset;
 import hotsource.domain.Cart;
 import hotsource.domain.User;
 import hotsource.exception.CartException;
@@ -47,7 +48,25 @@ public class CartController {
 		mav.addObject("discountList", discountList);
 		
 		return mav;
-	} 
+	}
+	
+	@PostMapping("/cart/regist")
+	@ResponseBody
+	public String addToCart(@RequestParam long asset_id, HttpSession session) {
+		User user = (User)session.getAttribute("user");
+		
+		Cart cart = new Cart();
+		cart.setUser(user);
+		Asset asset = new Asset();
+		asset.setAsset_id(asset_id);
+		cart.setAsset(asset);
+		
+		cartService.addToCart(cart);
+		
+		return "ok";
+	}
+	
+	
 	
 	@PostMapping("/cart/delete")
 	@ResponseBody

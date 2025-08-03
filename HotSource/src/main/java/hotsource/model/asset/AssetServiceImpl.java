@@ -1,10 +1,8 @@
 package hotsource.model.asset;
 
-import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
-import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -15,15 +13,20 @@ import org.springframework.web.multipart.MultipartFile;
 
 import hotsource.domain.Asset;
 import hotsource.domain.AssetFile;
-import hotsource.util.FileManager;
-import lombok.extern.slf4j.Slf4j;
 import hotsource.domain.AssetImg;
 import hotsource.domain.Sale;
-import hotsource.model.asset_file.AssetFileDAO;
 import hotsource.exception.AssetException;
+import hotsource.model.asset_file.AssetFileDAO;
 import hotsource.model.asset_img.AssetImgDAO;
+import hotsource.model.cart.CartService;
+import hotsource.model.ordered.OrderedService;
+import hotsource.model.review.ReviewService;
 import hotsource.model.sale.SaleDAO;
 import hotsource.model.sale.SaleService;
+import hotsource.model.wishlist.AssetCardDTO;
+import hotsource.model.wishlist_item.WishlistItemService;
+import hotsource.util.FileManager;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Slf4j
@@ -47,6 +50,18 @@ public class AssetServiceImpl implements AssetService {
 	@Autowired 
 	private SaleService saleService;
 	
+	@Autowired
+	private ReviewService reviewService;
+	
+	@Autowired
+	private OrderedService orderedService;
+	
+	@Autowired 
+	private WishlistItemService wishlistItemService;
+	
+	@Autowired
+	private CartService cartService;
+
 	@Override
 	public List selectAll() {
 		return assetDAO.selectAll();
@@ -156,12 +171,46 @@ public class AssetServiceImpl implements AssetService {
 
 	@Override
 	public int getDiscountPrice(Asset asset) {
-		Sale sale = saleService.selectByAssetId(asset.getAsset_id());
-		
-		if(sale == null) {
+		if(asset.getSale() == null) {
 			return 0;
 		}else {
-			return asset.getPrice() -(asset.getPrice() * sale.getSale_value() / 100); 
+			return asset.getPrice() -(asset.getPrice() * asset.getSale().getSale_value() / 100); 
 		}
 	}
+	
+	//출시 일주일 간은 신규 에셋으로 분류
+	public boolean isNew(Asset asset) {
+	    return asset.getCreate_date().toLocalDateTime().isAfter(LocalDateTime.now().minusDays(7));
+	}
+	
+	//조회수가 1000 이상이면 인기 에셋으로 분류
+	public boolean isHot(Asset asset) {
+		return asset.getView_count() > 1000;
+	}
+
+	@Override
+	public AssetCardDTO buildAssetCardDTO(long asset_id, long user_id) {
+		AssetCardDTO dto = new AssetCardDTO();
+		Asset asset = select(asset_id);
+		
+		dto.setAsset_id(asset_id);
+		dto.setSeller_name(asset.getSeller().getSeller_name());
+		dto.setTitle(asset.getTitle());
+		dto.setPrice(asset.getPrice());
+		dto.setThumbnail_url(asset.getThumbnail().getAsset_img_url());
+		if(asset.getSale() != null) {
+			dto.setSale_value(asset.getSale().getSale_value());
+		}
+		dto.setSalePrice(getDiscountPrice(asset));
+		dto.setAverage_rate(reviewService.getAverageRateByAssetId(asset_id));
+		dto.setReview_count(reviewService.countByAssetId(asset_id));
+		dto.setPurchased(orderedService.isPurchased(user_id, asset_id));
+		dto.setWished(wishlistItemService.isWished(user_id, asset_id));
+		dto.setInCart(cartService.isInCart(user_id, asset_id));
+		dto.setNew(isNew(asset));
+		dto.setHot(isHot(asset));		
+		
+		return dto;
+	}
+	
 }

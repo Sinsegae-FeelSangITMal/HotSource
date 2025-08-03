@@ -27,7 +27,7 @@
             <id property="subcategory_id" column="subcategory_id"/>
         </association>
         
-        <association column="sale_id" property="sale" javaType="Sale" select="Sale.selectValidByAssetId"></association>
+        <association column="asset_id" property="sale" javaType="Sale" select="Sale.selectValidByAssetId"></association>
         <association column = "asset_id" property="thumbnail" javaType="AssetImg" select = "AssetImg.selectThumbnailByAssetId"></association>
         <collection property="reviewList" column="asset_id" javaType="java.util.List" ofType="Review" select="Review.selectByAssetId"/>
     </resultMap>

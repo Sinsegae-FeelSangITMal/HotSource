@@ -10,6 +10,6 @@ public interface ReviewService {
 	public List selectByUserId(long user_id);
 	public List selectByAssetId(long asset_id);
 	public Review selectByOrderedAssetId(long order_asset_id);
-//	public double selectAvgRate(int seller_id);
-
+	public double getAverageRateByAssetId(long asset_id);
+	public int countByAssetId(long asset_id);
 }
