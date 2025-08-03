@@ -35,22 +35,22 @@ public class MybatisAssetDAO implements AssetDAO {
 	}
 
 	@Override
-	public List selectHot(long topcategory_id) {
+	public List selectHot(int topcategory_id) {
 		return sqlSessionTemplate.selectList("Asset.selectHot", topcategory_id);
 	}
 
 	@Override
-	public List selectNew(long topcategory_id) {
+	public List selectNew(int topcategory_id) {
 		return sqlSessionTemplate.selectList("Asset.selectNew", topcategory_id);
 	}
 
 	@Override
-	public List selectFree(long topcategory_id) {
+	public List selectFree(int topcategory_id) {
 		return sqlSessionTemplate.selectList("Asset.selectFree", topcategory_id);
 	}
 
 	@Override
-	public List selectSale(long topcategory_id) {
+	public List selectSale(int topcategory_id) {
 		return sqlSessionTemplate.selectList("Asset.selectSale", topcategory_id);
 	}
 

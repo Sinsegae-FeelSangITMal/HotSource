@@ -14,10 +14,10 @@ public interface AssetService {
 	public Asset select(long asset_id);
 	public List selectBySellerId(long seller_id);
 	public int selectCount(long seller_id);
-	public List selectHot(long topcategory_id);
-	public List selectNew(long topcategory_id);
-	public List selectFree(long topcategory_id);
-	public List selectSale(long topcategory_id);
+	public List selectHot(int topcategory_id);
+	public List selectNew(int topcategory_id);
+	public List selectFree(int topcategory_id);
+	public List selectSale(int topcategory_id);
 	
 	public void saveAssetFiles(Long assetId, MultipartFile[] photoFiles, MultipartFile[] projectFiles, HttpServletRequest request);
 

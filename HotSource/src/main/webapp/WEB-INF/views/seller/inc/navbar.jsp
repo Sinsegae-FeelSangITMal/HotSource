@@ -8,7 +8,7 @@
       </a>
     </li>
     <li class="nav-item d-none d-sm-inline-block">
-      <a href="/static/shop" class="nav-link text-white" target="_blank">메인페이지 바로가기</a>
+      <a href="/main/index" class="nav-link text-white" target="_blank">메인페이지 바로가기</a>
     </li>
   </ul>
 

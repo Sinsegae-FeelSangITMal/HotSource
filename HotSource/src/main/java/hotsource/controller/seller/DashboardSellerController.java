@@ -50,12 +50,12 @@ public class DashboardSellerController {
 	        try {
 	        	sellerService.regist(seller, savePath);
 	        } catch(SellerException e) {
-	        	// sellerService.remove(seller, savePath);
+//	        	sellerService.remove(seller, savePath);
 	        	e.printStackTrace();
 	        }
 	        session.setAttribute("seller", seller);
 	        
-	        mav.setViewName("redirect:/seller/dashboard/assetCreate");
+	        mav.setViewName("redirect:/seller/dashboard/assetList?seller_id="+seller.getSeller_id());
 
 	    } catch(Exception e) {
 	        log.error("등록 실패", e);

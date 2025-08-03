@@ -176,8 +176,8 @@
             <div class="form-section">
               <label>Price</label>
               <div class="radio-group">
-                <label><input type="radio" name="isPaid" value="true" /> Paid asset</label>
-                <label><input type="radio" name="isPaid" value="false" checked /> Free asset</label>
+                <label><input type="radio" name="isPaid" value="true" checked/> Paid asset</label>
+                <label><input type="radio" name="isPaid" value="false"/> Free asset</label>
               </div>
               <input type="number" name="price" class="form-control mt-2" placeholder="$ price (유료인 경우만)" />
             </div>
@@ -408,6 +408,20 @@
     const files = e.dataTransfer.files;
     fileInput.files = files;
     dropZone.textContent = [...files].map(f => f.name).join(", ");
+  });
+  
+  const isPaidRadios = document.querySelectorAll("input[name='isPaid']");
+  const priceInput = document.querySelector("input[name='price']");
+
+  isPaidRadios.forEach(radio => {
+    radio.addEventListener("change", () => {
+      if (radio.value === "true" && radio.checked) {
+        priceInput.disabled = false;
+      } else if (radio.value === "false" && radio.checked) {
+        priceInput.disabled = true;
+        priceInput.value = ""; // 선택 해제 시 가격 입력값 초기화 (선택사항)
+      }
+    });
   });
 </script>
 

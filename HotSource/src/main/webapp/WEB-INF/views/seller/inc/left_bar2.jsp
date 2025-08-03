@@ -4,9 +4,6 @@
 <%
     Seller seller = (Seller) session.getAttribute("seller");
     String uri = request.getRequestURI();
-    boolean isDashboard = uri.contains("/dashboard");
-    boolean isNotice = uri.contains("/seller/notice");
-    boolean isSettings = uri.contains("index");
 %>
 
 <aside class="main-sidebar sidebar-light elevation-4">
@@ -39,9 +36,9 @@
     <nav class="mt-2">
       <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="True">
 
-        <!-- Dashboard / Assets -->
-        <li class="nav-item mb-3 <%= isDashboard ? "menu-open" : "" %>">
-          <a href="#" class="nav-link <%= isDashboard ? "active" : "" %>">
+        <!-- Dashboard -->
+        <li class="nav-item mb-3">
+          <a href="#" class="nav-link <%= uri.contains("/dashboard") ? "active" : "" %>">
             <i class="nav-icon fas fa-tachometer-alt"></i>
             <p>
               Assets
@@ -50,7 +47,7 @@
           </a>
           <ul class="nav nav-treeview ps-3">
             <li class="nav-item">
-              <a href="/seller/dashboard/assetList?seller_id=<%= (seller != null ? seller.getSeller_id() : "") %>" class="nav-link <%= uri.contains("assetList") ? "active" : "" %>">
+            <a href="/seller/dashboard/assetList?seller_id=<%= (seller != null ? seller.getSeller_id() : "") %>" class="nav-link <%= uri.contains("assetList") ? "active" : "" %>">
                 <i class="far fa-circle nav-icon"></i>
                 <p>List</p>
               </a>
@@ -71,8 +68,8 @@
         </li>
 
         <!-- Notice -->
-        <li class="nav-item mb-3 <%= isNotice ? "menu-open" : "" %>">
-          <a href="#" class="nav-link <%= isNotice ? "active" : "" %>">
+        <li class="nav-item mb-3">
+          <a href="#" class="nav-link <%= uri.contains("/seller/notice") ? "active" : "" %>">
             <i class="nav-icon fas fa-bell"></i>
             <p>
               Notice
@@ -96,8 +93,8 @@
         </li>
 
         <!-- Settings -->
-        <li class="nav-item mb-3 <%= isSettings ? "menu-open" : "" %>">
-          <a href="#" class="nav-link <%= isSettings ? "active" : "" %>">
+        <li class="nav-item mb-3">
+          <a href="#" class="nav-link <%= uri.contains("index") ? "active" : "" %>">
             <i class="nav-icon fas fa-cog"></i>
             <p>
               Settings

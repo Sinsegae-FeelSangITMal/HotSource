@@ -109,22 +109,22 @@ public class AssetServiceImpl implements AssetService {
 	    assetFileDAO.insert(assetFilesList);
 	}
 
-	public List selectHot(long topcategory_id) {
+	public List selectHot(int topcategory_id) {
 		return assetDAO.selectHot(topcategory_id);
 	}
 
 	@Override
-	public List selectNew(long topcategory_id) {
+	public List selectNew(int topcategory_id) {
 		return assetDAO.selectNew(topcategory_id);
 	}
 
 	@Override
-	public List selectFree(long topcategory_id) {
+	public List selectFree(int topcategory_id) {
 		return assetDAO.selectFree(topcategory_id);
 	}
 
 	@Override
-	public List selectSale(long topcategory_id) {
+	public List selectSale(int topcategory_id) {
 		return assetDAO.selectSale(topcategory_id);
 	}
 	

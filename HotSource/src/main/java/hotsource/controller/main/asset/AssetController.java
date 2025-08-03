@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import hotsource.domain.Asset;
 import hotsource.domain.Seller;
@@ -47,5 +48,6 @@ public class AssetController {
 	    result.put("status", "success");
 	    return result;
 	}
+	
 
 }

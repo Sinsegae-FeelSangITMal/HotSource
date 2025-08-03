@@ -83,7 +83,6 @@
                       <th>공지글 제목</th>
                       <th>내용</th>
                       <th>등록일</th>
-                      <th>이미지 로고</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -98,7 +97,6 @@
 					    <td><%= notice.getTitle() %></td>
 					    <td><%= notice.getContent() %></td>
 					    <td><%= notice.getCreate_date() %></td>
-					    <td><img width="40px" src="<%= notice.getNotice_img_url() %>"></td>
 					  </tr>
 					<% } %>
 

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import hotsource.domain.Asset;
 import hotsource.model.asset.AssetService;
@@ -31,5 +32,18 @@ public class DashboardController {
 	@GetMapping("/dashboard/assetCreate")
 	public String getCreatePage() {
 		return "/seller/dashboard/asset_create";
+	}
+	
+	
+	@GetMapping("/dashboard/asset/update")
+	public ModelAndView update(@RequestParam("asset_id") long asset_id) {
+		ModelAndView mav = new ModelAndView();
+		
+		Asset asset = assetService.select(asset_id);
+		
+		mav.addObject("asset", asset);
+		mav.setViewName("/seller/dashboard/asset_update");
+
+	    return mav;
 	}
 }
