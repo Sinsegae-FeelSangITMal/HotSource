@@ -16,17 +16,17 @@
   <div class="sidebar">
     <!-- Sidebar user panel -->
     <div class="user-panel d-flex align-items-center my-3 px-3">
-     	<% if(seller == null){ %>
-        <a href="/seller/create" class="d-block fw-semibold text-dark">판매자 등록</a>
+      <div class="image">
+        <img src="<%= seller.getProfile_img_url()%>" class="img-circle elevation-2" alt="User Image" style="width: 35px; height: 35px;">
+      </div>
+      <div class="info ms-2">
+      	<% if(seller == null){ %>
+        <a href="#" class="d-block fw-semibold text-dark">판매자 등록</a>
         <% } else { %>
-	      <div class="image">
-	        <img src="/static/admin/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image" style="width: 35px; height: 35px;">
-	      </div>
-	      <div class="info ms-2">
         <a href="#" class="d-block fw-semibold text-dark"><%= seller.getSeller_nickname() %> (Seller)</a>
         
-      </div>
         <% } %>
+      </div>
     </div>
 
     <!-- Sidebar Menu -->

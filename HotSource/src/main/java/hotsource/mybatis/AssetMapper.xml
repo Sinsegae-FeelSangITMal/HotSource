@@ -26,6 +26,7 @@
         <association property="subCategory" javaType="SubCategory">
             <id property="subcategory_id" column="subcategory_id"/>
         </association>
+        <association property="thumbnail" column="asset_id" javaType="AssetImg" select="AssetImg.selectThumbnailByAssetId" />
         
         <association column="sale_id" property="sale" javaType="Sale" select="Sale.selectValidByAssetId"></association>
         <association column = "asset_id" property="thumbnail" javaType="AssetImg" select = "AssetImg.selectThumbnailByAssetId"></association>

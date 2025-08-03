@@ -329,7 +329,7 @@
 			success:function(result, status, xhr){
 				if(result.status === "success") {
 		            alert("업로드 성공");
-		            window.location.href = "/seller/dashboard/assetList?seller_id=<% seller.getSeller_id() %>";  // 고정 URL 이동
+		            window.location.href = "/seller/dashboard/assetList?seller_id=<%= seller.getSeller_id() %>";  // 고정 URL 이동
 		        } else {
 		            alert("업로드 실패");
 		        }

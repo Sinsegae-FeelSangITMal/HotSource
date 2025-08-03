@@ -3,7 +3,7 @@
 <mapper namespace="User">
 	
 	<sql id="columns">
-		user_id, id, password, user_name, user_email, user_nickname, profile_img_url, create_date, role_id, salt
+		user_id, id, password, user_name, user_email, user_nickname, profile_img_url, create_date, role_id, salt, sns_provider_id
 	</sql>
 	<resultMap			type="User"							id="roleMap">
 		<id 					column="user_id"					property="user_id"/>
@@ -14,7 +14,9 @@
 		<result				column="user_nickname"		property="user_nickname"/>
 		<result				column="profile_img_url"		property="profile_img_url"/>
 		<result				column="create_date"			property="create_date"/>
+		<result				column="salt"			property="salt"/>
 		<association	column="role_id"					property="role"					javaType="Role"		select="Role.select"/>
+		<association	column="sns_provider_id"					property="snsProvider"					javaType="SnsProvider"		select="SnsProvider.selectById"/>
 	</resultMap>
 	
 	<select id="selectAll" resultMap="roleMap">
@@ -25,11 +27,11 @@
 		SELECT <include refid="columns"/> FROM user WHERE user_id=#{user_id}
 	</select>
 	
-	<select id="selectById" parameterType="String" resultType="User">
+	<select id="selectById" parameterType="String" resultMap="roleMap">
 		SELECT <include refid="columns"/> FROM user WHERE id = #{id}
 	</select>
 	
-	<select id="selectByEmail" parameterType="String" resultType="User">
+	<select id="selectByEmail" parameterType="String" resultMap="roleMap">
 		SELECT <include refid="columns"/> FROM user WHERE user_email = #{user_email}
 	</select>
 	

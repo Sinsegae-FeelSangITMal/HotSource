@@ -45,7 +45,7 @@ public class DashboardSellerController {
 	        User user = (User) session.getAttribute("user");
 	        seller.setUser(user);
 	        
-	        String savePath = request.getServletContext().getRealPath("/seller");
+	        String savePath = request.getServletContext().getRealPath("/data");
 	        
 	        try {
 	        	sellerService.regist(seller, savePath);

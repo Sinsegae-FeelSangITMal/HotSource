@@ -48,7 +48,7 @@ public class UserServiceImpl implements UserService{
 		
 		User obj = userDAO.selectByEmail(user.getUser_email());
 		
-		log.debug("lslfsldlfslogin obj :" + obj);
+		log.debug("login obj :" + obj);
 		
 		String dbHash = passwordUtil.hashPassword(user.getPassword(), obj.getSalt());
 		

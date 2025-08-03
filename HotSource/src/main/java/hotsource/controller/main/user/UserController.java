@@ -1,16 +1,21 @@
 package hotsource.controller.main.user;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -23,7 +28,9 @@ import com.github.scribejava.core.oauth.OAuth20Service;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import hotsource.domain.Role;
 import hotsource.domain.Seller;
+import hotsource.domain.SnsProvider;
 import hotsource.domain.User;
 import hotsource.model.seller.SellerService;
 import hotsource.model.snsprovider.SnsProviderService;
@@ -75,24 +82,38 @@ public class UserController {
 	
 	@PostMapping("/regist")
 	public String regist(User user) {
+		Role role = new Role();
+		SnsProvider snsProvider = new SnsProvider();
+		role.setRole_id(1);
+		user.setRole(role);
 		userService.regist(user);
 
 	    return "redirect:/main/user/login";
 	}
 	
 	@PostMapping("/login")
-	public String homeLogin(User user, HttpSession session) {
-	    User obj = userService.login(user); // 로그인 인증
-
-	    if (obj != null) {
-	        session.setAttribute("user", obj);
-	        loginAndSetSession(session, obj);
-
-	        return "redirect:/main/index";
-	    }
-
-	    // 로그인 실패 시 처리
-	    return "redirect:/main/user/login?error=true";
+	@ResponseBody
+	public ResponseEntity<?> loginAjax(@RequestBody User user, HttpSession session) {
+		try {
+		    User obj = userService.login(user);
+	
+		    if (obj != null) {
+		        session.setAttribute("user", obj);
+		        loginAndSetSession(session, obj);
+	
+		        Map<String, Object> result = new HashMap<>();
+		        result.put("success", true);
+		        result.put("redirectUrl", "/main/index");
+		        return ResponseEntity.ok(result);
+		    }
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.debug("login Exception :"+ e.getMessage());
+		}
+		Map<String, Object> error = new HashMap<>();
+		error.put("success", false);
+		error.put("message", "Invalid credentials");
+		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(error);
 	}
 
 	
@@ -138,7 +159,12 @@ public class UserController {
 			user.setId(openid);
 			user.setUser_email(email);
 			user.setUser_name(name);
-			// user.setRole()나중에 구현
+			user.setUser_nickname(name);
+			
+			Role role = new Role();
+			
+			role.setRole_id(1);
+			user.setRole(role);
 			
 			userService.regist(user);
 		} 
@@ -196,6 +222,12 @@ public class UserController {
 			user.setId(id);
 			user.setUser_email(email);
 			user.setUser_name(name);
+			user.setUser_nickname(name);
+			
+			Role role = new Role();
+			
+			role.setRole_id(1);
+			user.setRole(role);
 			
 			userService.regist(user);
 		} 
@@ -258,6 +290,12 @@ public class UserController {
 			user.setId(id);
 			user.setUser_email(email);
 			user.setUser_name(name);
+			user.setUser_nickname(name);
+			
+			Role role = new Role();
+			
+			role.setRole_id(1);
+			user.setRole(role);
 			
 			userService.regist(user);
 		} 
