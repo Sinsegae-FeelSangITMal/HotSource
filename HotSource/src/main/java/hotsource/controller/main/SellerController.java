@@ -1,13 +1,20 @@
 package hotsource.controller.main;
 
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -17,6 +24,7 @@ import hotsource.domain.NoticeComment;
 import hotsource.domain.NoticeLike;
 import hotsource.domain.Review;
 import hotsource.domain.Seller;
+import hotsource.domain.User;
 import hotsource.model.asset.AssetService;
 import hotsource.model.notice.NoticeService;
 import hotsource.model.notice_comment.NoticeCommentService;
@@ -32,7 +40,7 @@ import lombok.extern.slf4j.Slf4j;
 public class SellerController {
 
 	@Autowired
-	private UserService userSerive;
+	private UserService userService;
 	
 	@Autowired
 	private SellerService sellerSerive;
@@ -118,5 +126,21 @@ public class SellerController {
 		model.addAttribute("assetRate", assetRate);
 
 		return mav;
+	}
+
+	@PostMapping("/seller/comment/regist")
+	@ResponseBody
+	public Map<String, Object> registComment(@RequestParam long notice_id,
+	                                         @RequestParam long user_id,
+	                                         @RequestParam String content) {
+
+	    NoticeComment comment = noticeService.registComment(notice_id, user_id, content);
+
+	    Map<String, Object> result = new HashMap<>();
+	    result.put("user_name", comment.getUser().getUser_name());  // 이름 필요 시 userDAO.select로 조회
+	    result.put("content", comment.getContent());
+	    result.put("create_date", new SimpleDateFormat("yyyy-MM-dd HH:mm").format(comment.getCreate_date()));
+
+	    return result;
 	}
 }

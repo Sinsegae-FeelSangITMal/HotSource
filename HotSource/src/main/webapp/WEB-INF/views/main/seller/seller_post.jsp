@@ -18,7 +18,8 @@
     Date oneMonthAgo = cal.getTime();
 
     // 조건: 한 달 이내에 생성된 경우
-    boolean isNew = createDate.after(oneMonthAgo) && !createDate.after(now);
+    //Date createDate = notice.getCreate_date(); // 공지 생성일로 변경
+	boolean isNew = createDate.after(oneMonthAgo) && !createDate.after(now);
 %>
 <div class="tap-artist-card">
 					<%-- for (int i=1; i<=2; i++) {--%>
@@ -53,21 +54,7 @@
 				
 				<!-- 공지 댓글 -->
 				<% List<NoticeComment> commentList = notice.getCommentList(); %>
-				<% if (notice.getCommentList() != null && !notice.getCommentList().isEmpty()) { %>
-				    <div class="comment-box">
-				        <h6>댓글 (<%= commentList.size() %>)</h6>
-				        <ul>
-				            <% for (NoticeComment comment : commentList) { 
-				                if (comment != null) { %> <!-- 이 부분도 안전하게 -->
-				                    <li><strong><%= comment.getUser().getUser_name() %>:</strong> <%= comment.getContent() %></li>
-				            <%  } } %>
-				        </ul>
-				    </div>
-				<% } else { %>
-				    <div class="comment-box">
-				        <p>댓글이 없습니다.</p>
-				    </div>
-				<% } %>
+
 
 		        
 		        <!-- 공지 좋아요 -->
@@ -88,18 +75,29 @@
 				<!-- 공지 댓글 작성 -->
 				<div class="comment-form mt-2">
 				    <% if (loginUser != null) { %>
-				        <form id="commentForm">
-				            <input type="hidden" name="notice_id" value="<%= notice.getNotice_id() %>">
-				            <input type="hidden" name="user_id" value="<%= loginUser.getUser_id() %>">
-				            <textarea name="content" id="commentContent" class="form-control mb-2" rows="2" placeholder="댓글을 입력하세요..."></textarea>
-				            <button type="button" id="btnSubmitComment" class="btn btn-primary btn-sm">댓글 등록</button>
-				        </form>
+				        <input type="hidden" id="notice_id_<%= notice.getNotice_id() %>" value="<%= notice.getNotice_id() %>">
+						<input type="hidden" id="user_id_<%= notice.getNotice_id() %>" value="<%= loginUser.getUser_id() %>">
+						<textarea id="comment_content_<%= notice.getNotice_id() %>" class="form-control mb-2" rows="2" placeholder="댓글을 입력하세요..."></textarea>
+						<button type="button" class="btn btn-primary btn-sm" onclick="registComment(<%= notice.getNotice_id() %>)">댓글 등록</button>
+
 				    <% } else { %>
 				        <textarea class="form-control mb-2" rows="2" placeholder="댓글을 입력하려면 로그인하세요..." readonly></textarea>
 				        <button type="button" class="btn btn-secondary btn-sm" onclick="alert('로그인이 필요합니다.'); location.href='/main/user/login';">로그인 하러가기</button>
 				    <% } %>
 				</div>
 				
+								
+				<!-- 댓글 리스트 -->
+				<ul id="comment_list_<%= notice.getNotice_id() %>" class="mt-3">
+				    <% for (NoticeComment comment : commentList) { %>
+				        <li class="mb-2">
+				            <strong><%= comment.getUser().getUser_name() %></strong> 
+				            <span class="text-muted" style="font-size: 0.8em;"><%= sdf.format(comment.getCreate_date()) %></span><br>
+				            <%= comment.getContent() %>
+				        </li>
+				    <% } %>
+				</ul>
+
 			</div>
 		<% } %>
 	<% } %>
@@ -111,39 +109,31 @@
 <!-- 페이지 영역 끝 -->
 
 <script>
-    
-        $("#btnSubmitComment").click(function () {
-            let form = document.getElementById("commentForm");
-            let formData = new FormData(form);
+function registComment(noticeId) {
+    const userId = $("#user_id_" + noticeId).val();
+    const content = $("#comment_content_" + noticeId).val();
 
-            $.ajax({
-                url: "/main/noticeComment/insert",
-                type: "POST",
-                data: formData,
-                processData: false,
-                contentType: false,
-                success: function (response) {
-                    // 예시: JSON 형태의 댓글 객체를 응답받는다고 가정
-                    // { comment_id, content, user_name, create_date }
+    if (!content.trim()) {
+        alert("댓글을 입력하세요.");
+        return;
+    }
 
-                    // 폼 초기화
-                    form.reset();
+    $.ajax({
+        url: "/main/seller/comment/regist",
+        type: "post",
+        data: {
+            notice_id: noticeId,
+            user_id: userId,
+            content: content
+        },
+        success: function(result) {
+        	alert('댓글이 등록되었습니다.');
+            location.reload();  // 새로고침
+        },
+        error: function(xhr, status, err) {
+            alert("댓글 등록 중 오류가 발생했습니다.");
+        }
+    });
+}
 
-                    // 댓글 HTML 생성
-                    let html = `
-                        <div class="comment-item mb-2 border p-2 rounded">
-                            <div class="fw-bold">${response.user_name}</div>
-                            <div class="text-muted small">${response.create_date}</div>
-                            <div>${response.content}</div>
-                        </div>
-                    `;
-
-                    // 댓글 리스트에 추가
-                    $("#commentList").prepend(html);
-                },
-                error: function (xhr, status, err) {
-                    alert("댓글 등록 실패: " + xhr.responseText);
-                }
-            });
-        });
 </script>

@@ -19,18 +19,15 @@
 		select <include refid="columns"/> from notice_comment
 	</select>
 	
-	<select id="select" parameterType="long" resultType="NoticeComment">
-		select <include refid="columns"/> from notice_comment
-		where	notice_comment_id = #{notice_comment_id}
-	</select>
+	<insert id="insert" parameterType="NoticeComment" useGeneratedKeys="true" keyProperty="notice_comment_id">
+	    INSERT INTO notice_comment (notice_id, user_id, content, create_date)
+	    VALUES (#{notice.notice_id}, #{user.user_id}, #{content}, #{create_date})
+	</insert>
 	
 	<select id="selectByNoticeId" resultMap="joinMap" parameterType="long">
 		SELECT <include refid="columns"/> FROM notice_comment WHERE notice_id=#{notice_id}
 	</select>
 	
-	<insert id="insert" parameterType="NoticeComment">
-		insert into notice_comment values(#{notice_id}, #{user_id}, #{content})
-	</insert>
 	
 	<update id="update" parameterType="NoticeComment">
 		update notice_comment set  user_id=#{user.user_id}, content=#{content}

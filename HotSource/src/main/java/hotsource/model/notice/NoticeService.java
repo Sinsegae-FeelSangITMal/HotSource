@@ -3,6 +3,7 @@ package hotsource.model.notice;
 import java.util.List;
 
 import hotsource.domain.Notice;
+import hotsource.domain.NoticeComment;
 
 public interface NoticeService {
 
@@ -14,4 +15,5 @@ public interface NoticeService {
 	public void update(Notice notice);
 	public void delete(long notice_id);
 	
+	public NoticeComment registComment(long notice_id, long user_id, String content);
 }
