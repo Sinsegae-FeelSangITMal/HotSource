@@ -14,20 +14,22 @@
 
   <!-- Sidebar -->
   <div class="sidebar">
-    <!-- Sidebar user panel -->
-    <div class="user-panel d-flex align-items-center my-3 px-3">
-      <div class="image">
-        <img src="<%= seller.getProfile_img_url()%>" class="img-circle elevation-2" alt="User Image" style="width: 35px; height: 35px;">
-      </div>
-      <div class="info ms-2">
-      	<% if(seller == null){ %>
-        <a href="#" class="d-block fw-semibold text-dark">판매자 등록</a>
-        <% } else { %>
-        <a href="#" class="d-block fw-semibold text-dark"><%= seller.getSeller_nickname() %> (Seller)</a>
-        
-        <% } %>
-      </div>
-    </div>
+	  <!-- Sidebar user panel -->
+	<div class="user-panel d-flex align-items-center my-3 px-3">
+	  <% if (seller == null) { %>
+	    <div class="info ms-2">
+	      <a href="#" class="d-block fw-semibold text-dark">판매자 등록</a>
+	    </div>
+	  <% } else { %>
+	    <div class="image">
+	      <img src="<%= seller.getProfile_img_url() %>" class="img-circle elevation-2" alt="User Image" style="width: 35px; height: 35px;">
+	    </div>
+	    <div class="info ms-2">
+	      <a href="#" class="d-block fw-semibold text-dark"><%= seller.getSeller_nickname() %> (Seller)</a>
+	    </div>
+	  <% } %>
+	</div>
+
 
     <!-- Sidebar Menu -->
     <nav class="mt-2">

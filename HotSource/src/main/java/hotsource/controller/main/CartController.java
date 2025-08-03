@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import hotsource.domain.AssetImg;
 import hotsource.domain.Cart;
 import hotsource.domain.User;
 import hotsource.exception.CartException;
@@ -38,10 +37,7 @@ public class CartController {
 		log.debug("login id=" + loginUser.getUser_id());
 		
 		List<Cart> carts = cartService.getCartList(loginUser.getUser_id());   // 수정 필요: 로그인 유저 id
-		
-		List<Integer> discountList = new ArrayList<>();
-		List<AssetImg> thumbnailList = new ArrayList<>();
-		
+		List<Integer> discountList = new ArrayList<>();		
 		
 		for(int i = 0; i < carts.size(); i++) {
 			discountList.add(assetService.getDiscountPrice(carts.get(i).getAsset()));
@@ -51,7 +47,7 @@ public class CartController {
 		mav.addObject("discountList", discountList);
 		
 		return mav;
-	}
+	} 
 	
 	@PostMapping("/cart/delete")
 	@ResponseBody

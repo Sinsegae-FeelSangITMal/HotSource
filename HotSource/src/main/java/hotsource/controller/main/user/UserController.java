@@ -116,7 +116,40 @@ public class UserController {
 		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(error);
 	}
 
+
+	@PostMapping("/password/check")
+	@ResponseBody
+	public String checkPassword(@RequestParam String oriPwd, HttpSession session) {
+		//User user = (User) session.getAttribute("user");
+		User user = userService.select(5);
+		if (user != null && userService.checkPassword(user, oriPwd))
+			return "match";
+		else
+			return "notMatch";
+	}
 	
+	@PostMapping("/password/confirm")
+	@ResponseBody
+	public String confirmPassword(@RequestParam String newPwd, HttpSession session) {
+		//User user = (User) session.getAttribute("user");
+		User user = userService.select(5);
+		if (user != null && userService.confirmPassword(user, newPwd))
+			return "isNew";
+		else
+			return "isNotNew";
+	}
+	
+	@PostMapping("/password/update")
+	@ResponseBody
+	public String updatePassword(@RequestParam String newPwd, HttpSession session) {
+		//User user = (User) session.getAttribute("user");
+		User user = userService.select(5);
+		if (user != null) {
+			userService.updatePassword(user, newPwd);
+			return "success";
+		} else
+			return "fail";
+	}
 	
 	/* --------------------------
 	 *  Google Login API
@@ -146,6 +179,7 @@ public class UserController {
 		String email = json.get("email").getAsString();
 		String name = json.get("name").getAsString();
 		String openid = json.get("id").getAsString();
+		log.debug("google OpenId :"+ openid);
 		
 		User user = null;
 		

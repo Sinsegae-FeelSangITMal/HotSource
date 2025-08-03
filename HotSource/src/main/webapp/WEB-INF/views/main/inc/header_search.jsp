@@ -69,7 +69,7 @@
 					<!-- 알림 끝 -->
 					
 					<!-- 찜 시작 -->
-					<a class="" data-toggle="" href="#">
+					<a class="" href="/main/wishlist">
 						<img class="wish_link" src="/static/images/wish.png" alt="">
 						<div class="qty">2</div>
 					</a>
@@ -101,7 +101,7 @@
 							<div class="dropdown-divider"></div><!-- 구분선 -->
 						<%} %>
 				          
-						<a href="#" class="dropdown-item dropdown-footer">View Cart</a>
+						<a href="/main/cart" class="dropdown-item dropdown-footer">View Cart</a>
 						</div>
 						<!-- 드롭다운 메뉴 끝 -->
 					</div>

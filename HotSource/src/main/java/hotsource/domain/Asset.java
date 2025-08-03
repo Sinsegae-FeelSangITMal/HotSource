@@ -17,7 +17,6 @@ public class Asset {
 	private String youtube_url;
 	private Timestamp create_date;
 	private int view_count;
-	private float rate_avg;
 	
 	private Sale sale; // 유효한 세일, null인 경우 적용 가능한 sale이 없는 것임
 	private AssetImg thumbnail;  // 썸네일 용도

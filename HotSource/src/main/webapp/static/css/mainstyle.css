@@ -1253,9 +1253,14 @@ a:focus {
   padding: 20px 20px;
   border-radius: 12px;
   box-shadow: 0 0 10px rgba(0,0,0,0.05);
-  height: 340px;
+  height: 390px;
 }
 
+/* 메뉴 하나 적은 버전 */
+.sidebar.short {
+  height: 340px;
+}
+	
 /* 제목 */
 .sidebar-title {
   font-size: 22px;

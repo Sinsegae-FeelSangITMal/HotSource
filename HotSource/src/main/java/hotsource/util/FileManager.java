@@ -11,10 +11,11 @@ import org.springframework.web.multipart.MultipartFile;
 import hotsource.domain.Asset;
 import hotsource.domain.AssetImg;
 import hotsource.domain.Seller;
+import hotsource.domain.User;
 import hotsource.exception.UploadException;
 import lombok.extern.slf4j.Slf4j;
 
-@Component 
+@Component
 @Slf4j
 public class FileManager{
 
@@ -62,6 +63,37 @@ public class FileManager{
 				e.printStackTrace();
 				throw new UploadException("파일 업로드 실패", e);
 			}		
+	}
+
+	// 유저 프로필 이미지 저장
+	public void save(User user, String savePath) throws UploadException{
+		
+		//MultipartFile 변수와 html 이름이 동일하면 매핑됨 
+		MultipartFile photo = user.getPhoto();
+		
+		try {
+			// 확장자 구하기 (원본 이미지 정보 추출)
+			log.debug("원본 파일명은 " + photo.getOriginalFilename());
+			String ori = photo.getOriginalFilename();
+			String ext = ori.substring(ori.lastIndexOf(".")+1, ori.length());
+			
+			// 개발자가 원하는 파일명 생성하기
+			String filename = user.getUser_id() + "_" + UUID.randomUUID().toString() + "." + ext;																					// --> 확장자가 붙어 파일로 만들어짐
+			
+			// 생성한 파일명을 DB 저장하기 위해 세팅
+			user.setProfile_img_url(filename);
+			
+			// 디렉토리 및 파일
+		    File directory = new File(savePath, "user");				
+			File file = new File(directory, filename);			
+			log.debug("업로드 된 이미지가 생성된 경로는 " + savePath);
+			
+			photo.transferTo(file);			// 메모리상의 파일 정보가, 실제 디스크상으로 존재하게 되는 시점 (함수는 덮어쓰기임)
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new UploadException("파일 업로드 실패", e);
+		}
+
 	}
 	
 	// 상품 이미지 삭제 (지정한 상품의 디렉토리 및 하위 파일들)
@@ -203,6 +235,18 @@ public class FileManager{
 			}
 		}
 	}
-	
 
+	// 유저 프로필 이미지 삭제
+	public void remove(String originalImg, String savePath) {
+	    File directory = new File(savePath, "user");
+	    File file = new File(directory, originalImg);
+	    
+	    if (file.exists()) {
+	    	boolean deleted = file.delete();
+	    	log.debug("기존 파일 " + originalImg + " 삭제 결과: " + deleted);
+	    }
+	}
+
+	
+	
 }
