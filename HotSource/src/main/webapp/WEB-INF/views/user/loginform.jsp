@@ -21,14 +21,14 @@
       <h2 class="text-3xl font-bold mb-2 text-left">Sign In</h2>
       <p class="text-sm text-gray-400 mb-6 text-left">to continue to <strong>HotSource</strong></p>
 
-      <form action="/main/user/login" method="post" class="space-y-4">
-        <input type="text" name="user_email" placeholder="Email"
+      <form id="loginForm" class="space-y-4">
+        <input type="text" id= "user_email" name="user_email" placeholder="Email"
                class="w-full bg-[#1e1f26] border border-gray-600 text-white px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-400" required>
 
-        <input type="password" name="password" placeholder="Password"
+        <input type="password" id= "password" name="password" placeholder="Password"
                class="w-full bg-[#1e1f26] border border-gray-600 text-white px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-400" required>
 
-        <input type="submit" value="Login"
+        <input type="button" id="loginButton" value="Login"
                class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded cursor-pointer transition">
       </form>
 
@@ -69,6 +69,37 @@
   		}
   	});
   }
+  function loginAjax() {
+    const user = {
+      user_email: $("#user_email").val(),
+      password: $("#password").val()
+    };
+
+    $.ajax({
+      url: "/main/user/login",
+      type: "POST",
+      contentType: "application/json",
+      data: JSON.stringify(user),
+      success: function(response) {
+        if (response.success) {
+          location.href = response.redirectUrl;
+        }
+      },
+      error: function(xhr) {
+        if (xhr.status === 401) {
+          alert("아이디 또는 비밀번호가 잘못되었습니다.");
+        } else {
+          alert("알 수 없는 오류가 발생했습니다.");
+        }
+      }
+    });
+  }
+	$(() => {
+	  $("#loginButton").click(() => {
+	    loginAjax();
+	  });
+	});
+  
   </script>
 
 </body>

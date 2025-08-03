@@ -278,7 +278,7 @@
 	function getTopCategory(){
 		$.ajax({
 			url:"/main/asset/topcategory/list",
-			type:"get",
+			type :"get",
 			success:function(result, status, xhr){ //200번대의 성공 응답 시, 이 함수 실행
 				console.log("서버로부터 받은 결과는 ", result);
 				//화면에 출력하기 
@@ -329,7 +329,7 @@
 			success:function(result, status, xhr){
 				if(result.status === "success") {
 		            alert("업로드 성공");
-		            window.location.href = "/seller/dashboard/assetList";  // 고정 URL 이동
+		            window.location.href = "/seller/dashboard/assetList?seller_id=<%= seller.getSeller_id() %>";  // 고정 URL 이동
 		        } else {
 		            alert("업로드 실패");
 		        }

@@ -1,8 +1,4 @@
-<%@page import="hotsource.domain.User"%>
 <%@ page contentType="text/html; charset=UTF-8"%>
-<% 
-	User loginUser = (User) session.getAttribute("user");
-%>
 
 <header class="header_section">
 	<div class="">		<!-- container엿음 -->

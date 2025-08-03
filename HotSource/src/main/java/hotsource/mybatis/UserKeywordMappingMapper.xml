@@ -18,4 +18,14 @@
 		WHERE user_id=#{user_id}
 	</select>
 	
+	<insert id="insert" parameterType="UserKeywordMapping">
+		INSERT INTO
+		user_keyword_mapping (user_id, keyword_id)
+		VALUES (#{user.user_id}, #{keyword.keyword_id})
+	</insert>
+	
+	<delete id="delete" parameterType="long">
+		DELETE FROM user_keyword_mapping WHERE user_id=#{user_id}
+	</delete>
+	
 </mapper>
