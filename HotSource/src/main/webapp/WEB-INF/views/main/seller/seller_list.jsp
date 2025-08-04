@@ -24,44 +24,6 @@
 </div>
 <!-- 에셋 리스트 영역 끝 -->
 
-<% if (true) { %> <!-- IMAGE 섹션 -->
-	<section class="search-section">
-		<div class="search-section-header">
-			<h3>IMAGE</h3>
-			<% if (result) { %>
-				<a href="#">More ></a>
-			<% } %>
-		</div>
-
-		<% if (!result) { %>
-			<h2 class="result-heading not-found">No results</h2>
-		<% } %>
-
-		<% if (result) { %>
-			<%@ include file="search_resource_mini-seller.jsp"%>
-		<% } %>
-	</section>
-<% } %>
-
-<% if (true) { %> <!-- SOUND 섹션 -->
-	<section class="search-section">
-		<div class="search-section-header">
-			<h3>SOUND</h3>
-			<% if (result) { %>
-				<a href="#">More ></a>
-			<% } %>
-		</div>
-
-		<% if (!result) { %>
-			<h2 class="result-heading not-found">No results</h2>
-		<% } %>
-
-		<% if (result) { %>
-			<%@ include file="search_resource_mini-seller.jsp"%>
-		<% } %>
-	</section>
-<% } %>
-
 <!-- 페이지 영역 시작 -->
 <%@ include file="../inc/page.jsp"%>
 <!-- 페이지 영역 끝 -->

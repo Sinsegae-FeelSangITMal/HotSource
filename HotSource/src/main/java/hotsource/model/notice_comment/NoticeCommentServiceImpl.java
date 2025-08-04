@@ -3,15 +3,13 @@ package hotsource.model.notice_comment;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import lombok.extern.slf4j.Slf4j;
-import hotsource.domain.Notice;
 import hotsource.domain.NoticeComment;
 import hotsource.exception.NoticeCommentException;
-import hotsource.exception.NoticeException;
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
@@ -19,7 +17,7 @@ import hotsource.exception.NoticeException;
 public class NoticeCommentServiceImpl implements NoticeCommentService{
 	
 	@Autowired
-	private NoticeCommentDAO noticeCommentDAO;
+    private NoticeCommentDAO noticeCommentDAO;
 
 	@Override
 	public List selectAll() {
@@ -48,7 +46,7 @@ public class NoticeCommentServiceImpl implements NoticeCommentService{
 
 	@Override
 	public void delete(long notice_comment_id) {
-
+		noticeCommentDAO.delete(notice_comment_id);
 	}
 
 }

@@ -90,10 +90,17 @@
 				<!-- 댓글 리스트 -->
 				<ul id="comment_list_<%= notice.getNotice_id() %>" class="mt-3">
 				    <% for (NoticeComment comment : commentList) { %>
-				        <li class="mb-2">
-				            <strong><%= comment.getUser().getUser_name() %></strong> 
-				            <span class="text-muted" style="font-size: 0.8em;"><%= sdf.format(comment.getCreate_date()) %></span><br>
-				            <%= comment.getContent() %>
+				        <li class="mb-2 d-flex justify-content-between align-items-start">
+				            <div>
+				                <strong><%= comment.getUser().getUser_name() %></strong> 
+				                <span class="text-muted" style="font-size: 0.8em;"><%= sdf.format(comment.getCreate_date()) %></span><br>
+				                <%= comment.getContent() %>
+				            </div>
+				            
+				            <%-- 로그인한 사용자가 작성한 댓글일 경우에만 삭제 버튼 노출 --%>
+				            <% if (loginUser != null && loginUser.getUser_id() == comment.getUser().getUser_id()) { %>
+				                <button class="btn btn-sm btn-danger ms-2" onclick="deleteComment(<%= comment.getNotice_comment_id() %>)">X</button>
+				            <% } %>
 				        </li>
 				    <% } %>
 				</ul>
@@ -112,6 +119,8 @@
 function registComment(noticeId) {
     const userId = $("#user_id_" + noticeId).val();
     const content = $("#comment_content_" + noticeId).val();
+    
+    console.log(userId);
 
     if (!content.trim()) {
         alert("댓글을 입력하세요.");
@@ -126,12 +135,32 @@ function registComment(noticeId) {
             user_id: userId,
             content: content
         },
-        success: function(result) {
+        success:function(result, status, xhr){
         	alert('댓글이 등록되었습니다.');
-            location.reload();  // 새로고침
+        	location.reload();  // 새로고침
+		},
+		error:function(xhr, status, err){
+			alert(err);
+		}
+    });
+}
+
+function deleteComment(notice_comment_id) {
+    if (!confirm("댓글을 삭제하시겠습니까?")) return;
+
+    $.ajax({
+        url: "/main/seller/comment/delete",
+        type: "post",
+        data: {
+            notice_comment_id: notice_comment_id
+        },
+        success: function(result, status, xhr) {
+            alert("댓글이 삭제되었습니다.");
+            // 댓글만 부분 갱신하고 싶다면 Ajax로 commentList 다시 불러오는 식으로 해도 좋음
+            location.reload();
         },
         error: function(xhr, status, err) {
-            alert("댓글 등록 중 오류가 발생했습니다.");
+            alert("삭제 실패: " + err);
         }
     });
 }

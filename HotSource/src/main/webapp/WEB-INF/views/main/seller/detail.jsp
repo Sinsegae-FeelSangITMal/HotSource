@@ -22,6 +22,10 @@
 	if (request.getAttribute("assetRate") != null) {
 		assetRate = Double.parseDouble(request.getAttribute("assetRate").toString());
 	}
+
+	Boolean isFollowing = (Boolean) request.getAttribute("isFollowing");
+	if (isFollowing == null) isFollowing = false;
+	
 %>
 <!DOCTYPE html>
 <html>
@@ -119,13 +123,34 @@
 			</div>
 			<!-- 버튼 -->
 			<div class="text-center mt-3">
-					<button id="follow-btn" class="follow-btn false me-2">+ Follow</button>
-					<button id="donation-btn" class="donation-btn">
-						<i class="bi bi-cash-coin"></i>Donation
-					</button>
-				</div>
+				<!-- 구독 버튼 -->
+				<% if (loginUser != null) { %>
+					<%if(isFollowing) { %>
+						<button class="follow-btn true" onclick="registSubscribe(<%= loginUser.getUser_id() %>, <%= seller.getSeller_id() %>)">
+							<%= isFollowing ? "Followed" : "+ Follow" %>
+						</button>
+					<% } else { %>
+						<button class="follow-btn false" onclick="registSubscribe(<%= loginUser.getUser_id() %>, <%= seller.getSeller_id() %>)">
+							<%= isFollowing ? "Followed" : "+ Follow" %>
+						</button>
+					<% } %>
+					
+					
+				<% } else { %>
+				    <button class="follow-btn false" onclick="alert('로그인이 필요합니다.'); location.href='/main/user/login';">
+				        + Follow
+				    </button>
+				<% } %>
+				
+				
+				<!-- 도네이션 버튼-->
+				<button id="donation-btn" class="donation-btn">
+					<i class="bi bi-cash-coin"></i>Donation
+				</button>
 			</div>
 		</div>
+	</div>
+					
 
 	</section>
 	<!-- 판매자 프로필 카드 영역 끝 -->
@@ -174,107 +199,115 @@
 	<%@ include file="../inc/footer_link.jsp"%>
 	<!-- Js Plugins 끝 -->
 </body>
+
+
 <script>
-	document.addEventListener("DOMContentLoaded", function () {
-		// 팔로우 버튼
-    	const followBtn = document.getElementById('follow-btn');
 
-		followBtn.addEventListener('click', function () {
-    	    const isFollowing = followBtn.classList.contains('true');
-
-    	    if (isFollowing) {
-	    	      followBtn.classList.remove('true');
-	    	      followBtn.classList.add('false');
-	    	      followBtn.textContent = '+ Follow';
-    	    } else {
-    	      followBtn.classList.remove('false');
-    	      followBtn.classList.add('true');
-    	      followBtn.textContent = 'Followed';
-    	    }
-		});
-    	
-		// 탭 이동 버튼
-		const buttons = document.querySelectorAll('.tab-btn');
-		const contents = document.querySelectorAll('.tab-content');
-
-		buttons.forEach(btn => {
-		  	btn.addEventListener('click', () => {
-			    const tab = btn.dataset.tab.trim();
+	function registSubscribe(userId, sellerId){
+		if (!userId || !sellerId) {
+			  alert("로그인 정보가 유효하지 않거나 seller 정보를 찾을 수 없습니다.");
+			  return;
+		}
 	
-			    buttons.forEach(b => b.classList.remove('active'));
-			    btn.classList.add('active');
+	    $.ajax({
+	        url: "/main/seller/subscribe",
+	        type: "post",
+	        data: {
+	            user_id: userId,
+	            seller_id: sellerId
+	        },
+	        success: function(result, status, xhr){
+	            
+	            location.reload();  // 새로고침
+	        },
+	        error:function(xhr, status, err){
+	            
+	            location.reload();  // 새로고침
+	        }
+	    });
+	}
 
-			    contents.forEach(content => {
-		    	    if (content.id.trim() === tab) {
-		    	    	content.classList.add('active');
-		    	    } else {
-		    	    	content.classList.remove('active');
-		    	    }
-		    	});
-		  	});
-		});
-		
-		// 별점 클릭 함수 시작 ---------------------------------------------------------------
-		const ratingStars = [...document.getElementsByClassName("seller-rating-star")];
-		const ratingResult = document.querySelector(".seller-rating-result");
 
-		printRatingResult(ratingResult);
+	// 탭 이동 버튼 ---------------------------------------------------------------
+	const buttons = document.querySelectorAll('.tab-btn');
+	const contents = document.querySelectorAll('.tab-content');
 
-		function executeRating(stars, resultStar) {
-			const starsLength = stars.length;
-			let selectedRating = parseFloat(resultStar.textContent); // 초기값 고정
+	buttons.forEach(btn => {
+	  	btn.addEventListener('click', () => {
+		    const tab = btn.dataset.tab.trim();
 
-			stars.forEach((star, index) => {
-				star.addEventListener("mousemove", (e) => {
-					const rect = star.getBoundingClientRect();
-					const offsetX = e.clientX - rect.left;
-					const isHalf = offsetX < rect.width / 2;
-					const rating = isHalf ? index + 0.5 : index + 1;
+		    buttons.forEach(b => b.classList.remove('active'));
+		    btn.classList.add('active');
 
-					highlightStars(stars, rating);
-					printRatingResult(resultStar, rating);
-				});
-
-				star.addEventListener("click", (e) => {
-					const rect = star.getBoundingClientRect();
-					const offsetX = e.clientX - rect.left;
-					const isHalf = offsetX < rect.width / 2;
-					const rating = isHalf ? index + 0.5 : index + 1;
-
-					selectedRating = rating; // 🔥 클릭한 값을 저장
-					highlightStars(stars, rating);
-					printRatingResult(resultStar, rating);
-				});
-			});
-
-			// 마우스가 별점 영역 벗어나면 클릭된 값으로 고정 표시
-			const container = document.querySelector(".seller-rating");
-			container.addEventListener("mouseleave", () => {
-				highlightStars(stars, selectedRating);
-				printRatingResult(resultStar, selectedRating);
-			});
-		}
-
-		function highlightStars(stars, score) {
-			stars.forEach((star, i) => {
-				if (score >= i + 1) {
-					star.className = "seller-rating-star fas fa-star"; // full star
-				} else if (score >= i + 0.5) {
-					star.className = "seller-rating-star fas fa-star-half-alt"; // half star
-				} else {
-					star.className = "seller-rating-star far fa-star"; // empty star
-				}
-			});
-		}
-
-		function printRatingResult(resultStar, num = 0) {
-			resultStar.textContent = `${num}/5`;
-		}
-
-		executeRating(ratingStars, ratingResult);
-		// 별점 클릭 함수 끝 ---------------------------------------------------------------
+		    contents.forEach(content => {
+	    	    if (content.id.trim() === tab) {
+	    	    	content.classList.add('active');
+	    	    } else {
+	    	    	content.classList.remove('active');
+	    	    }
+	    	});
+	  	});
 	});
+	
+	// 별점 클릭 함수 시작 ---------------------------------------------------------------
+	const ratingStars = [...document.getElementsByClassName("seller-rating-star")];
+	const ratingResult = document.querySelector(".seller-rating-result");
 
+	printRatingResult(ratingResult);
+
+	function executeRating(stars, resultStar) {
+		const starsLength = stars.length;
+		let selectedRating = parseFloat(resultStar.textContent); // 초기값 고정
+
+		stars.forEach((star, index) => {
+			star.addEventListener("mousemove", (e) => {
+				const rect = star.getBoundingClientRect();
+				const offsetX = e.clientX - rect.left;
+				const isHalf = offsetX < rect.width / 2;
+				const rating = isHalf ? index + 0.5 : index + 1;
+
+				highlightStars(stars, rating);
+				printRatingResult(resultStar, rating);
+			});
+
+			star.addEventListener("click", (e) => {
+				const rect = star.getBoundingClientRect();
+				const offsetX = e.clientX - rect.left;
+				const isHalf = offsetX < rect.width / 2;
+				const rating = isHalf ? index + 0.5 : index + 1;
+
+				selectedRating = rating; // 🔥 클릭한 값을 저장
+				highlightStars(stars, rating);
+				printRatingResult(resultStar, rating);
+			});
+		});
+
+		// 마우스가 별점 영역 벗어나면 클릭된 값으로 고정 표시
+		const container = document.querySelector(".seller-rating");
+		container.addEventListener("mouseleave", () => {
+			highlightStars(stars, selectedRating);
+			printRatingResult(resultStar, selectedRating);
+		});
+	}
+
+	function highlightStars(stars, score) {
+		stars.forEach((star, i) => {
+			if (score >= i + 1) {
+				star.className = "seller-rating-star fas fa-star"; // full star
+			} else if (score >= i + 0.5) {
+				star.className = "seller-rating-star fas fa-star-half-alt"; // half star
+			} else {
+				star.className = "seller-rating-star far fa-star"; // empty star
+			}
+		});
+	}
+
+	function printRatingResult(resultStar, num = 0) {
+		resultStar.textContent = `${num}/5`;
+	}
+
+	//executeRating(ratingStars, ratingResult);
+	// 별점 클릭 함수 끝 ---------------------------------------------------------------
 
 </script>
 </html>

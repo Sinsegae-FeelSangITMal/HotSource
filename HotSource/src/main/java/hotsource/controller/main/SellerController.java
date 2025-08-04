@@ -1,11 +1,12 @@
 package hotsource.controller.main;
 
-import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -74,8 +75,7 @@ public class SellerController {
 	
 	//상세요청 처리 
 	@GetMapping("/seller/detail")
-	@ResponseBody
-	public ModelAndView getDetail(long seller_id, Model model) {
+	public ModelAndView getDetail(@RequestParam(name="seller_id") Long seller_id, HttpServletRequest request, Model model) {
 		ModelAndView mav = new ModelAndView("main/seller/detail");
 		
 		//3단계
@@ -113,7 +113,16 @@ public class SellerController {
 		        .average()
 		        .orElse(0.0);
 		}
+		
+		// ✅ 로그인 유저가 이 seller를 구독했는지 확인
+	    User loginUser = (User) request.getSession().getAttribute("user");
+	    boolean isFollowing = false;
+	    if (loginUser != null) {
+	        isFollowing = subscribeService.isSubscribed(loginUser.getUser_id(), seller_id);
+	    }
+	    
 		log.debug("assetRate : " + assetRate);
+		log.debug("isFollowing : " + isFollowing);
 		
 		//4단계: 저장 
 		model.addAttribute("seller", seller);
@@ -124,6 +133,8 @@ public class SellerController {
 		
 		model.addAttribute("assetCount", assetCount);
 		model.addAttribute("assetRate", assetRate);
+		
+		model.addAttribute("isFollowing", isFollowing);  // ✅ 추가
 
 		return mav;
 	}
@@ -143,4 +154,31 @@ public class SellerController {
 
 	    return result;
 	}
+	
+	@PostMapping("/seller/comment/delete")
+	@ResponseBody
+	public String deleteComment(@RequestParam("notice_comment_id") long notice_comment_id) {
+
+	    NoticeComment comment = noticeCommentService.select(notice_comment_id);
+
+	    noticeCommentService.delete(notice_comment_id);
+	    return "success";
+	}
+	
+	@PostMapping("/seller/subscribe")
+    public Map<String, String> toggleSubscribe(@RequestParam long user_id, @RequestParam long seller_id) {
+		
+        boolean isSubscribed = subscribeService.isSubscribed(user_id, seller_id);
+        
+        if (isSubscribed) {
+            subscribeService.unsubscribe(user_id, seller_id);
+        } else {
+            subscribeService.subscribe(user_id, seller_id);
+        }
+        
+        Map<String, String> result = new HashMap<>();
+        
+        result.put("status", isSubscribed ? "unsubscribed" : "subscribed");
+        return result;
+    }
 }

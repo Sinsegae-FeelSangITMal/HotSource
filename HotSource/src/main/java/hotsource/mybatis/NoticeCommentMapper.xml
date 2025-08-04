@@ -15,8 +15,12 @@
 	    <association	column="user_id"	property="user"		javaType="User"		select="User.select"/>
 	</resultMap>
 	
-	<select id="selectAll" resultType="NoticeComment">
+	<select id="selectAll" resultMap="joinMap">
 		select <include refid="columns"/> from notice_comment
+	</select>
+	
+	<select id="select" parameterType="long" resultMap="joinMap">
+		select <include refid="columns"/> from notice_comment where notice_comment_id=#{notice_comment_id}
 	</select>
 	
 	<insert id="insert" parameterType="NoticeComment" useGeneratedKeys="true" keyProperty="notice_comment_id">
