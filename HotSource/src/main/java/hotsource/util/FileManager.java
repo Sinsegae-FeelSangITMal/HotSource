@@ -191,5 +191,27 @@ public class FileManager{
 	    	log.debug("기존 파일 " + originalImg + " 삭제 결과: " + deleted);
 	    }
 	}
+	
+	public boolean deleteFile(String filePath) {
+        try {
+            File file = new File(filePath);
+            if (file.exists()) {
+                boolean deleted = file.delete();
+                if (deleted) {
+                    System.out.println("파일 삭제 성공: " + filePath);
+                } else {
+                    System.out.println("파일 삭제 실패: " + filePath);
+                }
+                return deleted;
+            } else {
+                System.out.println("파일이 존재하지 않습니다: " + filePath);
+                return false;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
 
 }

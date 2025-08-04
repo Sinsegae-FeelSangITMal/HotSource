@@ -20,6 +20,7 @@ public interface AssetService {
 	public List selectSale(int topcategory_id);
 	
 	public void saveAssetFiles(Long assetId, MultipartFile[] photoFiles, MultipartFile[] projectFiles, HttpServletRequest request);
+	public void updateAssetFiles(Long assetId, MultipartFile[] photoFiles, MultipartFile[] projectFiles, HttpServletRequest request);
 
 	public void regist(Asset asset);
 	public void update(Asset asset);

@@ -10,4 +10,6 @@ public interface SaleDAO {
 	public Sale selectByAssetId(long asset_id);
 	public Sale selectValidByAssetId(long asset_id);
 	public void insert(Sale sale);
+	public void update(Sale sale);
+	public void deleteByAssetId(long asset_id);
 }

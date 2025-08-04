@@ -63,7 +63,9 @@ public class MybatisAssetDAO implements AssetDAO {
 
 	@Override
 	public void update(Asset asset) {
-
+		int result = sqlSessionTemplate.insert("Asset.update", asset);
+		if (result < 1)
+			throw new AssetException("상품 업데이트 실패");
 	}
 
 	@Override

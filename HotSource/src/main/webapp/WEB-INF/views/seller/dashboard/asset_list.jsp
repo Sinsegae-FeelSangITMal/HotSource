@@ -117,10 +117,10 @@
                     <div style="font-weight: bold;"><%= asset.getTitle() %></div>
                 </div>
                 <div style="white-space: nowrap;">
-                    <a href="/seller/asset/edit?id=<%= asset.getAsset_id() %>" style="margin-right: 10px;">Edit</a>
-                    <a href="/seller/asset/analytics?id=<%= asset.getAsset_id() %>" style="margin-right: 10px;">Analytics</a>
-                    <a href="/seller/asset/earnings?id=<%= asset.getAsset_id() %>" style="margin-right: 10px;">Earnings</a>
-                    <a href="/seller/asset/delete?id=<%= asset.getAsset_id() %>">Delete</a>
+                    <a href="asset/update?asset_id=<%= asset.getAsset_id() %>" style="margin-right: 10px;">Edit</a>
+                    <a href="/asset/analytics?id=<%= asset.getAsset_id() %>" style="margin-right: 10px;">Analytics</a>
+                    <a href="/asset/earnings?id=<%= asset.getAsset_id() %>" style="margin-right: 10px;">Earnings</a>
+                    <a href="/asset/delete?asset_id=<%= asset.getAsset_id() %>">Delete</a>
                 </div>
             </div>
         <% } %>

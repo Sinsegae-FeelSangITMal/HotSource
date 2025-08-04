@@ -70,9 +70,10 @@
       border: none;
       border-radius: 6px;
       font-weight: bold;
-      width: 100%;
+      width: 20%;
       transition: background-color 0.2s ease;
-      font-size: 16px;
+      font-size: 10px;
+      float: right;
     }
 
     .btn-submit:hover {
@@ -185,7 +186,6 @@
             <div class="form-section">
               <label for="sale">Sale</label>
               <select id="sale" name="sale.sale_value" class="form-control">
-                <option value="">Select discount</option>
                 <option value="0">No Sale</option>
                 <option value="10">10%</option>
                 <option value="20">20%</option>
@@ -222,7 +222,7 @@
             <div class="form-section">
               <label for="description">Description</label>
               <textarea id="description" name="description" class="form-control"
-                        placeholder="summary&#10;&#10;description&#10;&#10;#desc #desc #desc"></textarea>
+                        placeholder="description&#10;&#10;#desc #desc #desc"></textarea>
             </div>
 
             <button type="button" class="btn-submit" id="bt_regist">Create new Asset</button>
@@ -238,13 +238,10 @@
              <div class="preview-box">
                <div class="input-group">
                
-                 <div class="custom-file">                      
+                 <div class="custom-file">    
+                    <label for="asset_img">에셋 이미지 선택 </label>                  
                    <input type="file" class="custom-file-input" name="photo" id="photo" multiple="multiple">
-                   <label class="custom-file-label" for="exampleInputFile">에셋 이미지 선택 </label>
-                 </div>
-                 
-                 <div class="input-group-append">
-                   <span class="input-group-text">Upload</span>
+                   <label class="custom-file-label" for="exampleInputFile">다중 파일 선택 가능 </label>
                  </div>
                </div>
                
@@ -412,17 +409,23 @@
   
   const isPaidRadios = document.querySelectorAll("input[name='isPaid']");
   const priceInput = document.querySelector("input[name='price']");
+  const saleSelect = document.getElementById("sale");
 
   isPaidRadios.forEach(radio => {
     radio.addEventListener("change", () => {
       if (radio.value === "true" && radio.checked) {
         priceInput.disabled = false;
+        saleSelect.disabled = false;
       } else if (radio.value === "false" && radio.checked) {
         priceInput.disabled = true;
-        priceInput.value = ""; // 선택 해제 시 가격 입력값 초기화 (선택사항)
+        priceInput.value = ""; // 가격 초기화
+
+        saleSelect.value = "0"; // "No Sale"로 선택
+        saleSelect.disabled = true; // 선택 비활성화
       }
     });
   });
+
 </script>
 
 </body>

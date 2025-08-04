@@ -7,8 +7,11 @@
 	</sql>
 	
 	<resultMap			type="AssetKeywordMapping"					id="joinMap">
-		<id 					column="asset_keyword_mapping_id"		property="asset_keyword_mapping_id"/>
-		<association	column="asset_id"		property="asset"			javaType="Asset"		select="Asset.select"/>
+		<id 			property="asset_keyword_mapping_id"	column="asset_keyword_mapping_id"/>
+		<association property="asset" javaType="Asset">
+		    <id property="asset_id" column="asset_id"/>
+		</association>
+		<association	column="keyword_id"		property="keyword"			javaType="Keyword"		select="Keyword.select"/>
 	</resultMap>
 	
 	<select id="selectByAssetId" resultMap="joinMap" parameterType="long">
@@ -20,4 +23,8 @@
 		asset_keyword_mapping (asset_id, keyword_id)
 		VALUES (#{asset.asset_id}, #{keyword.keyword_id})
 	</insert>
+	
+	<delete id="deleteByAssetId" parameterType="long">
+		delete from asset_keyword_mapping where asset_id = #{asset_id}
+	</delete>
 </mapper>
