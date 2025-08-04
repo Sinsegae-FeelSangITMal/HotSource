@@ -6,6 +6,6 @@ import hotsource.domain.AssetKeywordMapping;
 
 public interface AssetKeywordMappingDAO {
 	public List selectByAssetId(long asset_id);
-	public void insert(AssetKeywordMapping assetKeywordMapping);
+	public void insert(List<AssetKeywordMapping> assetKeywordMappingList);
 	public void deleteByAssetId(long asset_id);
 }

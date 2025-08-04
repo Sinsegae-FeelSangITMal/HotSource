@@ -44,33 +44,17 @@ public class AssetController {
 	        @RequestParam("keywords") String keywordString,
 	        HttpServletRequest request,
 	        HttpSession session) {
+
 	    asset.setSeller((Seller) session.getAttribute("seller"));
-	    
-	    // 키워드 문자열 파싱 및 중복 제거
-	    String[] keywordArr = keywordString.split(",");
-	    Set<String> keywordSet = Arrays.stream(keywordArr)
-	        .map(String::trim)
-	        .filter(s -> !s.isEmpty())
-	        .collect(Collectors.toSet());
 
-	    List<AssetKeywordMapping> keywordMappingList = new ArrayList<>();
-	    for (String keywordName : keywordSet) {
-	        Keyword keyword = new Keyword();
-	        keyword.setKeyword_name(keywordName);
-
-	        AssetKeywordMapping mapping = new AssetKeywordMapping();
-	        mapping.setKeyword(keyword);
-	        keywordMappingList.add(mapping);
+	    Map<String, String> result = new HashMap<>();
+	    try {
+	        assetService.registFullAsset(asset, imgFiles, assetFiles, keywordString, request);
+	        result.put("status", "success");
+	    } catch (Exception e) {
+	        result.put("status", "fail");
+	        e.printStackTrace(); // 혹은 로그
 	    }
-	    asset.setKeywordList(keywordMappingList);
-	    // Asset에 키워드 리스트 대입 
-	    
-	    assetService.regist(asset);
-	    
-	    assetService.saveAssetFiles(asset.getAsset_id(), imgFiles, assetFiles, request);
-
-	    Map<String, String> result = new HashMap();
-	    result.put("status", "success");
 	    return result;
 	}
 	

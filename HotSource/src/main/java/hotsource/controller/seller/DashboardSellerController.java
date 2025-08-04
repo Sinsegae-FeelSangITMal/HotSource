@@ -60,7 +60,7 @@ public class DashboardSellerController {
 	    } catch(Exception e) {
 	        log.error("등록 실패", e);
 	        mav.addObject("e", e);
-	        mav.setViewName("sellerCreate");
+	        mav.setViewName("create");
 	    }
 
 	    return mav;

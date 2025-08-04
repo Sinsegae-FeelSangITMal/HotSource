@@ -18,11 +18,13 @@
 		SELECT <include refid="columns"/> FROM asset_keyword_mapping WHERE asset_id=#{asset_id}
 	</select>
 	
-	<insert id="insert" parameterType="AssetKeywordMapping">
-		INSERT INTO
-		asset_keyword_mapping (asset_id, keyword_id)
-		VALUES (#{asset.asset_id}, #{keyword.keyword_id})
-	</insert>
+	<insert id="insert" parameterType="list">
+    INSERT INTO asset_keyword_mapping (asset_id, keyword_id)
+    VALUES
+    <foreach collection="list" item="item" separator=",">
+        (#{item.asset.asset_id}, #{item.keyword.keyword_id})
+    </foreach>
+</insert>
 	
 	<delete id="deleteByAssetId" parameterType="long">
 		delete from asset_keyword_mapping where asset_id = #{asset_id}

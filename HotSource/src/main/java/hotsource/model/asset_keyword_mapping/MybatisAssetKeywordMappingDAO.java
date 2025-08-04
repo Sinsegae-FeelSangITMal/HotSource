@@ -21,8 +21,8 @@ public class MybatisAssetKeywordMappingDAO implements AssetKeywordMappingDAO{
 	}
 
 	@Override
-	public void insert(AssetKeywordMapping assetKeywordMapping) throws AssetKeywordMappingException{
-		int result = sqlSessionTemplate.insert("AssetKeywordMapping.insert", assetKeywordMapping);
+	public void insert(List<AssetKeywordMapping> assetKeywordMappingList) throws AssetKeywordMappingException{
+		int result = sqlSessionTemplate.insert("AssetKeywordMapping.insert", assetKeywordMappingList);
 		if(result< 1) {
 			throw new AssetKeywordMappingException("에셋 키워드 매핑 실패 ");
 		}

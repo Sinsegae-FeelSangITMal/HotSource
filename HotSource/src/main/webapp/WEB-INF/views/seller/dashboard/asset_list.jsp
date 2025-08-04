@@ -112,8 +112,12 @@
     <div class="upload-section" style="padding-top: 10px;">
         <% for (Asset asset : list) { %>
             <div style="display: flex; align-items: center; border: 1px solid #ccc; padding: 10px; margin-bottom: 10px;">
-                <img src="/data/asset_img/<%= asset.getAsset_id() %>/<%= asset.getThumbnail().getAsset_img_url() %>" alt="Thumbnail" style="width: 80px; height: 80px; object-fit: cover; margin-right: 15px;">
-                <div style="flex-grow: 1;">
+				    <% if (asset.getThumbnail() != null) { %>
+				        <img src="/data/asset_img/<%= asset.getAsset_id() %>/<%= asset.getThumbnail().getAsset_img_url() %>" alt="Thumbnail" style="width: 80px; height: 80px; object-fit: cover; margin-right: 15px;">
+				    <% } else { %>
+				        <img src="/images/default-thumbnail.png" alt="이미지 없음" style="width: 80px; height: 80px; object-fit: cover; margin-right: 15px;">
+				    <% } %>
+				    <div style="flex-grow: 1;">
                     <div style="font-weight: bold;"><%= asset.getTitle() %></div>
                 </div>
                 <div style="white-space: nowrap;">
