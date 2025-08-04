@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.web.multipart.MultipartFile;
 
 import hotsource.domain.Asset;
-import hotsource.domain.AssetImg;
+import hotsource.model.wishlist.AssetCardDTO;
 
 public interface AssetService {
 	public List selectAll();
@@ -26,4 +26,10 @@ public interface AssetService {
 	
 	//할인 적용된 가격 구하기 (10000원에서 20%할인해서 최종 가격 : 8000원 반환)
 	public int getDiscountPrice(Asset asset); 
+	
+	//asset card 정보 가져오기
+	public AssetCardDTO buildAssetCardDTO(long asset_id, long user_id);
+	
+	public AssetDetailDTO getDetail(long asset_id, long user_id);
+	
 }

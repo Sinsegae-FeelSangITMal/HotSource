@@ -1,9 +1,10 @@
-<%@page import="hotsource.domain.WishlistItem"%>
+<%@page import="hotsource.model.wishlist.BadgeType"%>
+<%@page import="hotsource.model.wishlist.AssetCardDTO"%>
 <%@page import="java.util.List"%>
-<%@page import="hotsource.domain.Wishlist"%>
+<%@page import="hotsource.model.wishlist.WishlistDetailDTO"%>
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%
-Wishlist wishlist = (Wishlist) request.getAttribute("wishlist");
+	WishlistDetailDTO dto = (WishlistDetailDTO)request.getAttribute("dto");
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -15,8 +16,8 @@ Wishlist wishlist = (Wishlist) request.getAttribute("wishlist");
 <!-- link Font, CSS -->
 <%@ include file="../inc/head_link.jsp"%>
 <link href="/static/css/wishlist.css" type="text/css" rel="stylesheet">
-<link href="/static/css/wishlist_modal.css" type="text/css"
-	rel="stylesheet">
+<link href="/static/css/wishlist_modal.css" type="text/css"rel="stylesheet">
+<link href="/static/css/toast.css" type="text/css"rel="stylesheet">
 </head>
 
 <body>
@@ -32,7 +33,7 @@ Wishlist wishlist = (Wishlist) request.getAttribute("wishlist");
 				<div class="col-lg-12">
 					<div class="breadcrumb__links">
 						<a href="/main/index"><i class="fa fa-home"></i> Home</a> <a
-							href="/main/wishlist"> Wish List</a> <span><%=wishlist.getList_name()%>
+							href="/main/wishlist"> Wish List</a> <span><%=dto.getList_name()%>
 						</span>
 					</div>
 				</div>
@@ -47,26 +48,30 @@ Wishlist wishlist = (Wishlist) request.getAttribute("wishlist");
 		<div class="wishlist-header">
 			<div class="wishlist-title-line">
 				<div class="wishlist-title-text">
-					<h2><%=wishlist.getList_name()%></h2>
+					<h2><%=dto.getList_name()%></h2>
 				</div>
 				<i class="bi bi-gear-fill" id="bt_setting1" style="color: black; font-size: 20px;"></i>
 			</div>
-			<div class="wishlist-description"><%=wishlist.getDescription()%></div>
+			<div class="wishlist-description"><%=dto.getDescription()%></div>
 		</div>
-		
+		<!-- Asset 없는 경우 -->
+		<%if(dto.getAssetList().size() == 0) { %>
+		<h4 style="margin-bottom: 300px;">Nothing saved yet</h4>
+		<%} else { %>
 		<!-- Asset 목록 시작 -->
 		<div class="product-grid">
 		<%
-			/* List<WishlistItem> list = wishlist.getItemList();
-			for (int i = 0; i < list.size(); i++) {
-		        Asset asset = list.get(i).getAsset();
-		        
-		        boolean isPurchased = false;
-		         */
-		%>
+			List<AssetCardDTO> list = dto.getAssetList();
+			for (int i = 0; i < list.size(); i++) { 
+				request.setAttribute("card", list.get(i));
+				request.setAttribute("wishlistPage", true);
+				request.setAttribute("wishlist_id", dto.getWishlist_id());
+		%> 		
+				<!-- 상품 카드 -->				
+				<jsp:include page="./asset_card.jsp" />
+		<%} %>
+		<%} %>
 		<!-- Asset 목록 끝 -->
-
-
 	</div>
 	<!-- Wishlist Section End -->
 
@@ -79,53 +84,50 @@ Wishlist wishlist = (Wishlist) request.getAttribute("wishlist");
 
 	<!-- js plugin -->
 	<%@ include file="../inc/footer_link.jsp"%>
+	<script src="/static/js/asset_card.js"></script>
 	
 	<script type="text/javascript">
 		//비동기 방식으로, 서버의 이미지를 다운로드 받기 
-		function getImgList(asset_id, filename){
-			console.log("넘겨받은 파일명은 ", filename);
-			$.ajax({
-				url:"/data/asset_img/" + asset_id + "/" + filename, 
-				type:"GET",
-				//서버로부터 가져온 이미지 정보는 img src로 표현되려면, 
-				//1) 서버로 부터 가져온 정보를 Blob 형태로 가져와서
-				//2) 웹브라우저 지원 객체인 File 로 변환 
-				//3) 이 파일을 읽어들인 후 e.target.result 형태로 img src에 대입
-				//XMLHttpRequest 객체를 이용해야 함
-				xhr: function(){
-					const xhr = new XMLHttpRequest();
-					xhr.responseType="blob"; 
-					return xhr;
-				},
-				success:function(result, status, xhr){
-					console.log("서버로부터 받은 바이너리 정보는 ",result);
-					const file = new File([result], filename, {type: result.type});
-					
-					const reader = new FileReader();
-					reader.onload=function(e){
+		function getImgList(img){
+			    const assetId = img.dataset.assetId;
+			    const filename = img.dataset.filename;
+				console.log("넘겨받은 파일명은 ", filename);
+				
+				$.ajax({
+					url:"/data/asset_img/" + assetId + "/" + filename, 
+					type:"GET",
+					//서버로부터 가져온 이미지 정보는 img src로 표현되려면, 
+					//1) 서버로 부터 가져온 정보를 Blob 형태로 가져와서
+					//2) 웹브라우저 지원 객체인 File 로 변환 
+					//3) 이 파일을 읽어들인 후 e.target.result 형태로 img src에 대입
+					//XMLHttpRequest 객체를 이용해야 함
+					xhr: function(){
+						const xhr = new XMLHttpRequest();
+						xhr.responseType="blob"; 
+						return xhr;
+					},
+					success:function(result, status, xhr){
+						console.log("서버로부터 받은 바이너리 정보는 ",result);
+						const file = new File([result], filename, {type: result.type});
 						
-						const imgTag = document.querySelector("#thumb_" + asset_id);
-						if (imgTag) {
-							imgTag.src = e.target.result;
-							console.log(imgTag.src);
+						const reader = new FileReader();
+						reader.onload=function(e){
+							img.src = e.target.result;
 						}
+						reader.readAsDataURL(file);//대상 파일 읽기 
 					}
-					reader.readAsDataURL(file);//대상 파일 읽기 
-				}
+				});
+			}
+			
+			document.querySelectorAll("img.thumb").forEach(img => {
+			    getImgList(img);
 			});
-		}
-		
-		document.querySelectorAll("img.thumb").forEach(img => {
-		    const assetId = img.dataset.assetId;
-		    const filename = img.dataset.filename;
-		    getImgList(assetId, filename);
-		});
 
 		
 		function updateWishlist(){
 			
 			let formdata = new FormData(document.querySelector("#wishlist_modal_form"));
-			formdata.append("wishlist_id", "<%=wishlist.getWishlist_id()%>");
+			formdata.append("wishlist_id", "<%=dto.getWishlist_id()%>");
 			$.ajax({
 				url:"/main/wishlist/update",
 				type: "post",
@@ -142,7 +144,7 @@ Wishlist wishlist = (Wishlist) request.getAttribute("wishlist");
 			});
 		}
 		function deleteWishlist(){
-			$("#delete_form input[type='hidden']").val(<%=wishlist.getWishlist_id()%>);
+			$("#delete_form input[type='hidden']").val(<%=dto.getWishlist_id()%>);
 			$("#delete_form").attr({
 				action: "/main/wishlist/delete",
 				method: "post"
@@ -158,9 +160,9 @@ Wishlist wishlist = (Wishlist) request.getAttribute("wishlist");
 		// 수정 모달 열기
  		$("#bt_setting1").click(() => { 
 			console.log("click"); 			
-			    $("#listTitle").val("<%=wishlist.getList_name()%>");
-			    $("#listDesc").val("<%=wishlist.getDescription()%>");
-			    $("#titleLength").text("<%=wishlist.getList_name().length()%>/60");
+			    $("#listTitle").val("<%=dto.getList_name()%>");
+			    $("#listDesc").val("<%=dto.getDescription()%>");
+			    $("#titleLength").text("<%=dto.getList_name().length()%>/60");
 			    $("#modalOverlay").css("display", "flex");
 			    checkForm();
 		});
@@ -184,7 +186,7 @@ Wishlist wishlist = (Wishlist) request.getAttribute("wishlist");
 		$("#delete_modal_a").click(function(){
 			$("#modalOverlay").css("display", "none");
 			
-			$("#deleteModal h6").text("<%=wishlist.getList_name()%>");
+			$("#deleteModal h6").text("<%=dto.getList_name()%>");
 			$("#deleteModal").css("display", "flex");
 		});
 		
@@ -198,5 +200,7 @@ Wishlist wishlist = (Wishlist) request.getAttribute("wishlist");
 		})
 		
 		</script>
+		
+		<div id="toast" class="toast"></div>
 	</body>
 </html>

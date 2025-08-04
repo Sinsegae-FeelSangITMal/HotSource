@@ -5,6 +5,7 @@
 <%
 	List<Notice> noticeList = (List) request.getAttribute("noticeList");
 	Paging paging = (Paging) request.getAttribute("paging");
+	
 %>
 <!DOCTYPE html>
 <html lang="en">

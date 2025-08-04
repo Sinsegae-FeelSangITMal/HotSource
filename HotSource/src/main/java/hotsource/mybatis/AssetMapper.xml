@@ -32,6 +32,7 @@
        	<collection property="keywordList" column="asset_id" javaType="java.util.List" ofType="AssetKeywordMapping" select="AssetKeywordMapping.selectByAssetId"/>
         <collection property="fileList" column="asset_id" javaType="java.util.List" ofType="AssetFile" select="AssetFile.selectByAssetId"/>
    		<collection property="imgList" column="asset_id" javaType="java.util.List" ofType="AssetImg" select="AssetImg.selectByAssetId"/>
+
     </resultMap>
 
     <!-- 전체 조회 -->

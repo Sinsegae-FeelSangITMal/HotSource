@@ -38,6 +38,19 @@ public class ReviewServiceImpl implements ReviewService {
 		return reviewDAO.selectByOrderedAssetId(order_asset_id);
 	}
 
+	@Override
+	public double getAverageRateByAssetId(long asset_id) {
+		double avg = reviewDAO.selectAverageRateByAssetId(asset_id); 
+		
+		//0.5단위로 반올림
+		return Math.round(avg * 2) / 2.0;
+	}
+
+	@Override
+	public int countByAssetId(long asset_id) {
+		return reviewDAO.countByAssetId(asset_id);
+	}
+
 //	@Override
 //	public double selectAvgRate(int seller_id) {
 //		return reviewDAO.selectAvgRate(seller_id);

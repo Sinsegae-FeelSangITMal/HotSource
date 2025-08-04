@@ -2,7 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="Cart">
 	<insert id="insert" parameterType="cart">
-            insert into cart(asset_id, user_id) values(#{asset.asset_id}, #{user.user_id})
+		insert into cart(asset_id, user_id) values(#{asset.asset_id}, #{user.user_id})
+        <selectKey keyColumn="cart_id" keyProperty="cart_id" resultType="long" order="AFTER">
+        	select last_insert_id() as cart_id
+        </selectKey>    
     </insert>
 	<sql id="columns">
 		cart_id, create_date, asset_id, user_id
@@ -26,7 +29,15 @@
 	<select id="selectByUserId" resultMap="joinMap" parameterType="long">
 		SELECT <include refid="columns"/> FROM cart WHERE user_id=#{user_id} ORDER BY create_date DESC
 	</select>
-	
+
+	<select id="existsByUserIdAndAssetId" parameterType="map" resultType="boolean">
+		select exists(
+			select 1 
+			from cart
+			where user_id = #{user_id}
+			and asset_id = #{asset_id}		
+		)
+	</select>
 	<!-- 단건 삭제 -->
     <delete id="delete" parameterType="long">
             delete from cart where cart_id = #{cart_id}
