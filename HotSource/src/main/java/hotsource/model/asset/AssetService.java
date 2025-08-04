@@ -29,5 +29,8 @@ public interface AssetService {
 	public int getDiscountPrice(Asset asset); 
 	
 	//asset card 정보 가져오기
-	AssetCardDTO buildAssetCardDTO(long asset_id, long user_id);
+	public AssetCardDTO buildAssetCardDTO(long asset_id, long user_id);
+	
+	public AssetDetailDTO getDetail(long asset_id, long user_id);
+	
 }

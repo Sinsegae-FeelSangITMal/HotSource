@@ -30,6 +30,8 @@
         <association column="asset_id" property="sale" javaType="Sale" select="Sale.selectValidByAssetId"></association>
         <association column = "asset_id" property="thumbnail" javaType="AssetImg" select = "AssetImg.selectThumbnailByAssetId"></association>
         <collection property="reviewList" column="asset_id" javaType="java.util.List" ofType="Review" select="Review.selectByAssetId"/>
+        <collection property="imgList" column="asset_id" javaType="java.util.List" ofType="AssetImg" select="AssetImg.selectByAssetId"/>
+        <collection property="keywordList" column="asset_id" javaType="java.util.List" ofType="AssetKeywordMapping" select="AssetKeywordMapping.selectByAssetId"/>
     </resultMap>
 
     <!-- 전체 조회 -->

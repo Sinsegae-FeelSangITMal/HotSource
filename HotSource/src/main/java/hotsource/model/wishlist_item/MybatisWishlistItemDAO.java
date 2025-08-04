@@ -43,4 +43,9 @@ public class MybatisWishlistItemDAO implements WishlistItemDAO {
 			throw new WishlistItemException("찜 목록에서 제거 실패");
 		}
 	}
+
+	@Override
+	public int countByAssetId(long asset_id) {
+		return sqlSessionTemplate.selectOne("WishlistItem.countByAssetId", asset_id);
+	}
 }

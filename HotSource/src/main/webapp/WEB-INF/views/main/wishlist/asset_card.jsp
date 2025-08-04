@@ -82,9 +82,9 @@
 			<img src="/static/images/cart_black.png" class="cart_link"> 
 			<span><%=card.isInCart() ? "장바구니 이동" : "장바구니 담기"%></span>
 		</button> 
-		<a href="" class="wish-btn" data-is-wished="<%=card.isWished()%>">
+		<button class="wish-btn" data-is-wished="<%=card.isWished()%>">
 			<img class="wish_link"
 			src="<%=card.isWished() ? "/static/images/heart2.png" : "/static/images/heart1.png"%>">
-		</a>
+		</button>
 	</div>
 </div>

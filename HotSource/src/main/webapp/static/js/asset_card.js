@@ -45,7 +45,16 @@ $(".cart-btn").click(function(){
 	}
 });
 
-
+$(".wish-btn").click(function(){
+	const isWished = $(this).data("is-wished");
+	
+	if(isWished){
+		showToast("이미 찜한 상품입니다!");
+	} else {
+		
+		//addToWishlist(this);
+	}
+});
 
 
 $(".remove-btn").click(function(){

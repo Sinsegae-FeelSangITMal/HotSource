@@ -12,4 +12,5 @@ public interface ReviewService {
 	public Review selectByOrderedAssetId(long order_asset_id);
 	public double getAverageRateByAssetId(long asset_id);
 	public int countByAssetId(long asset_id);
+	
 }

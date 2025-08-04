@@ -49,4 +49,9 @@ public class WishlistItemServiceImpl implements WishlistItemService {
 	    paramMap.put("asset_id", asset_id);
 	    wishlistItemDAO.deleteByWishlistIdAndAssetId(paramMap);
 	}
+
+	@Override
+	public int countByAssetId(long asset_id) {
+		return wishlistItemDAO.countByAssetId(asset_id);
+	}
 }

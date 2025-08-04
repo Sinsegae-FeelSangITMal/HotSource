@@ -213,4 +213,22 @@ public class AssetServiceImpl implements AssetService {
 		return dto;
 	}
 	
+	public AssetDetailDTO getDetail(long asset_id, long user_id) {
+		AssetDetailDTO dto = new AssetDetailDTO();
+		
+		Asset asset = select(asset_id); 
+		
+		dto.setAsset(asset);
+		dto.setAverage_rate(reviewService.getAverageRateByAssetId(asset_id));
+		dto.setReview_count(reviewService.countByAssetId(asset_id));
+		dto.setWish_count(wishlistItemService.countByAssetId(asset_id));
+		dto.setSale_price(getDiscountPrice(asset));
+		dto.setCart(cartService.isInCart(user_id, asset_id));
+		dto.setPurchased(orderedService.isPurchased(user_id, asset_id));
+		dto.setWished(wishlistItemService.isWished(user_id, asset_id));
+		
+		dto.printAsset();
+		
+		return dto;
+	}
 }
