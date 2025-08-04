@@ -58,10 +58,27 @@ public class MybatisUserDAO implements UserDAO {
 	}
 	
 	@Override
-	public void update(User user) throws UserException {
-		int result = sqlSessionTemplate.update("User.update", user);
+	public void updateBasic(User user) throws UserException {
+		int result = sqlSessionTemplate.update("User.updateBasic", user);
+		System.out.println("Repository User 정보: " + user);
 		if(result < 1)
-			throw new UserException("사용자 등록 실패");
+			throw new UserException("사용자 Basic 정보 수정 실패");
+	}
+	
+	@Override
+	public void updateKeyword(User user) throws UserException {
+		int result = sqlSessionTemplate.update("User.updateKeyword", user);
+		System.out.println("Repository User 정보: " + user);
+		if(result < 1)
+			throw new UserException("사용자 Keyword 정보 수정 실패");
+	}
+	
+	@Override
+	public void updatePassword(User user) throws UserException {
+		int result = sqlSessionTemplate.update("User.updatePassword", user);
+		System.out.println("Repository User 정보: " + user);
+		if(result < 1)
+			throw new UserException("사용자 Password 정보 수정 실패");
 	}
 
 }

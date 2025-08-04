@@ -12,5 +12,7 @@ public interface UserDAO {
 	public User selectByEmail(String email);
 	public List selectByRoleId(long role_id);
 	public void insert(User user);
-	public void update(User user);
+	public void updateBasic(User user);
+	public void updateKeyword(User user);
+	public void updatePassword(User user);
 }

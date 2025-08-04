@@ -93,7 +93,7 @@ public class AssetServiceImpl implements AssetService {
 	    List<AssetImg> assetImgs = new ArrayList<>();
 	    for (int i = 0; i < imgFilenames.size(); i++) {
 	        AssetImg assetImg = new AssetImg();
-	        assetImg.setAsset_img_url("data/asset_img/" + assetId + "/" + imgFilenames.get(i));
+	        assetImg.setAsset_img_url(imgFilenames.get(i));
 	        assetImg.set_thumb(i == 0); // 썸네일 지정
 	        Asset asset = new Asset();
 	        asset.setAsset_id(assetId);
@@ -115,7 +115,7 @@ public class AssetServiceImpl implements AssetService {
 	    List<AssetFile> assetFilesList = new ArrayList<>();
 	    for (String filename : assetFilenames) {
 	        AssetFile assetFile = new AssetFile();
-	        assetFile.setFile_url("data/asset/" + assetId + "/" + filename);
+	        assetFile.setFile_url(filename);
 	        Asset asset = new Asset();
 	        asset.setAsset_id(assetId);
 	        assetFile.setAsset(asset);

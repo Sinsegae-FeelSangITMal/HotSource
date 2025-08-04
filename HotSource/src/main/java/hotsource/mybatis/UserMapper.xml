@@ -3,18 +3,21 @@
 <mapper namespace="User">
 	
 	<sql id="columns">
-		user_id, id, password, user_name, user_email, user_nickname, profile_img_url, create_date, role_id, salt
+		user_id, id, password, salt, user_name, user_email, user_nickname, profile_img_url, create_date, role_id, sns_provider_id
 	</sql>
-	<resultMap			type="User"							id="roleMap">
-		<id 					column="user_id"					property="user_id"/>
+	<resultMap				type="User"							id="roleMap">
+		<id 						column="user_id"					property="user_id"/>
 		<result				column="id"							property="id"/>
 		<result				column="password"				property="password"/>
-		<result				column="user_name"				property="user_name"/>
-		<result				column="user_email"				property="user_email"/>
+		<result				column="salt"						property="salt"/>
+		<result				column="user_name"			property="user_name"/>
+		<result				column="user_email"			property="user_email"/>
 		<result				column="user_nickname"		property="user_nickname"/>
 		<result				column="profile_img_url"		property="profile_img_url"/>
 		<result				column="create_date"			property="create_date"/>
-		<association	column="role_id"					property="role"					javaType="Role"		select="Role.select"/>
+		<result				column="salt"			property="salt"/>
+		<association	column="role_id"					property="role"				javaType="Role"				select="Role.select"/>
+		<association	column="sns_provider_id"	property="snsProvider"		javaType="SnsProvider"	select="SnsProvider.select"/>
 	</resultMap>
 	
 	<select id="selectAll" resultMap="roleMap">
@@ -25,11 +28,11 @@
 		SELECT <include refid="columns"/> FROM user WHERE user_id=#{user_id}
 	</select>
 	
-	<select id="selectById" parameterType="String" resultType="User">
+	<select id="selectById" parameterType="String" resultMap="roleMap">
 		SELECT <include refid="columns"/> FROM user WHERE id = #{id}
 	</select>
 	
-	<select id="selectByEmail" parameterType="String" resultType="User">
+	<select id="selectByEmail" parameterType="String" resultMap="roleMap">
 		SELECT <include refid="columns"/> FROM user WHERE user_email = #{user_email}
 	</select>
 	
@@ -42,11 +45,19 @@
 		VALUES (#{id}, #{user_name}, #{user_email}, #{password}, #{user_nickname}, #{salt}, 1, #{snsProvider.sns_provider_id})
 	</insert>
 	
-	<update id="update" parameterType="User">
+	<update id="updateBasic" parameterType="User">
 		UPDATE user
-		SET 	id=#{id}, user_name=#{user_name}, user_email=#{user_email},
-				password=#{password}, user_nickname=#{user_nickname}, salt=#{salt},
-				role_id=1, sns_provider_id=#{snsProvider.sns_provider_id}
+		SET 	user_nickname=#{user_nickname}, profile_img_url=#{profile_img_url}
+		WHERE user_id=#{user_id}
+	</update>
+	
+	<update id="updateKeyword" parameterType="User">
+	<!-- 키워드 매핑 테이블 -->
+	</update>
+		
+	<update id="updatePassword" parameterType="User">
+		UPDATE user
+		SET 	password=#{password}, salt=#{salt}
 		WHERE user_id=#{user_id}
 	</update>
 	
