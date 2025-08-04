@@ -38,6 +38,15 @@
 		SELECT <include refid="columns"/> FROM review WHERE order_asset_id=#{order_asset_id}
 	</select>
 	
+	<!-- asset의 평균 별점 구하기 : 레코드가 없어 null이 뜨는 경우 0을 반환 -->
+	<select id="selectAverageRateByAssetId" parameterType="long" resultType="double">
+		select coalesce(avg(rate), 0) from review where asset_id = #{asset_id} 
+	</select>
+	
+	<!-- asset의 리뷰 수 구하기 -->
+	<select id="countByAssetId" parameterType="long" resultType="int">
+		select count(*) from review where asset_id = #{asset_id}
+	</select>
 	<!-- 
 	<select id="selectAvgRate" parameterType="long" resultType="double">
 		select 	AVG(rate)

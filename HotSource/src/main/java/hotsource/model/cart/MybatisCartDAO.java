@@ -1,6 +1,7 @@
 package hotsource.model.cart;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,6 +53,11 @@ public class MybatisCartDAO implements CartDAO{
 		if(result < cart_ids.size()) {
 			throw new CartException("장바구니 에셋 다 건 삭제 실패");
 		}
+	}
+
+	@Override
+	public boolean existsByUserIdAndAssetId(Map<String, Object> paramMap) {
+		return sqlSessionTemplate.selectOne("Cart.existsByUserIdAndAssetId", paramMap);
 	}
 
 }

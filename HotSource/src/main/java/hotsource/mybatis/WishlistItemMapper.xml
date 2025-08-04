@@ -25,8 +25,26 @@
 		SELECT <include refid="columns"/> FROM wishlist_item WHERE wishlist_id=#{wishlist_id}
 	</select>
 	
+	<select id="existsByUserIdAndAssetId" parameterType="map" resultType="boolean">
+		SELECT EXISTS (
+	    	SELECT 1
+	    	FROM wishlist w
+	    	JOIN wishlist_item wi ON w.wishlist_id = wi.wishlist_id
+	    	WHERE w.user_id = #{user_id}
+	      	AND wi.asset_id = #{asset_id}
+	  	)
+	</select>
+	
 	<delete id="deleteByWishlistId" parameterType="long">
 		delete from wishlist_item where wishlist_id = #{wishlist_id}
 	</delete>
+	
+	<delete id="deleteByWishlistIdAndAssetId" parameterType="map">
+		delete from wishlist_item where wishlist_id = #{wishlist_id} and asset_id = #{asset_id}
+	</delete>
+	
+	<select id="countByAssetId" parameterType="long" resultType="int">
+		select count(*) from wishlist_item where asset_id = #{asset_id}
+	</select>
 	
 </mapper>

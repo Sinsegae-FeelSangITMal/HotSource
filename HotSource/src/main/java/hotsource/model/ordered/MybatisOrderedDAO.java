@@ -1,6 +1,7 @@
 package hotsource.model.ordered;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,5 +28,10 @@ public class MybatisOrderedDAO implements OrderedDAO {
 	@Override
 	public List selectByUserId(long user_id) {
 		return sqlSessionTemplate.selectList("Ordered.selectByUserId", user_id);
+	}
+
+	@Override
+	public boolean existsByUserIdAndAssetId(Map<String, Object> paramMap) {
+		return sqlSessionTemplate.selectOne("Ordered.existsByUserIdAndAssetId", paramMap);
 	}
 }

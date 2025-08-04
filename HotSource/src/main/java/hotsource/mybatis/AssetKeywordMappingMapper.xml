@@ -9,6 +9,7 @@
 	<resultMap			type="AssetKeywordMapping"					id="joinMap">
 		<id 					column="asset_keyword_mapping_id"		property="asset_keyword_mapping_id"/>
 		<association	column="asset_id"		property="asset"			javaType="Asset"		select="Asset.select"/>
+		<association	column="keyword_id"		property="keyword"			javaType="Keyword"		select="Keyword.select"/>
 	</resultMap>
 	
 	<select id="selectByAssetId" resultMap="joinMap" parameterType="long">

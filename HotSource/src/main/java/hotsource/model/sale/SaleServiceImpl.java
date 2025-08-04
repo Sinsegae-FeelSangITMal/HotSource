@@ -30,6 +30,6 @@ public class SaleServiceImpl implements SaleService {
 
 	@Override
 	public Sale selectValidByAssetId(long asset_id) {
-		return saleDAO.selectByAssetId(asset_id);
+		return saleDAO.selectValidByAssetId(asset_id);
 	}
 }
