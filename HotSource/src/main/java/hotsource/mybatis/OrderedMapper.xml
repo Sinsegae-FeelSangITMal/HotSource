@@ -28,4 +28,15 @@
 		SELECT <include refid="columns"/> FROM ordered WHERE user_id=#{user_id}
 	</select>
 	
+	<!-- 구매 여부: exists 결과가 하나라도 있으면 true, 아니면 false반환 -->
+	<select id="existsByUserIdAndAssetId" parameterType="map" resultType="boolean">
+		SELECT EXISTS (
+	    	SELECT 1
+	    	FROM ordered o
+	    	JOIN ordered_asset oa ON o.order_id = oa.order_id
+	    	WHERE o.user_id = #{user_id}
+	      	AND oa.asset_id = #{asset_id}
+	  	)
+</select>
+	
 </mapper>

@@ -39,6 +39,16 @@ public class MybatisReviewDAO implements ReviewDAO {
 		return sqlSessionTemplate.selectOne("Review.selectByOrderedAssetId", order_asset_id);
 	}
 
+	@Override
+	public double selectAverageRateByAssetId(long asset_id) {
+		return sqlSessionTemplate.selectOne("Review.selectAverageRateByAssetId", asset_id);
+	}
+
+	@Override
+	public int countByAssetId(long asset_id) {
+		return sqlSessionTemplate.selectOne("Review.countByAssetId", asset_id);
+	}
+
 //	@Override
 //	public double selectAvgRate(int seller_id) {
 //		return sqlSessionTemplate.selectOne("Review.selectAvgRate", seller_id);

@@ -18,7 +18,7 @@
 	</sql>
 	
 	<select id="select" parameterType="int" resultType="TopCategory">
-		SELECT <include refid="columns"/> FROM topcategory WHERE topcategory_id = ${topcategory_id}
+		SELECT <include refid="columns"/> FROM topcategory WHERE topcategory_id = #{topcategory_id}
 	</select>
 	
 </mapper>

@@ -11,23 +11,25 @@
 
 <aside class="main-sidebar sidebar-light elevation-4">
   <!-- Brand Logo -->
-  <a href="/main/index" class="brand-link d-flex justify-content-center align-items-center" style="background-color: #15161D; height: 60px;">
-    <img src="/static/util/subLogo.png" alt="Hot Source Logo" class="brand-image" style="height: 60px; object-fit: contain;">
+  <a href="/main/index" class="brand-link px-3 py-2" style="background-color: #15161D;">
+    <div style="background-color: #15161D; display: flex; justify-content: center; align-items: center;">
+      <img src="/static/util/subLogo.png" alt="Hot Source Logo" style="max-width: 100%; height: auto;">
+    </div>
   </a>
 
   <!-- Sidebar -->
   <div class="sidebar">
-    <!-- User Panel -->
+    <!-- Sidebar user panel -->
     <div class="user-panel d-flex align-items-center my-3 px-3">
       <% if (seller == null) { %>
         <div class="info ms-2">
           <a href="/seller/registform" class="d-block fw-semibold text-danger">판매자 등록</a>
         </div>
       <% } else { %>
-        <div class="image me-2">
-          <img src="/data/user_profile_img/<%= seller.getProfile_img_url() %>" class="img-circle elevation-2" alt="User Image" style="width: 50px; height: 50px;">
+        <div class="image">
+          <img src="/data/user_profile_img/<%= seller.getProfile_img_url() %>" class="img-circle elevation-2" alt="User Image" style="width: 35px; height: 35px;">
         </div>
-        <div class="info">
+        <div class="info ms-2">
           <a href="#" class="d-block fw-semibold text-dark"><%= seller.getSeller_nickname() %> (Seller)</a>
         </div>
       <% } %>
@@ -128,20 +130,11 @@
     </nav>
   </div>
 </aside>
+
 <style>
   .main-sidebar {
-    background-color: #f6f7f9;
-    border-right: 1px solid #dcdcdc;
-  }
-
-  .brand-link {
-    padding: 0;
-    border-bottom: none;
-  }
-
-  .brand-image {
-    max-height: 40px;
-    padding: 5px 0;
+    background-color: #f9f9f9;
+    border-right: 1px solid #e0e0e0;
   }
 
   .main-sidebar .nav-sidebar .nav-link {

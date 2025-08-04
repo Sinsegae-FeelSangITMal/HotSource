@@ -87,3 +87,22 @@ a:hover{
 	text-decoration: none;
 	color: #dc3546;
 }
+
+.remove-btn {
+	position: absolute; 
+	top: 5px; 
+	right: 5px; 
+	background: none; 
+	border: none; 
+	font-size: 18px; 
+	color: #7c7c7c; 
+	cursor: pointer;
+	visibility: hidden;
+	opacity: 0;
+	transition: visibility 0s, opacity 0.2s ease;
+}
+
+.product-card:hover .remove-btn {
+	visibility: visible;
+	opacity: 1;
+}

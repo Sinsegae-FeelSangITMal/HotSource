@@ -15,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 import hotsource.domain.User;
 import hotsource.domain.Wishlist;
 import hotsource.exception.WishlistException;
+import hotsource.model.wishlist.WishlistDetailDTO;
 import hotsource.model.wishlist.WishlistService;
 import lombok.extern.slf4j.Slf4j;
 
@@ -55,15 +56,16 @@ public class WishlistController {
 	@GetMapping("/wishlist/detail")
 	public ModelAndView getWishlist(@RequestParam long wishlist_id, HttpSession session) {
 		ModelAndView mav = new ModelAndView("main/wishlist/detail");
-		Wishlist wishlist = wishlistService.select(wishlist_id);
 		
-		User loginUser = (User)session.getAttribute("user");  //로그인한 유저의 찜 목록이 아니라면 
+		User loginUser = (User)session.getAttribute("user");  //로그인한 유저의 찜 목록이 아니라면
+		Wishlist wishlist = wishlistService.select(wishlist_id);
 		if(loginUser.getUser_id() != wishlist.getUser().getUser_id()) {
 			//예외 발생시키고 ... 흠
 			// 다시 본인 찜 목록으로 돌아가기 
 		}
 		
-		mav.addObject("wishlist", wishlist);
+		WishlistDetailDTO dto = wishlistService.getDetailWishlist(wishlist);
+		mav.addObject("dto", dto);
 		return mav;
 	}
 	

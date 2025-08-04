@@ -112,15 +112,19 @@
     <div class="upload-section" style="padding-top: 10px;">
         <% for (Asset asset : list) { %>
             <div style="display: flex; align-items: center; border: 1px solid #ccc; padding: 10px; margin-bottom: 10px;">
-                <img src="/data/asset_img/<%= asset.getAsset_id() %>/<%= asset.getThumbnail().getAsset_img_url() %>" alt="Thumbnail" style="width: 80px; height: 80px; object-fit: cover; margin-right: 15px;">
-                <div style="flex-grow: 1;">
+				    <% if (asset.getThumbnail() != null) { %>
+				        <img src="/data/asset_img/<%= asset.getAsset_id() %>/<%= asset.getThumbnail().getAsset_img_url() %>" alt="Thumbnail" style="width: 80px; height: 80px; object-fit: cover; margin-right: 15px;">
+				    <% } else { %>
+				        <img src="/images/default-thumbnail.png" alt="이미지 없음" style="width: 80px; height: 80px; object-fit: cover; margin-right: 15px;">
+				    <% } %>
+				    <div style="flex-grow: 1;">
                     <div style="font-weight: bold;"><%= asset.getTitle() %></div>
                 </div>
                 <div style="white-space: nowrap;">
-                    <a href="/seller/asset/edit?id=<%= asset.getAsset_id() %>" style="margin-right: 10px;">Edit</a>
-                    <a href="/seller/asset/analytics?id=<%= asset.getAsset_id() %>" style="margin-right: 10px;">Analytics</a>
-                    <a href="/seller/asset/earnings?id=<%= asset.getAsset_id() %>" style="margin-right: 10px;">Earnings</a>
-                    <a href="/seller/asset/delete?id=<%= asset.getAsset_id() %>">Delete</a>
+                    <a href="asset/update?asset_id=<%= asset.getAsset_id() %>" style="margin-right: 10px;">Edit</a>
+                    <a href="/asset/analytics?id=<%= asset.getAsset_id() %>" style="margin-right: 10px;">Analytics</a>
+                    <a href="/asset/earnings?id=<%= asset.getAsset_id() %>" style="margin-right: 10px;">Earnings</a>
+                    <a href="/asset/delete?asset_id=<%= asset.getAsset_id() %>">Delete</a>
                 </div>
             </div>
         <% } %>
