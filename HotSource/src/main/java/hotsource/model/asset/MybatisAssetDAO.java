@@ -1,6 +1,7 @@
 package hotsource.model.asset;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,11 @@ public class MybatisAssetDAO implements AssetDAO {
 	@Override
 	public List selectAll() {
 		return sqlSessionTemplate.selectList("Asset.selectAll");
+	}
+	
+	@Override
+	public List selectSaleAll() {
+		return sqlSessionTemplate.selectList("Asset.selectSaleAll");
 	}
 
 	@Override
@@ -54,6 +60,7 @@ public class MybatisAssetDAO implements AssetDAO {
 		return sqlSessionTemplate.selectList("Asset.selectSale", topcategory_id);
 	}
 
+	
 	@Override
 	public void insert(Asset asset) throws AssetException{
 		int result = sqlSessionTemplate.insert("Asset.insert", asset);

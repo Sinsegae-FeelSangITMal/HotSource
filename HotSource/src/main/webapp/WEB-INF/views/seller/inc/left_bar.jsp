@@ -5,6 +5,9 @@
     Seller seller = (Seller) session.getAttribute("seller");
     String uri = request.getRequestURI();
     boolean isDashboard = uri.contains("/dashboard");
+    boolean isAssetList = uri.contains("/dashboard/assetList");
+    boolean isAssetCreate = uri.contains("/dashboard/assetCreate");
+    boolean isAssetUpdate = uri.contains("/product/registform");
     boolean isNotice = uri.contains("/seller/notice");
     boolean isSettings = uri.contains("index");
 %>
@@ -47,12 +50,13 @@
             </p>
           </a>
           <ul class="nav nav-treeview ps-3">
-            <li class="nav-item">
-              <a href="/seller/dashboard/assetList?seller_id=<%= (seller != null ? seller.getSeller_id() : "") %>" class="nav-link <%= uri.contains("assetList") ? "active" : "" %>">
-                <i class="far fa-circle nav-icon"></i>
-                <p>List</p>
-              </a>
-            </li>
+		    <li class="nav-item">
+			  <a href="/seller/dashboard/assetList?seller_id=<%= (seller != null ? seller.getSeller_id() : "") %>" 
+			     class="nav-link <%= isAssetList ? "active" : "" %>">
+			    <i class="far fa-circle nav-icon"></i>
+			    <p>List</p>
+			  </a>
+			</li>
             <li class="nav-item">
               <a href="/seller/dashboard/assetCreate" class="nav-link <%= uri.contains("assetCreate") ? "active" : "" %>">
                 <i class="far fa-circle nav-icon"></i>
@@ -158,11 +162,11 @@
     color: #000;
   }
 
-  .main-sidebar .nav-sidebar .nav-link.active {
-    background-color: #fff;
-    color: #000;
-    font-weight: 600;
-  }
+	.main-sidebar .nav-sidebar .nav-link.active {
+	  background-color: #dcdcdc; /* 더 선명한 회색 */
+	  color: #000;
+	  font-weight: 700;
+	}
 
   .main-sidebar .nav-icon,
   .main-sidebar .nav-link .far,

@@ -29,4 +29,5 @@
 	<delete id="deleteByAssetId" parameterType="long">
 		delete from asset_keyword_mapping where asset_id = #{asset_id}
 	</delete>
+
 </mapper>

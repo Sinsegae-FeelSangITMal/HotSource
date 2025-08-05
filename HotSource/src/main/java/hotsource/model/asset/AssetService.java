@@ -11,6 +11,7 @@ import hotsource.model.wishlist.AssetCardDTO;
 
 public interface AssetService {
 	public List selectAll();
+	public List selectSaleAll();
 	public Asset select(long asset_id);
 	public List selectBySellerId(long seller_id);
 	public int selectCount(long seller_id);

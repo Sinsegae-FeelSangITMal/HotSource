@@ -32,7 +32,14 @@
                class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded cursor-pointer transition">
       </form>
 
-      <div class="mt-6">
+      <div class="mt-1">
+      	<p class="text-center text-sm text-gray-400 mt-1">
+		  Don't have an account?
+		  <a href="/main/user/registform"
+		     class="text-blue-400 hover:text-blue-600 font-medium underline transition">
+		    Sign up
+		  </a>
+		</p>
         <p class="text-center text-gray-400 text-sm mb-2">Or sign in with</p>
 
         <div class="flex flex-col space-y-3">

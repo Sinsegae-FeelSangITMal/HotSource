@@ -86,7 +86,7 @@ function check() {
 	
 	$.ajax({
 		// 기존 비밀번호가 올바르게 입력됐는지 확인
-		url: "/user/password/check",
+		url: "/main/user/password/check",
 		type: "POST",
 		data: {
 			oriPwd: oriPwd
@@ -95,7 +95,7 @@ function check() {
 			// 기존 비밀번호가 올바르게 입력되었을 시 새 비밀번호와 겹치는지 확인 요청
 			if (result === "match"){
 				$.ajax({
-					url: "/user/password/confirm",
+					url: "/main/user/password/confirm",
 					type: "POST",
 					data: {
 						newPwd: newPwd1
@@ -105,14 +105,14 @@ function check() {
 						if (result === "isNew"){
 							if (confirm("비밀번호를 변경하시겠습니까?")) {
 								$.ajax({
-									url: "/user/password/update",
+									url: "/main/user/password/update",
 									type: "POST",
 									data: {
 										newPwd: newPwd1
 									},
 									success: function(result, status, xhr) {
 										alert("비밀번호가 변경되었습니다\n다시 로그인해주세요");
-										location.href = "/user/logout";
+										location.href = "/main/user/logout";
 									}
 								});
 							}

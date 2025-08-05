@@ -60,7 +60,7 @@
     <!-- 검색 결과 섹션 시작 -->
     <section class="search-section">
       
-	  <% request.setAttribute("resourceList", request.getAttribute("imgNewList")); %>
+	  <% request.setAttribute("resourceList", request.getAttribute("bgmNewList")); %>
 	  <jsp:include page="inc/search_resource_all.jsp" />
       <!-- 목록 출력 끝 -->
     </section>

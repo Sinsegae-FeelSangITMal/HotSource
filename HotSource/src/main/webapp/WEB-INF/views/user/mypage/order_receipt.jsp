@@ -13,7 +13,7 @@
 <div class="col-md-10 content-area">
 	<div class="content-box">
 	
-		<h3 class="header">Resources</h3>
+		<h3 class="header">My Reviews</h3>
 		
 		<!-- 기본 정보 섹션 시작 -->
 		<table class="asset-table">
@@ -45,7 +45,8 @@
 					<td><%=order.getOrder_no() %></td>
 					<td>
 						<div class="download-wrap">
-							<a class="download active" href="#">Download</a>
+							<a class="download" href="">Order Receipt</a>
+							<a class="download" href="">Write a Review</a>
 						</div>
 					</td>
 				</tr>

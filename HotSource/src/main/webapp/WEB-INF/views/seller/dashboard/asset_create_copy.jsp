@@ -72,7 +72,7 @@
       font-weight: bold;
       width: 20%;
       transition: background-color 0.2s ease;
-      font-size: 13px;
+      font-size: 10px;
       float: right;
     }
 
@@ -155,7 +155,7 @@
 
           <!-- 왼쪽 폼 영역 -->
           <div class="left-form">
-            <h1 style="bold">Create Asset</h1>
+            <h2>Create Asset</h2>
 
             <div class="form-section">
               <label for="title">Title</label>
@@ -193,11 +193,6 @@
               </select>
             </div>
 
-			<div class="form-section">
-              <label for="youtube_url">youtubeUrl</label>
-              <input type="text" id="youtube_url" name="youtube_url" class="form-control"
-                     placeholder="youtube_url" />
-            </div>
             
              <div class="form-section">
               <label for="keywords">Keywords</label>
@@ -235,13 +230,18 @@
 
           <!-- 오른쪽 이미지 미리보기 영역 -->
           <div class="right-preview">
+     	     <div class="form-section">
+              <label for="youtube_url">youtubeUrl</label>
+              <input type="text" id="youtube_url" name="youtube_url" class="form-control"
+                     placeholder="youtube_url" />
+            </div>
              <div class="preview-box">
                <div class="input-group">
                
                  <div class="custom-file">    
-                    <label for="asset_img"> </label>                  
+                    <label for="asset_img">에셋 이미지 선택 </label>                  
                    <input type="file" class="custom-file-input" name="photo" id="photo" multiple="multiple">
-                   <label class="custom-file-label" for="exampleInputFile"> 에셋 이미지 업로드  </label>
+                   <label class="custom-file-label" for="exampleInputFile">다중 파일 선택 가능 </label>
                  </div>
                </div>
                

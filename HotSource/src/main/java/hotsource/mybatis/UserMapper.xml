@@ -5,19 +5,20 @@
 	<sql id="columns">
 		user_id, id, password, salt, user_name, user_email, user_nickname, profile_img_url, create_date, role_id, sns_provider_id
 	</sql>
-	<resultMap				type="User"							id="roleMap">
-		<id 						column="user_id"					property="user_id"/>
-		<result				column="id"							property="id"/>
-		<result				column="password"				property="password"/>
-		<result				column="salt"						property="salt"/>
-		<result				column="user_name"			property="user_name"/>
-		<result				column="user_email"			property="user_email"/>
-		<result				column="user_nickname"		property="user_nickname"/>
-		<result				column="profile_img_url"		property="profile_img_url"/>
-		<result				column="create_date"			property="create_date"/>
-		<result				column="salt"			property="salt"/>
+	<resultMap			type="User"							id="roleMap">
+		<id 					column="user_id"					property="user_id"/>
+		<result			column="id"							property="id"/>
+		<result			column="password"				property="password"/>
+		<result			column="salt"						property="salt"/>
+		<result			column="user_name"			property="user_name"/>
+		<result			column="user_email"			property="user_email"/>
+		<result			column="user_nickname"		property="user_nickname"/>
+		<result			column="profile_img_url"		property="profile_img_url"/>
+		<result			column="create_date"			property="create_date"/>
+		<result			column="salt"						property="salt"/>
 		<association	column="role_id"					property="role"				javaType="Role"				select="Role.select"/>
 		<association	column="sns_provider_id"	property="snsProvider"		javaType="SnsProvider"	select="SnsProvider.select"/>
+		<collection 		column="user_id"				property="orderList"			javaType="java.util.List"	ofType="Ordered"	select="Ordered.selectByUserId"/>
 	</resultMap>
 	
 	<select id="selectAll" resultMap="roleMap">
@@ -60,6 +61,8 @@
 		SET 	password=#{password}, salt=#{salt}
 		WHERE user_id=#{user_id}
 	</update>
+	
+	
 	
 
 </mapper>
