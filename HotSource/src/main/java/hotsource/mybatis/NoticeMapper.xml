@@ -31,7 +31,7 @@
 	</select>
 	
 	<insert id="insert" parameterType="Notice">
-		insert into notice(title, seller_id, content) values(#{title}, 1, #{content})
+		insert into notice(title, seller_id, content) values(#{title}, #{seller.seller_id}, #{content})
 	</insert>
 	
 	<update id="update" parameterType="Notice">

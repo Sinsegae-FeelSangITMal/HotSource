@@ -9,17 +9,15 @@
 <%
 	SimpleDateFormat sdf;
 	String formattedDate;
-    Date createDate = seller.getCreate_date(); // java.util.Date 또는 Timestamp 라고 가정
-    Calendar cal = java.util.Calendar.getInstance();
+    //Date createDate = seller.getCreate_date(); // java.util.Date 또는 Timestamp 라고 가정
+    Calendar cal = Calendar.getInstance();
     Date now = cal.getTime(); // 오늘 날짜
 
     // 한 달 전으로 이동
     cal.add(Calendar.MONTH, -1);
     Date oneMonthAgo = cal.getTime();
 
-    // 조건: 한 달 이내에 생성된 경우
-    //Date createDate = notice.getCreate_date(); // 공지 생성일로 변경
-	boolean isNew = createDate.after(oneMonthAgo) && !createDate.after(now);
+    
 %>
 <div class="tap-artist-card">
 					<%-- for (int i=1; i<=2; i++) {--%>
@@ -32,7 +30,11 @@
 					<div class="seller-post-info">
 						<%
 							sdf = new SimpleDateFormat("yyyy/ M / d HH:mm");
-							formattedDate = sdf.format(seller.getCreate_date());
+							formattedDate = sdf.format(notice.getCreate_date());
+							
+							// 조건: 한 달 이내에 생성된 경우
+						    Date createDate = notice.getCreate_date(); // 공지 생성일로 변경
+							boolean isNew = createDate.after(oneMonthAgo) && !createDate.after(now);
 						%>
 						<h5 class="seller-post-author"><%= seller.getSeller_name() %></h5> &nbsp &nbsp
 						<span class="seller-post-time"><%= formattedDate %></span> &nbsp &nbsp
@@ -42,7 +44,8 @@
 				</div>
 				<div class="seller-post-body d-flex">
 					<!-- <img src="/static/images/cozy_tileset_preview.png" alt="tileset" class="seller-post-image">-->
-					<img class="seller-post-image" src="/static/images/test1.gif" alt="썸네일" />
+					
+					<img class="seller-post-image " src="/data/notice/<%=notice.getNotice_id()%>/<%=notice.getNotice_img_url()%>">
 					<div class="post-text ms-3">
 						<h4 class="seller-post-title"><%= notice.getTitle() %></h4>
 						<hr>
@@ -71,12 +74,12 @@
 					        <span id="like_count_<%= notice.getNotice_id() %>"><%= (likeList != null) ? likeList.size() : 0 %></span>
 					    </button>
 					<% } %>
-
+					<button class="comment-btn">
+				        <i class="fas fa-comment"></i> <span><%= commentList.size() %></span>
+				    </button>
+				    
 				    <button class="send-btn">
 				        <i class="bi bi-send-fill"></i>
-				    </button>
-				    <button class="comment-btn">
-				        <i class="fas fa-comment"></i> <span><%= commentList.size() %></span>
 				    </button>
 				</div>
 				
