@@ -10,8 +10,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import hotsource.model.asset.AssetService;
 import hotsource.model.keyword.KeywordService;
+import lombok.extern.slf4j.Slf4j;
 
 @Controller
+@Slf4j
 public class MainController {
 
 	@Autowired
@@ -53,6 +55,8 @@ public class MainController {
 	@RequestMapping(value="/sale")
 	public ModelAndView searchAll() {
 		List saleList = assetService.selectSaleAll();
+		
+		log.debug("sssssssssaleList :"+ saleList);
 		
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("main/search_sale");

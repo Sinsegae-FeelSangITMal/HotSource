@@ -128,7 +128,10 @@ public class MypageController {
 		User user = (User) session.getAttribute("user");
 		
 		try {
-			userKeywordService.delete(user.getUser_id());
+			List<String> keywords = userKeywordService.selectByUserId(user.getUser_id());
+			if (keywords != null && !keywords.isEmpty()) {
+			    userKeywordService.delete(user.getUser_id());
+			}
 			for (String keyword : request)
 				userKeywordService.insert(user, keyword);
 			return "success";

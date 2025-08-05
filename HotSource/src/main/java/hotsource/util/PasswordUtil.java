@@ -7,8 +7,10 @@ import java.util.Base64;
 import org.springframework.stereotype.Component;
 
 import hotsource.exception.PasswordEncryptException;
+import lombok.extern.slf4j.Slf4j;
 
 @Component
+@Slf4j
 public class PasswordUtil {
 
 	public static String generateSalt() {
@@ -25,6 +27,7 @@ public class PasswordUtil {
 		String result = null;
 		try {
 			MessageDigest md = MessageDigest.getInstance("SHA-256");
+			log.debug("salt :"+salt);
 			md.update(salt.getBytes("UTF-8"));
 			byte[] hashedByte = md.digest(password.getBytes("UTF-8"));
 			
