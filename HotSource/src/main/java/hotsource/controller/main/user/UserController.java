@@ -120,8 +120,8 @@ public class UserController {
 	@PostMapping("/password/check")
 	@ResponseBody
 	public String checkPassword(@RequestParam String oriPwd, HttpSession session) {
-		//User user = (User) session.getAttribute("user");
-		User user = userService.select(5);
+		User loginUser = (User) session.getAttribute("user");
+		User user = userService.select(loginUser.getUser_id());
 		if (user != null && userService.checkPassword(user, oriPwd))
 			return "match";
 		else
@@ -131,8 +131,8 @@ public class UserController {
 	@PostMapping("/password/confirm")
 	@ResponseBody
 	public String confirmPassword(@RequestParam String newPwd, HttpSession session) {
-		//User user = (User) session.getAttribute("user");
-		User user = userService.select(5);
+		User loginUser = (User) session.getAttribute("user");
+		User user = userService.select(loginUser.getUser_id());
 		if (user != null && userService.confirmPassword(user, newPwd))
 			return "isNew";
 		else
@@ -142,8 +142,8 @@ public class UserController {
 	@PostMapping("/password/update")
 	@ResponseBody
 	public String updatePassword(@RequestParam String newPwd, HttpSession session) {
-		//User user = (User) session.getAttribute("user");
-		User user = userService.select(5);
+		User loginUser = (User) session.getAttribute("user");
+		User user = userService.select(loginUser.getUser_id());
 		if (user != null) {
 			userService.updatePassword(user, newPwd);
 			return "success";

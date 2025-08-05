@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import hotsource.domain.Review;
+import hotsource.exception.ReviewException;
 
 @Repository
 public class MybatisReviewDAO implements ReviewDAO {
@@ -53,4 +54,11 @@ public class MybatisReviewDAO implements ReviewDAO {
 //	public double selectAvgRate(int seller_id) {
 //		return sqlSessionTemplate.selectOne("Review.selectAvgRate", seller_id);
 //	}
+	
+	@Override
+	public void insert(Review review) throws ReviewException{
+		int result = sqlSessionTemplate.insert("Review.insert", review);
+		if (result < 1)
+			throw new ReviewException("리뷰 등록에 실패했습니다");
+	}
 }

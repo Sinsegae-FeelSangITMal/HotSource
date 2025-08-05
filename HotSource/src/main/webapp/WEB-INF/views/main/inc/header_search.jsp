@@ -27,7 +27,7 @@
 					</li>
 					<li class="nav-item"><a class="nav-link" href="/main/sounds">Sound</a>
 					</li>
-					<li class="nav-item"><a class="nav-link" href="/main/search">Sale</a>
+					<li class="nav-item"><a class="nav-link" href="/main/sale">Sale</a>
 					</li>
 				</ul>
 				<!-- 중앙 메뉴 끝 -->

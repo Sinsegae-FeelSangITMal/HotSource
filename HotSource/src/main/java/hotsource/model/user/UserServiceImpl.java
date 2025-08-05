@@ -6,35 +6,40 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import hotsource.domain.Ordered;
 import hotsource.domain.User;
 import hotsource.exception.UploadException;
 import hotsource.exception.UserException;
 import hotsource.exception.UserNotFoundException;
+import hotsource.model.ordered.OrderedDAO;
 import hotsource.util.FileManager;
 import hotsource.util.PasswordUtil;
 import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Slf4j
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private UserDAO userDAO;
+
+	@Autowired
+	private OrderedDAO orderedDAO;
 	
 	@Autowired
 	private PasswordUtil passwordUtil;
-	
+
 	@Autowired
 	private FileManager fileManager;
-	
+
 	@Override
 	public void regist(User user) {
-		
-		if(user.getSnsProvider() == null) {
+
+		if (user.getSnsProvider() == null) {
 			String salt = passwordUtil.generateSalt();
-			
+
 			String hashedPassword = passwordUtil.hashPassword(user.getPassword(), salt);
-			
+
 			user.setSalt(salt);
 			user.setPassword(hashedPassword);
 		} else {
@@ -43,22 +48,22 @@ public class UserServiceImpl implements UserService{
 			user.setSalt("Oauth");
 			user.setPassword("Oauth");
 		}
-		
+
 		userDAO.insert(user);
 	}
-	
+
 	@Override
-	public User login(User user) throws UserNotFoundException{
-		
-		log.debug("User_email :"+user.getUser_email());
+	public User login(User user) throws UserNotFoundException {
+
+		log.debug("User_email :" + user.getUser_email());
 		log.debug("User service Impl의 User 정보: " + user);
 		User obj = userDAO.selectByEmail(user.getUser_email());
-		
+
 		log.debug("login obj :" + obj);
-		
+
 		String dbHash = passwordUtil.hashPassword(user.getPassword(), obj.getSalt());
-		
-		if(dbHash.equals(obj.getPassword()) == false) {
+
+		if (dbHash.equals(obj.getPassword()) == false) {
 			throw new UserNotFoundException("로그인 정보가 올바르지 않습니다");
 		}
 		return obj;
@@ -78,10 +83,18 @@ public class UserServiceImpl implements UserService{
 	public User selectById(String id) {
 		return userDAO.selectById(id);
 	}
-	
+
 	@Override
 	public List selectByRoleId(long role_id) {
 		return userDAO.selectByRoleId(role_id);
+	}
+
+	@Override
+	public User selectOrder(long user_id) {
+		User user = userDAO.select(user_id);  // 유저 조회
+		List<Ordered> orders = orderedDAO.selectByUserId(user_id);  // 별도 주문 조회
+		user.setOrderList(orders);  // 수동으로 세팅
+		return user;
 	}
 
 	@Transactional
@@ -90,21 +103,21 @@ public class UserServiceImpl implements UserService{
 		User u = userDAO.select(user.getUser_id());
 		u.setUser_nickname(user.getUser_nickname());
 		u.setPhoto(user.getPhoto());
-		
+
 		// 이미지 저장 + User에 파일 경로 저장
 		if (user.getPhoto() != null && !user.getPhoto().isEmpty()) {
 			fileManager.save(user, savePath);
-		    u.setProfile_img_url(user.getProfile_img_url());
+			u.setProfile_img_url(user.getProfile_img_url());
 		}
-		
+
 		// DB 호출
 		userDAO.updateBasic(u);
 	}
-	
+
 	@Override
 	public boolean checkPassword(User user, String oldPwd) {
 		String reqResult = passwordUtil.hashPassword(oldPwd, user.getSalt());
-		
+
 		// 기존 비밀번호가 정확히 입력됐으면 true
 		if (reqResult.equals(user.getPassword()))
 			return true;
@@ -122,20 +135,20 @@ public class UserServiceImpl implements UserService{
 		else
 			return true;
 	}
-	
+
 	@Override
 	public void updatePassword(User user, String pwd) throws UserException {
 		// 비밀번호 암호화
 		if (user.getSnsProvider() == null) {
 			String salt = passwordUtil.generateSalt();
 			String hashedPassword = passwordUtil.hashPassword(pwd, salt);
-			
+
 			user.setSalt(salt);
 			user.setPassword(hashedPassword);
 		}
-		
+
 		// DB 수정 요청
 		userDAO.updatePassword(user);
 	}
-	
+
 }

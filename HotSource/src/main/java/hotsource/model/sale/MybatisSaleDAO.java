@@ -38,6 +38,16 @@ public class MybatisSaleDAO implements SaleDAO {
 	public void insert(Sale sale) {
 		sqlSessionTemplate.insert("Sale.insert", sale);
 	}
+
+	@Override
+	public void update(Sale sale) {
+		sqlSessionTemplate.update("Sale.update", sale);
+	}
+
+	@Override
+	public void deleteByAssetId(long asset_id) {
+		sqlSessionTemplate.delete("Sale.deleteByAssetId", asset_id);
+	}
 	
 	
 }

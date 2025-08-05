@@ -1,13 +1,21 @@
 package hotsource.controller.main;
 
+import java.text.SimpleDateFormat;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -17,6 +25,7 @@ import hotsource.domain.NoticeComment;
 import hotsource.domain.NoticeLike;
 import hotsource.domain.Review;
 import hotsource.domain.Seller;
+import hotsource.domain.User;
 import hotsource.model.asset.AssetService;
 import hotsource.model.notice.NoticeService;
 import hotsource.model.notice_comment.NoticeCommentService;
@@ -32,7 +41,7 @@ import lombok.extern.slf4j.Slf4j;
 public class SellerController {
 
 	@Autowired
-	private UserService userSerive;
+	private UserService userService;
 	
 	@Autowired
 	private SellerService sellerSerive;
@@ -66,15 +75,26 @@ public class SellerController {
 	
 	//상세요청 처리 
 	@GetMapping("/seller/detail")
-	@ResponseBody
-	public ModelAndView getDetail(long seller_id, long notice_id, long notice_comment_id, long notice_like_id, Model model) {
+	public ModelAndView getDetail(@RequestParam(name="seller_id") Long seller_id, HttpServletRequest request, Model model) {
 		ModelAndView mav = new ModelAndView("main/seller/detail");
 		
 		//3단계
 		Seller seller = sellerSerive.selectBySellerId(seller_id);
-		Notice notice = noticeService.select(notice_id);
-		NoticeComment noticeComment = noticeCommentService.select(notice_comment_id);
-		NoticeLike noticeLike = noticeLikeService.select(notice_like_id);
+
+		List<Asset> assetList = assetService.selectBySellerId(seller_id);
+		List<Notice> noticeList = noticeService.selectBySellerId(seller_id);
+
+		for (Notice notice : noticeList) {
+			// 각각의 공지에 댓글 리스트를 붙여준다
+		    List<NoticeComment> commentList = noticeCommentService.selectByNoticeId(notice.getNotice_id());
+		    notice.setCommentList(commentList);  // Notice 객체에 commentList 필드가 있어야 함
+		    
+		    // 각각의 공지에 좋아요 리스트를 붙여준다
+		    List<NoticeLike> likeList = noticeLikeService.selectByNoticeId(notice.getNotice_id());
+			notice.setLikeList(likeList);  // Notice 객체에 commentList 필드가 있어야 함
+		}
+		
+
 		
 		// 구독자 수 count
 		int subscribeCount = subscribeService.selectSubCount(seller_id);
@@ -83,9 +103,9 @@ public class SellerController {
 		int assetCount = assetService.selectCount(seller_id);
 		
 		// 작가의 평균 리뷰 평점
-		//double assetRate = reviewService.selectAvgRate(seller_id);
 		double assetRate = 0.0;
 		if (seller.getAssetList() != null) {
+			// 작가의 전체 에셋 평균 리뷰 별점
 		    assetRate = seller.getAssetList().stream()
 		        .filter(asset -> asset.getReviewList() != null)
 		        .flatMap(asset -> asset.getReviewList().stream())
@@ -94,17 +114,88 @@ public class SellerController {
 		        .orElse(0.0);
 		}
 		
+		// ✅ 로그인 유저가 이 seller를 구독했는지 확인
+	    User loginUser = (User) request.getSession().getAttribute("user");
+	    boolean isFollowing = false;
+	    if (loginUser != null) {
+	        isFollowing = subscribeService.isSubscribed(loginUser.getUser_id(), seller_id);
+	    }
+	    
 		log.debug("assetRate : " + assetRate);
+		log.debug("isFollowing : " + isFollowing);
 		
 		//4단계: 저장 
 		model.addAttribute("seller", seller);
-		model.addAttribute("notice", notice);
-		model.addAttribute("noticeComment", noticeComment);		
-		model.addAttribute("noticeLike", noticeLike);		
-		model.addAttribute("subscribeCount", subscribeCount);		
+		model.addAttribute("assetList", assetList);
+		model.addAttribute("noticeList", noticeList);
+				
+		model.addAttribute("subscribeCount", subscribeCount);	
+		
 		model.addAttribute("assetCount", assetCount);
 		model.addAttribute("assetRate", assetRate);
+		
+		model.addAttribute("isFollowing", isFollowing);  // ✅ 추가
 
 		return mav;
+	}
+
+	@PostMapping("/seller/comment/regist")
+	@ResponseBody
+	public Map<String, Object> registComment(@RequestParam long notice_id,
+	                                         @RequestParam long user_id,
+	                                         @RequestParam String content) {
+
+	    NoticeComment comment = noticeService.registComment(notice_id, user_id, content);
+
+	    Map<String, Object> result = new HashMap<>();
+	    result.put("user_name", comment.getUser().getUser_name());  // 이름 필요 시 userDAO.select로 조회
+	    result.put("content", comment.getContent());
+	    result.put("create_date", new SimpleDateFormat("yyyy-MM-dd HH:mm").format(comment.getCreate_date()));
+
+	    return result;
+	}
+	
+	@PostMapping("/seller/comment/delete")
+	@ResponseBody
+	public String deleteComment(@RequestParam("notice_comment_id") long notice_comment_id) {
+
+	    NoticeComment comment = noticeCommentService.select(notice_comment_id);
+
+	    noticeCommentService.delete(notice_comment_id);
+	    return "success";
+	}
+	
+	@PostMapping("/seller/subscribe")
+    public Map<String, String> toggleSubscribe(@RequestParam long user_id, @RequestParam long seller_id) {
+		
+        boolean isSubscribed = subscribeService.isSubscribed(user_id, seller_id);
+        
+        if (isSubscribed) {
+            subscribeService.unsubscribe(user_id, seller_id);
+        } else {
+            subscribeService.subscribe(user_id, seller_id);
+        }
+        
+        Map<String, String> result = new HashMap<>();
+        
+        result.put("status", isSubscribed ? "unsubscribed" : "subscribed");
+        return result;
+    }
+	
+	@PostMapping("/seller/notice/like")
+	@ResponseBody
+	public Map<String, String> noticeLike(@RequestParam long user_id, @RequestParam long notice_id) {
+	    boolean isLiked = noticeLikeService.isLiked(user_id, notice_id);
+
+	    if (isLiked) {
+	        noticeLikeService.delete(user_id, notice_id);  // 좋아요 삭제
+	    } else {
+	        noticeLikeService.insert(user_id, notice_id);  // 좋아요 추가
+	    }
+
+	    Map<String, String> result = new HashMap<>();
+	    result.put("status", isLiked ? "unliked" : "liked");
+
+	    return result;
 	}
 }

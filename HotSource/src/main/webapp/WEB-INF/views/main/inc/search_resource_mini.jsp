@@ -8,24 +8,27 @@
 	<%
     List<Asset> list = (List<Asset>) request.getAttribute("resourceList");  // 이름 고정
     List<AssetImg> thumbList = (List<AssetImg>) request.getAttribute("thumbList");
+    
+    boolean isPurchasedAsset = false;
+    
     int max = Math.min(5, list.size());  // 출력 갯수 정하기
     for (int i = 0; i < max; i++) {
         Asset asset = list.get(i);
-        boolean isPurchased = false;
+        isPurchasedAsset = false;
         int salePer = 0;
         if (asset.getSaleList().size() > 0)
             salePer = asset.getSaleList().get(0).getSale_value();
         int oriPrice = asset.getPrice();
         int salePrice = 0;
         if (oriPrice > 0 && salePer > 0) {
-            salePrice = (int) Math.ceil(oriPrice * ((float) salePer / 100));
+            salePrice = (int) Math.ceil(oriPrice - (oriPrice * ((float) salePer / 100)));
             salePrice = salePrice - (salePrice % 10);
         }
 	  %>
 	  <div class="product-card mini">
 	    <div class="badge-wrapper">
 	    <%
-		if (isPurchased) {
+		if (isPurchasedAsset) {
 		%>
 		    <span class="badge purchased">PURCHASED</span>
 		<%
@@ -71,11 +74,11 @@
 		%>
 	    </div>
 	    <div class="img-wrapper">
-	      <a href=""><img src="/static/images/test1.gif" alt="썸네일" /></a>
+	      <a href=""><img src="<%=(asset.getImgList()!=null) ? ("/data/asset_img/"+asset.getImgList().get(0).getAsset_img_url()) : "/static/images/noimg.jpg" %>" alt="썸네일" /></a>
 	    </div>
 	    <div class="product-meta mini">
-	      <a href=""><h6 class="author"><%=asset.getSeller().getSeller_name()%></h6></a>
-	      <a href=""><h6 class="title"><%=asset.getTitle()%></h6></a>
+	      <a href="/main/seller/detail?seller_id=<%= asset.getSeller().getSeller_id()%>"><h6 class="author"><%=asset.getSeller().getSeller_name()%></h6></a>
+	      <a href="/main/asset/detail?asset_id=<%=asset.getAsset_id()%>"><h6 class="title"><%=asset.getTitle()%></h6></a>
 	      <% if (oriPrice==0) { %>
 	      		<span class="price free">FREE</span>
 	      <% } else if (salePer>0) { %>

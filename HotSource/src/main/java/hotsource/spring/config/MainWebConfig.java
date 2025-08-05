@@ -25,7 +25,7 @@ import hotsource.model.user.NaverApi20;
 */
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = { "hotsource.controller.main, hotsource.util" })
+@ComponentScan(basePackages = { "hotsource.controller.main, hotsource.controller.notice, hotsource.util" })
 @PropertySource("classpath:application.properties")
 public class MainWebConfig extends WebMvcConfigurerAdapter{
 

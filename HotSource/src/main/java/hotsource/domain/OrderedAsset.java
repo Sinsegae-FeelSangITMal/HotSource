@@ -1,5 +1,7 @@
 package hotsource.domain;
 
+import java.util.List;
+
 import lombok.Data;
 
 @Data
@@ -14,4 +16,9 @@ public class OrderedAsset {
 	
 	private Ordered ordered;				// FK
 	private Asset asset;					// FK
+	
+	private Review review;
+	
+	
+	private List<Review> reviewList;
 }

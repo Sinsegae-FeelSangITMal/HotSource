@@ -33,7 +33,8 @@ public class SellerLoginCheckFilter implements Filter {
 
 	    String uri = request.getRequestURI();
 
-	    if (uri.startsWith(request.getContextPath() + "/seller")) {
+	    if (uri.startsWith(request.getContextPath() + "/seller")&&
+	    		   !uri.equals(request.getContextPath() + "/seller/subscribe/toggle")) {
 
 	        Object user = session != null ? session.getAttribute("user") : null;
 	        Object seller = session != null ? session.getAttribute("seller") : null;

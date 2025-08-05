@@ -70,9 +70,10 @@
       border: none;
       border-radius: 6px;
       font-weight: bold;
-      width: 100%;
+      width: 20%;
       transition: background-color 0.2s ease;
-      font-size: 16px;
+      font-size: 13px;
+      float: right;
     }
 
     .btn-submit:hover {
@@ -154,7 +155,7 @@
 
           <!-- 왼쪽 폼 영역 -->
           <div class="left-form">
-            <h2>Create Asset</h2>
+            <h1 style="bold">Create Asset</h1>
 
             <div class="form-section">
               <label for="title">Title</label>
@@ -176,8 +177,8 @@
             <div class="form-section">
               <label>Price</label>
               <div class="radio-group">
-                <label><input type="radio" name="isPaid" value="true" /> Paid asset</label>
-                <label><input type="radio" name="isPaid" value="false" checked /> Free asset</label>
+                <label><input type="radio" name="isPaid" value="true" checked/> Paid asset</label>
+                <label><input type="radio" name="isPaid" value="false"/> Free asset</label>
               </div>
               <input type="number" name="price" class="form-control mt-2" placeholder="$ price (유료인 경우만)" />
             </div>
@@ -185,7 +186,6 @@
             <div class="form-section">
               <label for="sale">Sale</label>
               <select id="sale" name="sale.sale_value" class="form-control">
-                <option value="">Select discount</option>
                 <option value="0">No Sale</option>
                 <option value="10">10%</option>
                 <option value="20">20%</option>
@@ -193,6 +193,11 @@
               </select>
             </div>
 
+			<div class="form-section">
+              <label for="youtube_url">youtubeUrl</label>
+              <input type="text" id="youtube_url" name="youtube_url" class="form-control"
+                     placeholder="youtube_url" />
+            </div>
             
              <div class="form-section">
               <label for="keywords">Keywords</label>
@@ -222,7 +227,7 @@
             <div class="form-section">
               <label for="description">Description</label>
               <textarea id="description" name="description" class="form-control"
-                        placeholder="summary&#10;&#10;description&#10;&#10;#desc #desc #desc"></textarea>
+                        placeholder="description&#10;&#10;#desc #desc #desc"></textarea>
             </div>
 
             <button type="button" class="btn-submit" id="bt_regist">Create new Asset</button>
@@ -230,21 +235,13 @@
 
           <!-- 오른쪽 이미지 미리보기 영역 -->
           <div class="right-preview">
-     	     <div class="form-section">
-              <label for="youtube_url">youtubeUrl</label>
-              <input type="text" id="youtube_url" name="youtube_url" class="form-control"
-                     placeholder="youtube_url" />
-            </div>
              <div class="preview-box">
                <div class="input-group">
                
-                 <div class="custom-file">                      
+                 <div class="custom-file">    
+                    <label for="asset_img"> </label>                  
                    <input type="file" class="custom-file-input" name="photo" id="photo" multiple="multiple">
-                   <label class="custom-file-label" for="exampleInputFile">에셋 이미지 선택 </label>
-                 </div>
-                 
-                 <div class="input-group-append">
-                   <span class="input-group-text">Upload</span>
+                   <label class="custom-file-label" for="exampleInputFile"> 에셋 이미지 업로드  </label>
                  </div>
                </div>
                
@@ -300,23 +297,15 @@
 		});
 	} 
 	 
-	let selectedFile=[];
+	let selectedImgs=[];
 	
 	function regist(){
-		//기존 폼을 이용하되, file 컴포넌트 파라미터만 새로 교체(selectedFile 배열로 대체)
-		//js에서 프로그래밍 적 form 생성 
 		let formData = new FormData(document.getElementById("form1"));
-		
-		//formData 동기/비동기 둘다 지원하지만, 대부분은 비동기방식을 많이 씀 
-		//Jquery Ajax 자체에서 formData 를 비동기방식으로 간단하게 사용할 수 있는 코드를 지원 
-		//기존 photo 버리고, 우리가 선언한 배열로 대체 
-		//formData.append("email", "zino11198@naver.com"); // <input type="text" name="email">
-		//formData는 개발자가 명시하지 않아도, 디폴트로 multipart/form-data 가 지정되어 잇음
 		
 		formData.delete("photo");//기존의 photo 파라미터 제거하기 append의 반대
 		
-		for(let i=0;i<selectedFile.length;i++){
-			formData.append("photo", selectedFile[i]); 
+		for(let i=0;i<selectedImgs.length;i++){
+			formData.append("photo", selectedImgs[i]); 
 		}
 		
 		//파일마저도 비동기로 업로드 가능!!!
@@ -356,7 +345,7 @@
 				
 				//첨부된 파일 수 만큼 반복
 				for(let i=0;i<files.length;i++){
-					selectedFile[i]=files[i]; //읽기 전용에 들어있었던 각 file들을,우리만의 배열로 옮기자 
+					selectedImgs[i]=files[i]; //읽기 전용에 들어있었던 각 file들을,우리만의 배열로 옮기자 
 					
 					//파일을 읽기위한 스트림 객체 생성 
 					const reader = new FileReader();
@@ -409,6 +398,26 @@
     fileInput.files = files;
     dropZone.textContent = [...files].map(f => f.name).join(", ");
   });
+  
+  const isPaidRadios = document.querySelectorAll("input[name='isPaid']");
+  const priceInput = document.querySelector("input[name='price']");
+  const saleSelect = document.getElementById("sale");
+
+  isPaidRadios.forEach(radio => {
+    radio.addEventListener("change", () => {
+      if (radio.value === "true" && radio.checked) {
+        priceInput.disabled = false;
+        saleSelect.disabled = false;
+      } else if (radio.value === "false" && radio.checked) {
+        priceInput.disabled = true;
+        priceInput.value = ""; // 가격 초기화
+
+        saleSelect.value = "0"; // "No Sale"로 선택
+        saleSelect.disabled = true; // 선택 비활성화
+      }
+    });
+  });
+
 </script>
 
 </body>

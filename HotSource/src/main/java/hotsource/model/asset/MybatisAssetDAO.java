@@ -1,6 +1,7 @@
 package hotsource.model.asset;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,11 @@ public class MybatisAssetDAO implements AssetDAO {
 	public List selectAll() {
 		return sqlSessionTemplate.selectList("Asset.selectAll");
 	}
+	
+	@Override
+	public List selectSaleAll() {
+		return sqlSessionTemplate.selectList("Asset.selectSaleAll");
+	}
 
 	@Override
 	public Asset select(long asset_id) {
@@ -35,25 +41,26 @@ public class MybatisAssetDAO implements AssetDAO {
 	}
 
 	@Override
-	public List selectHot(long topcategory_id) {
+	public List selectHot(int topcategory_id) {
 		return sqlSessionTemplate.selectList("Asset.selectHot", topcategory_id);
 	}
 
 	@Override
-	public List selectNew(long topcategory_id) {
+	public List selectNew(int topcategory_id) {
 		return sqlSessionTemplate.selectList("Asset.selectNew", topcategory_id);
 	}
 
 	@Override
-	public List selectFree(long topcategory_id) {
+	public List selectFree(int topcategory_id) {
 		return sqlSessionTemplate.selectList("Asset.selectFree", topcategory_id);
 	}
 
 	@Override
-	public List selectSale(long topcategory_id) {
+	public List selectSale(int topcategory_id) {
 		return sqlSessionTemplate.selectList("Asset.selectSale", topcategory_id);
 	}
 
+	
 	@Override
 	public void insert(Asset asset) throws AssetException{
 		int result = sqlSessionTemplate.insert("Asset.insert", asset);
@@ -63,7 +70,9 @@ public class MybatisAssetDAO implements AssetDAO {
 
 	@Override
 	public void update(Asset asset) {
-
+		int result = sqlSessionTemplate.insert("Asset.update", asset);
+		if (result < 1)
+			throw new AssetException("상품 업데이트 실패");
 	}
 
 	@Override

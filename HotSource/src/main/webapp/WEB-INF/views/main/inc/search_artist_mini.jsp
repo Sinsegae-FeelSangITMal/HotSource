@@ -6,7 +6,7 @@
   <div class="artist-card">
     <img class="artist-avatar" src="/static/images/big_logo.png" alt="작가 프로필" />
     <div class="artist-info">
-      <a href="/main/seller/detail?seller_id=<%= 1 %>&notice_id=<%= 1 %>&notice_comment_id=<%= 1 %>&notice_like_id=<%= 1 %>"><h4 class="artist-name">작가명</h4></a>
+      <a href="/main/seller/detail?seller_id=<%= 1 %>"><h4 class="artist-name">작가명</h4></a>
       <h6 class="artist-role">2D Pixel Artist</h6>
       <% if (true) %><button class="follow-btn false">+ Follow</button>
       <% if (false) %><button class="follow-btn true">Followed</button>

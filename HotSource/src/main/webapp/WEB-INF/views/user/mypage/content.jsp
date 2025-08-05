@@ -23,7 +23,6 @@
           <li class="my-item ${mymenu == 'order' ? 'active' : ''}"><a class="my-link" href="/main/user/mypage?mymenu=order">Orders</a></li>
           <li class="my-item ${mymenu == 'review' ? 'active' : ''}"><a class="my-link" href="/main/user/mypage?mymenu=review">Reviews</a></li>
           <li class="my-item ${mymenu == 'resource' ? 'active' : ''}"><a class="my-link" href="/main/user/mypage?mymenu=resource">Resources</a></li>
-  		  <li class="my-item ${mymenu == 'subscription' ? 'active' : ''}"><a class="my-link" href="/main/user/mypage?mymenu=subscription">Subscriptions</a></li>
         </ul>
       </div>
     </div>

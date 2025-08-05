@@ -1,4 +1,10 @@
+<%@page import="java.util.List"%>
+<%@page import="hotsource.domain.Keyword"%>
 <%@ page contentType="text/html; charset=UTF-8"%>
+
+<%
+	List<Keyword> keywordList = (List<Keyword>) request.getAttribute("keywordList");
+%>
 
 <section class="slider_section ">
 	<div id="customCarousel1" class="carousel slide" data-ride="carousel">
@@ -36,13 +42,13 @@
 			    </div>
 			    <div class="row text-center">
 			      <div class="col-md-4">
-			        <img src="/static/images/fire1.jpg" class="img-fluid" alt="이미지1">
+			        <img src="/static/images/asset_thumb/fantasyWeapons.jpg" class="img-fluid" alt="이미지1">
 			      </div>
 			      <div class="col-md-4">
-			        <img src="/static/images/fire1.jpg" class="img-fluid" alt="이미지2">
+			        <img src="/static/images/asset_thumb/pixelBackgrounds.jpg" class="img-fluid" alt="이미지2">
 			      </div>
 			      <div class="col-md-4">
-			        <img src="/static/images/fire1.jpg" class="img-fluid" alt="이미지3">
+			        <img src="/static/images/asset_thumb/realisticCharacter.jpg" class="img-fluid" alt="이미지3">
 			      </div>
 			    </div>
 			  </div>
@@ -57,13 +63,13 @@
 			    </div>
 			    <div class="row text-center">
 			      <div class="col-md-4">
-			        <img src="/static/images/fire1.jpg" class="img-fluid" alt="이미지1">
+			        <img src="/static/images/asset_thumb/sfCharacter.jpg" class="img-fluid" alt="이미지1">
 			      </div>
 			      <div class="col-md-4">
-			        <img src="/static/images/fire1.jpg" class="img-fluid" alt="이미지2">
+			        <img src="/static/images/asset_thumb/forestBGM.jpg" class="img-fluid" alt="이미지2">
 			      </div>
 			      <div class="col-md-4">
-			        <img src="/static/images/fire1.jpg" class="img-fluid" alt="이미지3">
+			        <img src="/static/images/asset_thumb/robotEffects.jpg" class="img-fluid" alt="이미지3">
 			      </div>
 			    </div>
 			  </div>
@@ -89,6 +95,10 @@
 			
 			<!-- 검색 태그 영역 시작 -->
 			<div class="tag-box">	
+				<% for (int i=0;i<10;i++) {%>
+					<a href="" class="tag"> #<%=keywordList.get(i).getKeyword_name() %> </a>
+				<%} %>
+			<!-- 
 				<a href="" class="tag"> #도트 </a>
 				<a href="" class="tag"> #신나는 </a>
 				<a href="" class="tag"> #귀여운 </a>
@@ -99,6 +109,7 @@
 				<a href="" class="tag"> #초록색 </a>
 				<a href="" class="tag"> #몽환적인 </a>
 				<a href="" class="tag"> #화려한 </a>
+				 -->
 			</div>
 			<!-- 검색 태그 영역 끝 -->
 			

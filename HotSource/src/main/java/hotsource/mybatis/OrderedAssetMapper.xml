@@ -6,16 +6,17 @@
 		order_asset_id, seller_id, seller_name, asset_title, asset_price, asset_discount, asset_pay, order_id, asset_id
 	</sql>
 	
-	<resultMap 		type="OrderedAsset" 				id="joinOrderAssetMap">
+	<!-- Order에서 와서 order 소유할 필요 x -->
+	<resultMap 		type="OrderedAsset" 		id="joinOrderAssetMap">
 		<id 					column="order_asset_id" 	property="order_asset_id"/>
 		<result 			column="seller_id" 			property="seller_id"/>
 		<result 			column="seller_name" 		property="seller_name"/>
-		<result 			column="asset_title" 			property="asset_title"/>
+		<result 			column="asset_title" 		property="asset_title"/>
 		<result 			column="asset_price" 		property="asset_price"/>
 		<result 			column="asset_discount" 	property="asset_discount"/>
-		<result 			column="asset_pay" 			property="asset_pay"/>
-		<association 	column="order_id" 			property="ordered" 		javaType="Ordered"		select="Ordered.select"/>
-		<association 	column="asset_id" 			property="asset" 		javaType="Asset"		select="Asset.select"/>
+		<result 			column="asset_pay" 		property="asset_pay"/>
+		<association 	column="asset_id" 			property="asset" 			javaType="Asset"				select="Asset.selectAsset"/>
+		<association 	column="review_id" 			property="review" 			javaType="Review"				select="Review.selectFromUser"/>
 	</resultMap>
 	
 	<select id="selectAll" resultMap="joinOrderAssetMap">

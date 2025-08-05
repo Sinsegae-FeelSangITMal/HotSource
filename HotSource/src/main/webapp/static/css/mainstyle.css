@@ -95,6 +95,86 @@ a:focus {
           box-shadow: none;
 }
 
+/* -------------------- */
+/*			Order			*/
+/* -------------------- */
+.content-box .asset-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  font-size: 14px;
+}
+.content-box .asset-table thead th {
+  text-align: left;
+  padding: 10px;
+  background-color: #f5f5f5;
+  border-bottom: 1px solid #ddd;
+}
+.content-box .asset-table tbody td {
+  padding: 15px 10px;
+  vertical-align: middle;
+  border-bottom: 1px solid #eee;
+}
+.content-box .asset-table .asset-info {
+  display: flex;
+  align-items: center;
+}
+.asset-info .thumb {
+  width: 130px;
+  height: 80px;
+  margin-right: 20px;
+}
+.asset-text .creator {
+  font-size: 12px;
+  color: #888;
+}
+.asset-text .title {
+  font-weight: bold;
+}
+.asset-text .size {
+  font-size: 12px;
+  color: #aaa;
+}
+/* 다운로드 버튼 */
+td.download-wrap {
+  vertical-align: top; /* 버튼 셀을 위로 정렬 */
+}
+
+.download-wrap {
+  display: flex;
+  flex-direction: column; /* 수직 정렬 */
+  gap: 10px; /* 버튼 간 간격 */
+  align-items: flex-start; /* 왼쪽 정렬 (또는 center) */
+}
+
+.download-wrap .download {
+  width: 130px;
+  font-weight: 500;
+  padding: 5px 15px;
+  background-color: #eee;
+  color: #000000;
+  border-radius: 10px;
+  transition: all 0.3s;
+  font-size: 14px;
+  text-decoration: none;
+  text-align: center;
+}
+
+.download-wrap .download:hover {
+  background-color: #F9B54A;
+}
+
+.download-wrap .download.active {
+  background-color: #F9B54A;
+}
+
+.download-wrap .download.active:hover {
+  background-color: #e69c00;
+}
+
+
+
+
 /*header section*/
 .hero_area {
   background-color: #15161D;
@@ -358,6 +438,13 @@ a:focus {
   padding-top: 100px;
 }
 
+.slider_section .carousel-item .img-fluid{
+  width: 420px;
+  height: 240px;
+  object-fit: fill;
+  margin-top: 20px;
+}
+	
 .text-center.detail-box {
   color: #ffffff;
   padding-top: 54px;
@@ -1253,12 +1340,12 @@ a:focus {
   padding: 20px 20px;
   border-radius: 12px;
   box-shadow: 0 0 10px rgba(0,0,0,0.05);
-  height: 390px;
+  height: 340px;
 }
 
 /* 메뉴 하나 적은 버전 */
 .sidebar.short {
-  height: 340px;
+  height: 290px;
 }
 	
 /* 제목 */
@@ -1437,6 +1524,162 @@ a:focus {
   background-color: #e69c00;
 }
 
+
+/* Order 페이지 Popup style */
+
+/* 팝업 오버레이 */
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 9999;
+}
+
+/* 팝업 본체 */
+.popup {
+  background: #fff;
+  border-radius: 10px;
+  width: 450px;
+  margin: 50px auto;
+  padding: 20px;
+  position: relative;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+}
+
+.popup h2{
+  font-weight: bold;
+  padding: 10px 10px;
+}
+
+.popup h5{
+	text-align: center;
+  font-weight: bold;
+  margin-top: 20px;
+}
+
+.review-header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+.review-header .thumb {
+  width: 170px;
+  height: 100px;
+  margin-right: 10px;
+  margin-left: 10px;
+}
+.review-info .title {
+  font-size: 18px;
+  font-weight: bold;
+}
+.review-type {
+  display: flex;
+  justify-content: space-around;
+  margin: 10px 0;
+}
+.star-rating {
+  font-size: 24px;
+  color: #FFA500;
+  text-align: center;
+  margin: 10px 0;
+}
+
+.review-comment {
+  width: 100%;
+  height: 80px;
+  resize: none;
+  padding: 8px;
+  font-size: 14px;
+}
+
+.btn-wrapper .review-btn {
+  font-weight: 500;
+  padding: 7px 25px;
+  background-color: #eee;
+  color: #000000;
+  border-radius: 10px;
+  transition: all 0.3s;
+  font-size: 14px;
+  text-decoration: none;
+  display: inline-block;
+  white-space: nowrap;
+  margin: 5px;
+}
+
+.btn-wrapper .review-btn:hover {
+  background-color: #d1d1d1;
+}
+
+.btn-wrapper .review-btn.save {
+  background-color: #D10024;
+}
+
+.btn-wrapper .review-btn.save:hover {
+  background-color: #b0001f;
+}
+
+.btn-wrapper .review-btn.recommend {
+  width: 180px;
+  text-align: center;
+  margin: 5px;
+  padding: 7px;
+  font-size: 15px;
+  background-color: #eee;
+}
+
+.btn-wrapper .review-btn.recommend:hover {
+  background-color: #F9B54A;
+}
+
+.btn-wrapper .review-btn.recommend.active {
+  background-color: #F9B54A;
+}
+
+/* 별점 */
+
+.review-rating {
+   position: relative;
+   background: transparent;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   gap: .3em;
+   padding: 5px;
+   overflow: hidden;
+}
+
+.review-rating-result {
+   position: absolute;
+   top: 50%;
+   left: 50%;
+   transform: translate(-50%, -50%);
+   z-index: 0;
+   font: 3em Arial, Helvetica, sans-serif;
+   color: #ebebeb8e;
+   pointer-events: none;
+}
+
+.review-rating-star {
+   font-size: 2.3em;
+   cursor: pointer;
+   color: #dabd18b2;
+   transition: filter linear .3s;
+   z-index: 1;
+   padding: 5px;
+   padding-top: 10px;
+   padding-bottom: 10px;
+}
+
+.review-rating-star:hover {
+   filter: drop-shadow(1px 1px 4px gold);
+}
+
+
+
 /*----------------------------*\
 	마이 페이지 - 끝
 \*----------------------------*/
@@ -1481,6 +1724,7 @@ a:focus {
   gap: 20px; /* tap-artist-card와 내부 요소 사이 여백 */
 }
 
+/* 작가 페이지 - 별점 표시*/
 .seller-rating {
    position: relative;
    width: 180px;
@@ -1491,6 +1735,7 @@ a:focus {
    gap: .3em;
    padding: 5px;
    overflow: hidden;
+   text-align: center;
 }
 
 .seller-rating-result {
@@ -1511,12 +1756,13 @@ a:focus {
    transition: filter linear .3s;
 }
 
-.seller-rating-star:hover {
-   filter: drop-shadow(1px 1px 4px gold);
+
+
+
+
+.like-btn.liked {
+    color: red;
 }
-
-
-
 
 /* 작가페이지 - 공지 List Tap 스타일 시작 */
 .list-custom-card {

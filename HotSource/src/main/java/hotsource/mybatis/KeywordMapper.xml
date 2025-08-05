@@ -18,4 +18,11 @@
 		SELECT <include refid="columns"/> FROM keyword WHERE keyword_name=#{keyword_name}
 	</select>
 	
+	<insert id="insert" parameterType="Keyword">
+		insert IGNORE into keyword(keyword_name) values (#{keyword_name})
+		<selectKey keyColumn="keyword_id" keyProperty="keyword_id" resultType="long" order="AFTER">
+			select last_insert_id() as keyword_id
+		</selectKey>
+	</insert>
+	
 </mapper>

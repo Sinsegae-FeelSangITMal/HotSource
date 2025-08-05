@@ -33,6 +33,11 @@ public class MybatisNoticeDAO implements NoticeDAO{
 	}
 
 	@Override
+	public List selectBySellerId(long seller_id) {
+		return sqlSessionTemplate.selectList("Notice.selectBySellerId", seller_id);
+	}
+	
+	@Override
 	public void insert(Notice notice) throws NoticeException{
 		long result = sqlSessionTemplate.insert("Notice.insert", notice);
 		if(result < 1) {
@@ -50,4 +55,5 @@ public class MybatisNoticeDAO implements NoticeDAO{
 	public void delete(long notice_id) {
 		
 	}
+
 }

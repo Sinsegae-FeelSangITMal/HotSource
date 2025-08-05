@@ -2,7 +2,11 @@ package hotsource.model.asset;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -14,10 +18,14 @@ import org.springframework.web.multipart.MultipartFile;
 import hotsource.domain.Asset;
 import hotsource.domain.AssetFile;
 import hotsource.domain.AssetImg;
+import hotsource.domain.AssetKeywordMapping;
+import hotsource.domain.Keyword;
 import hotsource.domain.Sale;
 import hotsource.exception.AssetException;
 import hotsource.model.asset_file.AssetFileDAO;
 import hotsource.model.asset_img.AssetImgDAO;
+import hotsource.model.asset_keyword_mapping.AssetKeywordMappingDAO;
+import hotsource.model.keyword.KeywordDAO;
 import hotsource.model.cart.CartService;
 import hotsource.model.ordered.OrderedService;
 import hotsource.model.review.ReviewService;
@@ -47,6 +55,12 @@ public class AssetServiceImpl implements AssetService {
 	@Autowired
 	private SaleDAO saleDAO;
 	
+	@Autowired
+	private KeywordDAO keywordDAO;
+	
+	@Autowired
+	private AssetKeywordMappingDAO assetKeywordMappingDAO;
+	
 	@Autowired 
 	private SaleService saleService;
 	
@@ -66,6 +80,11 @@ public class AssetServiceImpl implements AssetService {
 	public List selectAll() {
 		return assetDAO.selectAll();
 	}
+	
+	@Override
+	public List selectSaleAll() {
+		return assetDAO.selectSaleAll();
+	}
 
 	@Override
 	public Asset select(long asset_id) {
@@ -80,13 +99,41 @@ public class AssetServiceImpl implements AssetService {
 	public int selectCount(long seller_id) {
 		return assetDAO.selectCount(seller_id);
 	}
-	
-	public void saveAssetFiles(Long assetId, MultipartFile[] imgFiles, MultipartFile[] assetFiles, HttpServletRequest request) {
-		log.debug("imgFiles length = {}", imgFiles.length);
+	@Transactional
+	public void registFullAsset(Asset asset, MultipartFile[] imgFiles, MultipartFile[] assetFiles, String keywordString, HttpServletRequest request) {
+	    // 1. 키워드 파싱
+	    String[] keywordArr = keywordString.split(",");
+	    Set<String> keywordSet = Arrays.stream(keywordArr)
+	        .map(String::trim)
+	        .filter(s -> !s.isEmpty())
+	        .collect(Collectors.toSet());
+
+	    // 2. asset insert (MyBatis에서 @Options(useGeneratedKeys=true) 설정 필수)
+	    assetDAO.insert(asset);
 	    
+	    // 3. 키워드 매핑 리스트 생성 및 asset 객체 연결
+	    List<AssetKeywordMapping> keywordMappingList = new ArrayList<>();
+	    for (String keywordName : keywordSet) {
+	        Keyword keyword = keywordDAO.selectByName(keywordName);
+	        if (keyword == null) {
+	            keyword = new Keyword();
+	            keyword.setKeyword_name(keywordName);
+	            keywordDAO.insert(keyword); // @Options(useGeneratedKeys=true) 설정 필요
+	        }
+
+	        AssetKeywordMapping mapping = new AssetKeywordMapping();
+	        mapping.setKeyword(keyword);
+	        mapping.setAsset(asset);
+	        keywordMappingList.add(mapping);
+	    }
+	    
+	    // 4. 키워드 매핑 삽입
+	    assetKeywordMappingDAO.insert(keywordMappingList);
+	    
+	    Long assetId = asset.getAsset_id();
 	    String savePath = request.getServletContext().getRealPath("/data");
 
-	    // 1. 에셋 이미지 저장
+	    // 5. 에셋 이미지 저장
 	    String screenshotDir = savePath + "/asset_img/" + assetId;
 	    List<String> imgFilenames = fileManager.imgUpload(imgFiles, screenshotDir);
 
@@ -94,21 +141,13 @@ public class AssetServiceImpl implements AssetService {
 	    for (int i = 0; i < imgFilenames.size(); i++) {
 	        AssetImg assetImg = new AssetImg();
 	        assetImg.setAsset_img_url(imgFilenames.get(i));
-	        assetImg.set_thumb(i == 0); // 썸네일 지정
-	        Asset asset = new Asset();
-	        asset.setAsset_id(assetId);
+	        assetImg.set_thumb(i == 0);
 	        assetImg.setAsset(asset);
 	        assetImgs.add(assetImg);
 	    }
-	    log.debug("Asset ID: {}", assetId);
-	    log.debug("assetImgs: {}", assetImgs);
-	    for (AssetImg img : assetImgs) {
-	        log.debug("imgUrl={}, isThumb={}, assetId={}", img.getAsset_img_url(), img.is_thumb(), img.getAsset().getAsset_id());
-	    }
-	    
 	    assetImgDAO.insert(assetImgs);
 
-	    // 2. 프로젝트 파일 저장
+	    // 6. 프로젝트 파일 저장
 	    String projectDir = savePath + "/asset/" + assetId;
 	    List<String> assetFilenames = fileManager.imgUpload(assetFiles, projectDir);
 
@@ -116,52 +155,114 @@ public class AssetServiceImpl implements AssetService {
 	    for (String filename : assetFilenames) {
 	        AssetFile assetFile = new AssetFile();
 	        assetFile.setFile_url(filename);
-	        Asset asset = new Asset();
-	        asset.setAsset_id(assetId);
 	        assetFile.setAsset(asset);
 	        assetFilesList.add(assetFile);
 	    }
 	    assetFileDAO.insert(assetFilesList);
 	}
+	
+	@Transactional
+	public void updateFullAsset(Asset asset, MultipartFile[] imgFiles, MultipartFile[] assetFiles, String keywordString, HttpServletRequest request) {
+	    // 1. 키워드 처리 (기존 키워드를 조회하거나 없으면 삽입 후 ID 확보)
+	    String[] keywordArr = keywordString.split(",");
+	    Set<String> keywordSet = Arrays.stream(keywordArr)
+	        .map(String::trim)
+	        .filter(s -> !s.isEmpty())
+	        .collect(Collectors.toSet());
 
-	public List selectHot(long topcategory_id) {
+	    List<AssetKeywordMapping> keywordMappingList = new ArrayList<>();
+	    for (String keywordName : keywordSet) {
+	        Keyword keyword = keywordDAO.selectByName(keywordName);
+	        if (keyword == null) {
+	            keyword = new Keyword();
+	            keyword.setKeyword_name(keywordName);
+	            keywordDAO.insert(keyword); // @Options(useGeneratedKeys=true) 필수
+	        }
+
+	        AssetKeywordMapping mapping = new AssetKeywordMapping();
+	        mapping.setKeyword(keyword);
+	        mapping.setAsset(asset);
+	        keywordMappingList.add(mapping);
+	    }
+
+	    // 2. 기존 asset 수정 + 키워드 재설정
+	    assetDAO.update(asset);
+	    assetKeywordMappingDAO.deleteByAssetId(asset.getAsset_id());
+	    assetKeywordMappingDAO.insert(keywordMappingList);
+
+	    String savePath = request.getServletContext().getRealPath("/data");
+
+	    // 3. 기존 이미지 삭제 + 새 이미지 저장
+	    long assetId = asset.getAsset_id();
+	    
+	    // 3.1 파일에서 삭제 
+	    List<AssetImg> existingImgs = assetImgDAO.selectByAssetId(assetId);
+	    if (existingImgs != null && !existingImgs.isEmpty()) {
+		    for (AssetImg img : existingImgs) {
+		    	fileManager.deleteFile(savePath + "/asset_img/"+ assetId +"/"+ img.getAsset_img_url());
+		    }
+	    	assetImgDAO.deleteByAssetId(assetId);
+	    }
+	    
+	    String screenshotDir = savePath + "/asset_img/" + assetId;
+	    List<String> imgFilenames = fileManager.imgUpload(imgFiles, screenshotDir);
+
+	    List<AssetImg> assetImgs = new ArrayList<>();
+	    for (int i = 0; i < imgFilenames.size(); i++) {
+	        AssetImg assetImg = new AssetImg();
+	        assetImg.setAsset_img_url(imgFilenames.get(i));
+	        assetImg.set_thumb(i == 0);
+	        assetImg.setAsset(asset);
+	        assetImgs.add(assetImg);
+	    }
+	    // 3.2 db에서 삭제 
+	    if (assetImgs != null && !assetImgs.isEmpty()) {
+	    	assetImgDAO.insert(assetImgs);
+	    }
+
+	    // 4. 기존 파일 삭제 + 새 파일 저장
+	    List<AssetFile> existingFiles = assetFileDAO.selectByAssetId(assetId);
+	    if(existingFiles != null && !existingFiles.isEmpty()) {
+		    for (AssetFile file : existingFiles) {
+		        fileManager.deleteFile(savePath + "/asset/"+ assetId +"/"+ file.getFile_url());
+		    }
+	    	assetFileDAO.deleteByAssetId(assetId);
+	    }
+	    
+	    String projectDir = savePath + "/asset/" + assetId;
+	    List<String> assetFilenames = fileManager.imgUpload(assetFiles, projectDir);
+
+	    List<AssetFile> assetFilesList = new ArrayList<>();
+	    for (String filename : assetFilenames) {
+	        AssetFile assetFile = new AssetFile();
+	        assetFile.setFile_url(filename);
+	        assetFile.setAsset(asset);
+	        assetFilesList.add(assetFile);
+	    }
+	    if (assetFilesList != null && !assetFilesList.isEmpty()) {
+	    	assetFileDAO.insert(assetFilesList);
+	    }
+	}
+
+
+
+	public List selectHot(int topcategory_id) {
 		return assetDAO.selectHot(topcategory_id);
 	}
 
 	@Override
-	public List selectNew(long topcategory_id) {
+	public List selectNew(int topcategory_id) {
 		return assetDAO.selectNew(topcategory_id);
 	}
 
 	@Override
-	public List selectFree(long topcategory_id) {
+	public List selectFree(int topcategory_id) {
 		return assetDAO.selectFree(topcategory_id);
 	}
 
 	@Override
-	public List selectSale(long topcategory_id) {
+	public List selectSale(int topcategory_id) {
 		return assetDAO.selectSale(topcategory_id);
-	}
-	
-	@Override
-	@Transactional
-	public void regist(Asset asset) throws AssetException{
-		// DB에 데이터 등록 (+PK값 자동 추출)
-		assetDAO.insert(asset);
-		
-		// 서버에 이미지 등록
-		
-		  // Sale 정보가 있다면 저장
-	    if (asset.getSale() != null && asset.getSale().getSale_value() != 0) {
-	        Sale sale = asset.getSale();
-	        sale.setAsset_id(asset.getAsset_id()); // FK 설정
-	        saleDAO.insert(sale); // Sale 테이블에 insert
-	    }
-	}
-
-	@Override
-	public void update(Asset asset) {
-
 	}
 
 	@Override

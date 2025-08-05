@@ -6,6 +6,7 @@
 		review_id, rate, comment, create_date, update_date, user_id, asset_id, order_asset_id
 	</sql>
 	
+	<!-- OrderAsset에서 와서 orderAsset 소유할 필요 x -->
 	<resultMap			type="Review"			id="joinMap">
 		<id 			column="review_id"		property="review_id"/>
 		<result			column="rate"			property="rate"/>
@@ -15,7 +16,17 @@
 		
 		<association	column="user_id"		property="user"			javaType="User"			select="User.select"/>
 		<association	column="asset_id"		property="asset"		javaType="Asset"		select="Asset.select"/>
-		<association	column="order_asset_id"	property="orderedAsset"	javaType="OrderedAsset"	select="OrderedAsset.select"/>
+		<association	column="review_like_id"	property="reviewLike"		javaType="ReviewLike"		select="ReviewLike.select"/>
+	</resultMap>
+	
+	<resultMap			type="Review"			id="jotMap">
+		<id 			column="review_id"		property="review_id"/>
+		<result			column="rate"			property="rate"/>
+		<result			column="comment"		property="comment"/>
+		<result			column="create_date"	property="create_date"/>
+		<result			column="update_date"	property="update_date"/>
+		
+		<association	column="review_like_id"	property="reviewLike"		javaType="ReviewLike"		select="ReviewLike.select"/>
 	</resultMap>
 	
 	<select id="selectAll" resultMap="joinMap">
@@ -23,6 +34,10 @@
 	</select>
 	
 	<select id="select" resultMap="joinMap" parameterType="long">
+		SELECT <include refid="columns"/> FROM review WHERE review_id=#{review_id}
+	</select>
+		
+	<select id="selectFromUser" resultMap="jotMap" parameterType="long">
 		SELECT <include refid="columns"/> FROM review WHERE review_id=#{review_id}
 	</select>
 	
@@ -34,8 +49,10 @@
 		SELECT <include refid="columns"/> FROM review WHERE asset_id=#{asset_id}
 	</select>
 	
-	<select id="selectByOrderedAssetId" resultMap="joinMap" parameterType="long">
-		SELECT <include refid="columns"/> FROM review WHERE order_asset_id=#{order_asset_id}
+	<select id="selectByOrderedAssetId" resultType="Review" parameterType="long">
+		SELECT <include refid="columns"/>
+		FROM review
+		WHERE order_asset_id=#{order_asset_id}
 	</select>
 	
 	<!-- asset의 평균 별점 구하기 : 레코드가 없어 null이 뜨는 경우 0을 반환 -->
@@ -56,4 +73,17 @@
 		and 	a.seller_id = #{seller_id}
 	</select>
 	 -->
+	 	
+	<select id="selectAssetId" resultType="Review" parameterType="long">
+		SELECT <include refid="columns"/>
+		FROM review
+		WHERE asset_id=#{asset_id}
+	</select>
+	
+	<insert id="insert" parameterType="Review" useGeneratedKeys="true" keyProperty="review_id">
+		INSERT INTO
+		review (rate, comment, user_id, asset_id, order_asset_id)
+		VALUES(#{rate, jdbcType=DECIMAL}, #{comment}, #{user.user_id}, #{asset.asset_id}, #{orderedAsset.order_asset_id})
+	</insert>
+	
 </mapper>

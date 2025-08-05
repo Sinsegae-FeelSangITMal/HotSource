@@ -4,14 +4,22 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import hotsource.domain.Review;
+import hotsource.domain.ReviewLike;
+import hotsource.exception.ReviewException;
+import hotsource.exception.ReviewLikeException;
+import hotsource.model.review_like.ReviewLikeDAO;
 
 @Service
 public class ReviewServiceImpl implements ReviewService {
 
 	@Autowired
 	private ReviewDAO reviewDAO;
+	
+	@Autowired
+	private ReviewLikeDAO reviewLikeDAO;
 	
 	@Override
 	public List selectAll() {
@@ -49,6 +57,11 @@ public class ReviewServiceImpl implements ReviewService {
 	@Override
 	public int countByAssetId(long asset_id) {
 		return reviewDAO.countByAssetId(asset_id);
+	}
+	
+	@Transactional
+	public void insert(Review review) throws ReviewException, ReviewLikeException{
+		reviewDAO.insert(review);
 	}
 
 //	@Override

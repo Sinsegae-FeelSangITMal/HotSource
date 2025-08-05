@@ -30,6 +30,8 @@ public class Seller {
 	private List<Asset> assetList;
 	private List<Review> reviewList;
 	private List<OrderedAsset> orderAssetList;
-	private List<Notice> noticeList;
 	private List<Subscribe> subscribeList;
+	private List<Notice> noticeList;
+	private List<NoticeComment> noticeCommentList;
+	private List<NoticeLike> noticeLikeList; 
 }

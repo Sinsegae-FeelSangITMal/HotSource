@@ -24,6 +24,7 @@
 		<association column="user_id" 	property="user" javaType="User" select="User.select"/>
 		<!-- 1:N 관계 -->
 		<collection property="assetList" column="seller_id" javaType="java.util.List" ofType="Asset" select="Asset.selectBySellerId"/>
+		<collection property="noticeList" column="seller_id" javaType="java.util.List" ofType="Notice" select="Notice.selectBySellerId"/>
 	</resultMap>
 	
 	<select id="selectAll" resultMap="joinMap">
@@ -48,6 +49,10 @@
 			#{user.user_id}, #{seller_name}, #{seller_nickname}, #{seller_bio}, #{seller_insta_url}, #{seller_email}, #{profile_img_url},
 			#{bank_name}, #{account_number}, true
 		)
+		    <!-- insert 시키자 마자, 현재 세션에서 일으킨 pk의 최대값  -->
+		<selectKey keyColumn="seller_id" keyProperty="seller_id" resultType="long" order="AFTER">
+			select last_insert_id() as seller_id
+		</selectKey>
 	</insert>
 	
 	<select id="select" resultType="Seller" parameterType="long">
