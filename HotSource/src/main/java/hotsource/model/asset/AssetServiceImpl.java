@@ -134,7 +134,7 @@ public class AssetServiceImpl implements AssetService {
 	    String savePath = request.getServletContext().getRealPath("/data");
 
 	    // 5. 에셋 이미지 저장
-	    String screenshotDir = savePath + "/asset_img/" + assetId;
+	    String screenshotDir = savePath + "/asset_img/";
 	    List<String> imgFilenames = fileManager.imgUpload(imgFiles, screenshotDir);
 
 	    List<AssetImg> assetImgs = new ArrayList<>();
@@ -272,6 +272,7 @@ public class AssetServiceImpl implements AssetService {
 
 	@Override
 	public int getDiscountPrice(Asset asset) {
+		log.debug("asset.getSale()" + asset.getSale());
 		if(asset.getSale() == null) {
 			return 0;
 		}else {
@@ -295,6 +296,7 @@ public class AssetServiceImpl implements AssetService {
 		Asset asset = select(asset_id);
 		
 		dto.setAsset_id(asset_id);
+		dto.setSeller_id(asset.getSeller().getSeller_id());
 		dto.setSeller_name(asset.getSeller().getSeller_name());
 		dto.setTitle(asset.getTitle());
 		dto.setPrice(asset.getPrice());
@@ -320,6 +322,7 @@ public class AssetServiceImpl implements AssetService {
 		Asset asset = select(asset_id); 
 		
 		dto.setAsset(asset);
+		log.debug("222asset.getSale()" + asset.getSale());
 		dto.setAverage_rate(reviewService.getAverageRateByAssetId(asset_id));
 		dto.setReview_count(reviewService.countByAssetId(asset_id));
 		dto.setWish_count(wishlistItemService.countByAssetId(asset_id));

@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="WishlistItem">
+
+	<insert id="insert" parameterType="WishlistItem">
+		insert into wishlist_item(wishlist_id, asset_id) values(#{wishlist.wishlist_id}, #{asset.asset_id})
+		<selectKey keyColumn="wishlist_item_id" keyProperty="wishlist_item_id" resultType="long" order="AFTER">
+			select last_insert_id()
+		</selectKey>
+	</insert>
 	
 	<sql id="columns">
 		wishlist_item_id, create_date, wishlist_id, asset_id
