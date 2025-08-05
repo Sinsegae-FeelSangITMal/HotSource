@@ -195,6 +195,11 @@
                 <option value="30" <%= asset.getSale() != null && asset.getSale().getSale_value() == 30 ? "selected" : "" %>>30%</option>
               </select>
             </div>
+            
+             <div class="form-section">
+              <label for="youtube_url">youtubeUrl</label>
+              <input type="text" id="youtube_url" name="youtube_url" class="form-control" value="<%= asset.getYoutube_url() %>" />
+            </div>
 
             <div class="form-section">
               <label for="keywords">Keywords</label>
@@ -236,11 +241,6 @@
           </div>
 
           <div class="right-preview">
-            <div class="form-section">
-              <label for="youtube_url">youtubeUrl</label>
-              <input type="text" id="youtube_url" name="youtube_url" class="form-control" value="<%= asset.getYoutube_url() %>" />
-            </div>
-
             <div class="preview-box">
               <div class="input-group">
                 <div class="custom-file">
