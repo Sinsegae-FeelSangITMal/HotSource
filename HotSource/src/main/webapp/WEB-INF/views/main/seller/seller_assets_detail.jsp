@@ -35,7 +35,7 @@
 
         <!-- 상품 이미지 -->
         <div class="img-wrapper">
-            <img class="product__big__img big_pic" src="/data/asset_img/<%=asset.getAsset_id() %>/<%=asset.getThumbnail().getAsset_img_url()%>">
+            <img class="product__big__img big_pic" src="/data/asset_img/<%=asset.getThumbnail().getAsset_img_url()%>">
         </div>
 
         <!-- 상품 정보 -->

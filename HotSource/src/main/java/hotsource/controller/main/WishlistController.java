@@ -108,4 +108,5 @@ public class WishlistController {
 		return "redirect:/main/wishlist";
 	}
 	
+	
 }

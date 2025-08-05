@@ -2,7 +2,9 @@ package hotsource.model.wishlist;
 
 import hotsource.domain.Wishlist;
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Data
 public class WishlistSimpleDTO {
     private Long wishlist_id;
@@ -21,10 +23,12 @@ public class WishlistSimpleDTO {
     
     private String extractThumbnail(Wishlist wishlist) {
         if(wishlist.getItemList().size() == 0) {
-        	return null;
+        	return "/static/images/noimg.jpg";
         }
         else {
+        	log.debug("wishlist.size()=" + wishlist.getItemList().size());
         	this.asset_id = wishlist.getItemList().get(0).getAsset().getAsset_id();
+        	log.debug("wishlist.asset_id()=" + wishlist.getItemList().get(0).getAsset().getAsset_id());;
         	return wishlist.getItemList().get(0).getAsset().getThumbnail().getAsset_img_url();
         }
     }

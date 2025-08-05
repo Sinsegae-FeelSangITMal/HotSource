@@ -31,15 +31,15 @@
 			<i class="bi bi-x-square-fill"></i>
 		</button>
 		<%} %>
-		<a><img class="thumb" src="/static/images/test1.gif" alt="썸네일"
+		<a><img class="thumb" src="/data/asset_img/<%=card.getThumbnail_url() %>" alt="썸네일"
 			data-asset-id="<%=card.getAsset_id()%>"
 			data-filename="<%=card.getThumbnail_url()%>" /></a>
 
 	</div>
 	<!-- 상품 정보 -->
 	<div class="product-meta mini">
-		<a href=""><h6 class="author"><%=card.getSeller_name()%></h6></a> <a
-			href=""><h6 class="title"><%=card.getTitle()%></h6></a>
+		<a href="/main/seller/detail?seller_id=<%=card.getSeller_id()%>"><h6 class="author"><%=card.getSeller_name()%></h6></a>
+		<a href="/main/asset/detail?asset_id=<%=card.getAsset_id()%>"><h6 class="title"><%=card.getTitle()%></h6></a>
 
 		<!-- 리뷰 수 5개 이하면 별점 표시   -->
 		<%
