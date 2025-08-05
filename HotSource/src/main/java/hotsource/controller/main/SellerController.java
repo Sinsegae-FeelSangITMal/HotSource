@@ -181,4 +181,21 @@ public class SellerController {
         result.put("status", isSubscribed ? "unsubscribed" : "subscribed");
         return result;
     }
+	
+	@PostMapping("/seller/notice/like")
+	@ResponseBody
+	public Map<String, String> noticeLike(@RequestParam long user_id, @RequestParam long notice_id) {
+	    boolean isLiked = noticeLikeService.isLiked(user_id, notice_id);
+
+	    if (isLiked) {
+	        noticeLikeService.delete(user_id, notice_id);  // 좋아요 삭제
+	    } else {
+	        noticeLikeService.insert(user_id, notice_id);  // 좋아요 추가
+	    }
+
+	    Map<String, String> result = new HashMap<>();
+	    result.put("status", isLiked ? "unliked" : "liked");
+
+	    return result;
+	}
 }

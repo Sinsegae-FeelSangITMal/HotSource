@@ -56,20 +56,28 @@
 				<% List<NoticeComment> commentList = notice.getCommentList(); %>
 
 
-		        
-		        <!-- 공지 좋아요 -->
+				<!-- 공지 좋아요 -->
 				<% List<NoticeLike> likeList = notice.getLikeList(); %>
 				<div class="seller-post-footer">
-					<button class="like-btn">
-						<i class="fas fa-thumbs-up"></i>
-						<span><%= (likeList != null) ? likeList.size() : 0 %></span>
-					</button>
-					<button class="send-btn">
-						<i class="bi bi-send-fill"></i>
-					</button>
-					<button class="comment-btn">
-						<i class="fas fa-comment"></i> <span><%= commentList.size() %></span>
-					</button>
+				    <% if (loginUser != null) { %>
+					    <button class="like-btn <%= notice.isLikedByLoginUser(loginUser.getUser_id()) ? "liked" : "" %>" 
+					            onclick="noticeLike(<%= notice.getNotice_id() %>)">
+					        <i class="fas fa-thumbs-up"></i>
+					        <span id="like_count_<%= notice.getNotice_id() %>"><%= (likeList != null) ? likeList.size() : 0 %></span>
+					    </button>
+					<% } else { %>
+					    <button class="like-btn" onclick="alert('로그인이 필요합니다.'); location.href='/main/user/login';">
+					        <i class="fas fa-thumbs-up"></i>
+					        <span id="like_count_<%= notice.getNotice_id() %>"><%= (likeList != null) ? likeList.size() : 0 %></span>
+					    </button>
+					<% } %>
+
+				    <button class="send-btn">
+				        <i class="bi bi-send-fill"></i>
+				    </button>
+				    <button class="comment-btn">
+				        <i class="fas fa-comment"></i> <span><%= commentList.size() %></span>
+				    </button>
 				</div>
 				
 				<!-- 공지 댓글 작성 -->
@@ -116,6 +124,41 @@
 <!-- 페이지 영역 끝 -->
 
 <script>
+
+function noticeLike(noticeId) {
+    const userId = $("#user_id_" + noticeId).val();
+
+    if (!userId) {
+        alert("로그인이 필요합니다.");
+        location.href = "/main/user/login";
+        return;
+    }
+
+    $.ajax({
+        url: "/main/seller/notice/like",
+        type: "post",
+        data: {
+            notice_id: noticeId,
+            user_id: userId
+        },
+        success: function (response) {
+            // 응답에서 좋아요 수를 갱신
+            $("#like_count_" + noticeId).text(response.likeCount);
+		    const btn = $(".like-btn[onclick='toggleLike(" + noticeId + ")']");
+		    if(response.status === "liked") {
+		        btn.addClass("liked");
+		    } else {
+		        btn.removeClass("liked");
+		    }
+            alert('공지 반응이 등록되었습니다.');
+        	location.reload();  // 새로고침
+        },
+        error: function (xhr, status, err) {
+            alert("좋아요 처리 실패: " + err);
+        }
+    });
+}
+
 function registComment(noticeId) {
     const userId = $("#user_id_" + noticeId).val();
     const content = $("#comment_content_" + noticeId).val();
