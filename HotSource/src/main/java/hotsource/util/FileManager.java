@@ -129,6 +129,7 @@ public class FileManager{
 	public void sellerImgSave(Seller seller, String savePath) throws UploadException{
 		
 		log.debug("seller Id:"+ seller.getSeller_id());
+
 		File directory = new File(savePath+"/user_profile_img");
 		
 		MultipartFile photo = seller.getSeller_profile();

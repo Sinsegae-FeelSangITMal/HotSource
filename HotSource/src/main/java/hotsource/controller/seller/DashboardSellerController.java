@@ -57,6 +57,7 @@ public class DashboardSellerController {
 	        
 	        mav.setViewName("redirect:/seller/dashboard/assetList?seller_id="+seller.getSeller_id());
 
+
 	    } catch(Exception e) {
 	        log.error("등록 실패", e);
 	        mav.addObject("e", e);

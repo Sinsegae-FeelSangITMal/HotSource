@@ -183,7 +183,7 @@
 									<div class="review-meta">
 										<div class="review-user">
 											   <%
-											        float rate = review.getRate();  // 예: 3.5
+											        double rate = review.getRate();  // 예: 3.5
 											        fullStars = (int)rate;      // 정수 부분만 full star
 											        boolean hasHalf = (rate - fullStars) == 0.5;
 											        int emptyStars = 5 - fullStars - (hasHalf ? 1 : 0);

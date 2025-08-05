@@ -74,7 +74,7 @@
 		%>
 	    </div>
 	    <div class="img-wrapper">
-	      <a href=""><img src="<%=(asset.getImgList()!=null) ? ("/data/asset_img/"+asset.getImgList().get(0).getAsset_img_url()) : "/static/images/noimg.jpg" %>" alt="썸네일" /></a>
+	      <a href=""><img src="<%=(asset.getImgList().size() != 0) ? ("/data/asset_img/"+asset.getImgList().get(0).getAsset_img_url()) : "/static/images/noimg.jpg" %>" alt="썸네일" /></a>
 	    </div>
 	    <div class="product-meta mini">
 	      <a href="/main/seller/detail?seller_id=<%= asset.getSeller().getSeller_id()%>"><h6 class="author"><%=asset.getSeller().getSeller_name()%></h6></a>
