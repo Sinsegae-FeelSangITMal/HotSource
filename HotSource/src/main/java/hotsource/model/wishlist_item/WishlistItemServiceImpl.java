@@ -54,4 +54,12 @@ public class WishlistItemServiceImpl implements WishlistItemService {
 	public int countByAssetId(long asset_id) {
 		return wishlistItemDAO.countByAssetId(asset_id);
 	}
+
+	@Override
+	public boolean isContained(long wishlist_id, long asset_id) {
+		Map<String, Object> paramMap = new HashMap<>();
+		paramMap.put("wishlist_id", wishlist_id);
+	    paramMap.put("asset_id", asset_id);
+		return wishlistItemDAO.existsByWishlistIdAndAssetId(paramMap);
+	}
 }

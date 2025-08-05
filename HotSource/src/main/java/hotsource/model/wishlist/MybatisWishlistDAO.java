@@ -1,6 +1,7 @@
 package hotsource.model.wishlist;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,5 +54,4 @@ public class MybatisWishlistDAO implements WishlistDAO {
 			throw new WishlistException("찜 목록 삭제 실패");
 		}
 	}
-
 }

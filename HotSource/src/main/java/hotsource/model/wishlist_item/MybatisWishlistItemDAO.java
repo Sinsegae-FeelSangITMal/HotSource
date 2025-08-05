@@ -48,4 +48,9 @@ public class MybatisWishlistItemDAO implements WishlistItemDAO {
 	public int countByAssetId(long asset_id) {
 		return sqlSessionTemplate.selectOne("WishlistItem.countByAssetId", asset_id);
 	}
+
+	@Override
+	public boolean existsByWishlistIdAndAssetId(Map<String, Object> paramMap) {
+		return sqlSessionTemplate.selectOne("WishlistItem.existsByWishlistIdAndAssetId", paramMap);
+	}
 }
