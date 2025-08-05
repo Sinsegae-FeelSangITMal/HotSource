@@ -32,4 +32,40 @@
 	<select id="selectByNoticeId" resultMap="joinMap" parameterType="long">
 		SELECT <include refid="columns"/> FROM notice_like WHERE notice_id=#{notice_id}
 	</select>
+	
+	<select id="selectByUserAndNotice" resultType="NoticeLike">
+	    SELECT * FROM notice_like
+	    WHERE user_id = #{user_id} AND notice_id = #{notice_id}
+	</select>
+	
+	<select id="isLiked" resultType="boolean" parameterType="map">
+	    SELECT COUNT(*) > 0
+	    FROM Notice_like
+	    WHERE user_id = #{user_id} AND notice_id = #{notice_id}
+	</select>
+	
+	<insert id="insert" parameterType="NoticeLike" useGeneratedKeys="true" keyProperty="notice_like_id">
+		INSERT INTO notice_like (is_like, notice_id, user_id)
+		VALUES (#{is_like}, #{notice.notice_id}, #{user.user_id})
+	</insert>
+
+	<update id="update" parameterType="NoticeLike">
+		UPDATE notice_like
+		SET is_like = #{is_like},
+		    notice_id = #{notice.notice_id},
+		    user_id = #{user.user_id}
+		WHERE notice_like_id = #{notice_like_id}
+	</update>
+
+	<delete id="delete" parameterType="long">
+		DELETE FROM notice_like WHERE notice_id = #{notice_id} and user_id = #{user_id} 
+	</delete>
+	
+	<!-- exists -->
+	<select id="exists" resultType="boolean">
+	    SELECT COUNT(*) > 0
+	    FROM notice_like
+	    WHERE user_id = #{user_id} AND notice_id = #{notice_id}
+	</select>
+	
 </mapper>

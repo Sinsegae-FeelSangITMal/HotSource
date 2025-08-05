@@ -60,7 +60,8 @@
 			<div class="row align-items-center">
 				<!-- 프로필 이미지 -->
 				<div class="col-md-3 text-center mb-3 mb-md-0">
-					<img class="artist-avatar" src="/static/images/big_logo.png" alt="작가 프로필" class="img-fluid rounded-circle" style="width: 150px; height: 150px;">
+					<img class="artist-avatar" src="/data/seller_profile_img/<%=seller.getSeller_id()%>/<%=seller.getProfile_img_url()%>"
+					alt="작가 프로필" class="img-fluid rounded-circle" style="width: 150px; height: 150px;">
 				</div>
 
 				<!-- 정보 텍스트 -->
@@ -160,8 +161,7 @@
 		<div class="container mt-4">
 			<div class="d-flex justify-content-start border-bottom">
 				<button class="tab-btn active me-3" data-tab="1">Assets</button>
-				<button class="tab-btn me-3" data-tab="2">List</button>
-				<button class="tab-btn" data-tab="3">Post</button>
+				<button class="tab-btn" data-tab="2">Post</button>
 			</div>
 		</div>
 
@@ -173,14 +173,8 @@
 			</div>
 			<!-- Asset TAP 영역 끝-->
 			
-			<!-- List TAP 영역 시작-->
-			<div class="tab-content" id="2" >
-				<%@ include file="seller_list.jsp"%>
-			</div>
-			<!-- List TAP 영역 끝-->
-			
 			<!-- Post TAP 영역 -->
-			<div class="tab-content" id="3">
+			<div class="tab-content" id="2">
 				<%@ include file="seller_post.jsp"%>
 			</div>
 			<!-- Post TAP 영역 끝-->

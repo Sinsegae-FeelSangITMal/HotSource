@@ -9,17 +9,15 @@
 <%
 	SimpleDateFormat sdf;
 	String formattedDate;
-    Date createDate = seller.getCreate_date(); // java.util.Date 또는 Timestamp 라고 가정
-    Calendar cal = java.util.Calendar.getInstance();
+    //Date createDate = seller.getCreate_date(); // java.util.Date 또는 Timestamp 라고 가정
+    Calendar cal = Calendar.getInstance();
     Date now = cal.getTime(); // 오늘 날짜
 
     // 한 달 전으로 이동
     cal.add(Calendar.MONTH, -1);
     Date oneMonthAgo = cal.getTime();
 
-    // 조건: 한 달 이내에 생성된 경우
-    //Date createDate = notice.getCreate_date(); // 공지 생성일로 변경
-	boolean isNew = createDate.after(oneMonthAgo) && !createDate.after(now);
+    
 %>
 <div class="tap-artist-card">
 					<%-- for (int i=1; i<=2; i++) {--%>
@@ -32,7 +30,11 @@
 					<div class="seller-post-info">
 						<%
 							sdf = new SimpleDateFormat("yyyy/ M / d HH:mm");
-							formattedDate = sdf.format(seller.getCreate_date());
+							formattedDate = sdf.format(notice.getCreate_date());
+							
+							// 조건: 한 달 이내에 생성된 경우
+						    Date createDate = notice.getCreate_date(); // 공지 생성일로 변경
+							boolean isNew = createDate.after(oneMonthAgo) && !createDate.after(now);
 						%>
 						<h5 class="seller-post-author"><%= seller.getSeller_name() %></h5> &nbsp &nbsp
 						<span class="seller-post-time"><%= formattedDate %></span> &nbsp &nbsp
@@ -42,7 +44,8 @@
 				</div>
 				<div class="seller-post-body d-flex">
 					<!-- <img src="/static/images/cozy_tileset_preview.png" alt="tileset" class="seller-post-image">-->
-					<img class="seller-post-image" src="/static/images/test1.gif" alt="썸네일" />
+					
+					<img class="seller-post-image " src="/data/notice/<%=notice.getNotice_id()%>/<%=notice.getNotice_img_url()%>">
 					<div class="post-text ms-3">
 						<h4 class="seller-post-title"><%= notice.getTitle() %></h4>
 						<hr>
@@ -56,20 +59,28 @@
 				<% List<NoticeComment> commentList = notice.getCommentList(); %>
 
 
-		        
-		        <!-- 공지 좋아요 -->
+				<!-- 공지 좋아요 -->
 				<% List<NoticeLike> likeList = notice.getLikeList(); %>
 				<div class="seller-post-footer">
-					<button class="like-btn">
-						<i class="fas fa-thumbs-up"></i>
-						<span><%= (likeList != null) ? likeList.size() : 0 %></span>
-					</button>
-					<button class="send-btn">
-						<i class="bi bi-send-fill"></i>
-					</button>
+				    <% if (loginUser != null) { %>
+					    <button class="like-btn <%= notice.isLikedByLoginUser(loginUser.getUser_id()) ? "liked" : "" %>" 
+					            onclick="noticeLike(<%= notice.getNotice_id() %>)">
+					        <i class="fas fa-thumbs-up"></i>
+					        <span id="like_count_<%= notice.getNotice_id() %>"><%= (likeList != null) ? likeList.size() : 0 %></span>
+					    </button>
+					<% } else { %>
+					    <button class="like-btn" onclick="alert('로그인이 필요합니다.'); location.href='/main/user/login';">
+					        <i class="fas fa-thumbs-up"></i>
+					        <span id="like_count_<%= notice.getNotice_id() %>"><%= (likeList != null) ? likeList.size() : 0 %></span>
+					    </button>
+					<% } %>
 					<button class="comment-btn">
-						<i class="fas fa-comment"></i> <span><%= commentList.size() %></span>
-					</button>
+				        <i class="fas fa-comment"></i> <span><%= commentList.size() %></span>
+				    </button>
+				    
+				    <button class="send-btn">
+				        <i class="bi bi-send-fill"></i>
+				    </button>
 				</div>
 				
 				<!-- 공지 댓글 작성 -->
@@ -116,6 +127,41 @@
 <!-- 페이지 영역 끝 -->
 
 <script>
+
+function noticeLike(noticeId) {
+    const userId = $("#user_id_" + noticeId).val();
+
+    if (!userId) {
+        alert("로그인이 필요합니다.");
+        location.href = "/main/user/login";
+        return;
+    }
+
+    $.ajax({
+        url: "/main/seller/notice/like",
+        type: "post",
+        data: {
+            notice_id: noticeId,
+            user_id: userId
+        },
+        success: function (response) {
+            // 응답에서 좋아요 수를 갱신
+            $("#like_count_" + noticeId).text(response.likeCount);
+		    const btn = $(".like-btn[onclick='toggleLike(" + noticeId + ")']");
+		    if(response.status === "liked") {
+		        btn.addClass("liked");
+		    } else {
+		        btn.removeClass("liked");
+		    }
+            alert('공지 반응이 등록되었습니다.');
+        	location.reload();  // 새로고침
+        },
+        error: function (xhr, status, err) {
+            alert("좋아요 처리 실패: " + err);
+        }
+    });
+}
+
 function registComment(noticeId) {
     const userId = $("#user_id_" + noticeId).val();
     const content = $("#comment_content_" + noticeId).val();

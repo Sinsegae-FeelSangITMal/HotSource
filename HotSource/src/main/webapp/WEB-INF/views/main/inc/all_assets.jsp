@@ -61,8 +61,8 @@
 	      <a href=""><img src="/static/images/test1.gif" alt="썸네일" /></a>
 	    </div>
 	    <div class="product-meta mini">
-	      <a href=""><h6 class="author"><%=asset.getSeller().getSeller_name()%></h6></a>
-	      <a href=""><h6 class="title"><%=asset.getTitle()%></h6></a>
+	      <a href="/main/seller/detail?seller_id=<%= asset.getSeller().getSeller_id()%>"><h6 class="author"><%=asset.getSeller().getSeller_name()%></h6></a>
+	      <a href="/main/asset/detail?asset_id=<%=asset.getAsset_id()%>"><h6 class="title"><%=asset.getTitle()%></h6></a>
 	      		<span class="price free">FREE</span>
 		      <span class="price sale"><%=%></span>
 		      <span class="price original"><%=%></span>

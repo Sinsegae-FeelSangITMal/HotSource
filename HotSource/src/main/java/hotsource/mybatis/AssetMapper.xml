@@ -135,7 +135,8 @@
 		<result property="view_count" column="view_count"/>
 	
 		<association property="seller" javaType="Seller">
-			<result property="seller_name" column="seller_name"/>
+		    <id property="seller_id" column="seller_id"/>
+		    <result property="seller_name" column="seller_name"/>
 		</association>
 	
 		<association property="subCategory" javaType="SubCategory">

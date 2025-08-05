@@ -29,7 +29,7 @@
 	</select>
 	
 	<select id="selectSubCount" resultType="int" parameterType="long">
-		SELECT count(user_id) FROM subscribe WHERE seller_id=#{seller_id}
+		SELECT count(user_id) FROM subscribe WHERE seller_id=#{seller_id} and cancel_date is null
 	</select>
 	
 	<!-- 기존 구독 내역 조회 (user_id & seller_id 기준) -->

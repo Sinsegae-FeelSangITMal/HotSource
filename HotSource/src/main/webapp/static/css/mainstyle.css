@@ -1760,7 +1760,9 @@ td.download-wrap {
 
 
 
-
+.like-btn.liked {
+    color: red;
+}
 
 /* 작가페이지 - 공지 List Tap 스타일 시작 */
 .list-custom-card {

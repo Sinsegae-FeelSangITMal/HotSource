@@ -1,3 +1,4 @@
+<%@page import="hotsource.domain.Asset"%>
 <%@page import="hotsource.domain.Review"%>
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%
@@ -34,7 +35,7 @@
 
         <!-- 상품 이미지 -->
         <div class="img-wrapper">
-            <a href=""><img src="/static/images/test1.gif" alt="썸네일" /></a>
+            <img class="product__big__img big_pic" src="/data/asset_img/<%=asset.getAsset_id() %>/<%=asset.getThumbnail().getAsset_img_url()%>">
         </div>
 
         <!-- 상품 정보 -->
@@ -42,7 +43,7 @@
             <a href="">
                 <h6 class="author"><%= seller.getSeller_name() %></h6>
             </a>
-            <a href="">
+            <a href="/main/asset/detail?asset_id=<%=asset.getAsset_id()%>">
                 <h6 class="title"><%= asset.getTitle() %></h6>
             </a>
             <h6 class="review">
@@ -50,7 +51,7 @@
             </h6>
             <% if (false) { %><span class="price free">FREE</span><% } %>
             <% if (true) { %><span class="price sale">￦<%= asset.getPrice() %></span><% } %>
-            <% if (false) { %><span class="price original">￦3,200</span><% } %>
+            <% if (false) { %><span class="price original">￦<%= asset.getPrice() %></span><% } %>
         </div>
 
         <!-- 카트, 찜 등록 -->
