@@ -6,29 +6,13 @@
 	<div class="product-grid">
 	<!-- 한 컨텐츠 시작 -->
 	<%
-    List<Asset> list = (List<Asset>) request.getAttribute("resourceList");  // 이름 고정
+    List<Asset> list = (List<Asset>) request.getAttribute("assetList");  // 이름 고정
     List<AssetImg> thumbList = (List<AssetImg>) request.getAttribute("thumbList");
-    
-    boolean isPurchasedAsset = false;
-    
-    int max = Math.min(5, list.size());  // 출력 갯수 정하기
-    for (int i = 0; i < max; i++) {
-        Asset asset = list.get(i);
-        isPurchasedAsset = false;
-        int salePer = 0;
-        if (asset.getSaleList().size() > 0)
-            salePer = asset.getSaleList().get(0).getSale_value();
-        int oriPrice = asset.getPrice();
-        int salePrice = 0;
-        if (oriPrice > 0 && salePer > 0) {
-            salePrice = (int) Math.ceil(oriPrice - (oriPrice * ((float) salePer / 100)));
-            salePrice = salePrice - (salePrice % 10);
-        }
 	  %>
 	  <div class="product-card mini">
 	    <div class="badge-wrapper">
 	    <%
-		if (isPurchasedAsset) {
+		if (isPurchased) {
 		%>
 		    <span class="badge purchased">PURCHASED</span>
 		<%
@@ -74,19 +58,15 @@
 		%>
 	    </div>
 	    <div class="img-wrapper">
-	      <a href=""><img src="<%=(asset.getImgList().get(0).getAsset_img_url()!=null) ? ("/data/asset_img/"+asset.getAsset_id()+"/"+asset.getImgList().get(0).getAsset_img_url()) : "/static/images/noimg.jpg" %>" alt="썸네일" /></a>
+	      <a href=""><img src="/static/images/test1.gif" alt="썸네일" /></a>
 	    </div>
 	    <div class="product-meta mini">
 	      <a href=""><h6 class="author"><%=asset.getSeller().getSeller_name()%></h6></a>
 	      <a href=""><h6 class="title"><%=asset.getTitle()%></h6></a>
-	      <% if (oriPrice==0) { %>
 	      		<span class="price free">FREE</span>
-	      <% } else if (salePer>0) { %>
-		      <span class="price sale"><%=salePrice%></span>
-		      <span class="price original"><%=oriPrice%></span>
-	      <% } else { %>
-	      	  <span class="price sale"><%=oriPrice%></span>
-	      <% } %>
+		      <span class="price sale"><%=%></span>
+		      <span class="price original"><%=%></span>
+	      	  <span class="price sale"><%=%></span>
 	    </div>
 	  </div>
 	<% } %>

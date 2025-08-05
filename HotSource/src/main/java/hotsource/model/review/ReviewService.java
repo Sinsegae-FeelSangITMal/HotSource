@@ -3,6 +3,7 @@ package hotsource.model.review;
 import java.util.List;
 
 import hotsource.domain.Review;
+import hotsource.domain.ReviewLike;
 
 public interface ReviewService {
 	public List selectAll();
@@ -12,5 +13,5 @@ public interface ReviewService {
 	public Review selectByOrderedAssetId(long order_asset_id);
 	public double getAverageRateByAssetId(long asset_id);
 	public int countByAssetId(long asset_id);
-	
+	public void insert(Review review);
 }

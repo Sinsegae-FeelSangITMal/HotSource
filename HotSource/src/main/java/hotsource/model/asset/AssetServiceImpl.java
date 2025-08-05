@@ -80,6 +80,11 @@ public class AssetServiceImpl implements AssetService {
 	public List selectAll() {
 		return assetDAO.selectAll();
 	}
+	
+	@Override
+	public List selectSaleAll() {
+		return assetDAO.selectSaleAll();
+	}
 
 	@Override
 	public Asset select(long asset_id) {

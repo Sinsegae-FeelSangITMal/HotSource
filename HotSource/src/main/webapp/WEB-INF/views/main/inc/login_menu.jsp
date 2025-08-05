@@ -14,7 +14,7 @@
     <%= loginUser.getUser_name() %>
   </a>
   <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-    <li><a href="/main/mypage" class="dropdown-item">My Page</a></li>
+    <li><a href="/main/user/mypage" class="dropdown-item">My Page</a></li>
     <% if (loginSeller != null) { %>
 	  <li><a href="/seller/dashboard/assetList?seller_id=<%= loginSeller.getSeller_id() %>" class="dropdown-item">Dashboard</a></li>
 	<% } else{ %>
