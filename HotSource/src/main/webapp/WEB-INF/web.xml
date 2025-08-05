@@ -18,6 +18,16 @@
 	</listener>
 	
 	<filter>
+		<filter-name>LoginCheckFilter</filter-name>
+	    <filter-class>hotsource.util.LoginCheckFilter</filter-class>
+	</filter>
+	
+	<filter-mapping>
+		<filter-name>LoginCheckFilter</filter-name>
+		<url-pattern>/main/*</url-pattern>
+	</filter-mapping>
+	
+	 <filter>
 	    <filter-name>SellerLoginCheckFilter</filter-name>
 	    <filter-class>hotsource.util.SellerLoginCheckFilter</filter-class>
 	</filter>
@@ -25,7 +35,9 @@
 	<filter-mapping>
 		<filter-name>SellerLoginCheckFilter</filter-name>
 		<url-pattern>/seller/*</url-pattern>
-	</filter-mapping>
+	</filter-mapping> 
+	
+	
 	
 	<filter>
 		<filter-name>encodingFilter</filter-name>
@@ -40,8 +52,8 @@
 		<url-pattern>/*</url-pattern>		
 	</filter-mapping>
 	
-	<!-- 임시 로그인  -->
-	<!-- <filter>
+	<!-- 임시 로그인 
+	<filter>
 		<filter-name>loginBypassFilter</filter-name>
 		<filter-class>hotsource.util.LoginBypassFilter</filter-class>
 	</filter>
