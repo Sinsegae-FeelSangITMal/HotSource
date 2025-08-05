@@ -300,15 +300,7 @@
 	let selectedFile=[];
 	
 	function regist(){
-		//기존 폼을 이용하되, file 컴포넌트 파라미터만 새로 교체(selectedFile 배열로 대체)
-		//js에서 프로그래밍 적 form 생성 
 		let formData = new FormData(document.getElementById("form1"));
-		
-		//formData 동기/비동기 둘다 지원하지만, 대부분은 비동기방식을 많이 씀 
-		//Jquery Ajax 자체에서 formData 를 비동기방식으로 간단하게 사용할 수 있는 코드를 지원 
-		//기존 photo 버리고, 우리가 선언한 배열로 대체 
-		//formData.append("email", "zino11198@naver.com"); // <input type="text" name="email">
-		//formData는 개발자가 명시하지 않아도, 디폴트로 multipart/form-data 가 지정되어 잇음
 		
 		formData.delete("photo");//기존의 photo 파라미터 제거하기 append의 반대
 		

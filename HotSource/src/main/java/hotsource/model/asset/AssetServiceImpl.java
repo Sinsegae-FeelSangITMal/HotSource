@@ -192,12 +192,12 @@ public class AssetServiceImpl implements AssetService {
 	    
 	    // 3.1 파일에서 삭제 
 	    List<AssetImg> existingImgs = assetImgDAO.selectByAssetId(assetId);
-	    for (AssetImg img : existingImgs) {
-	    	fileManager.deleteFile(savePath + "/asset_img/"+ assetId +"/"+ img.getAsset_img_url());
-	    	log.debug("file deleteFIle AssetIMg:"+savePath + "/asset_img/"+ assetId +"/"+ img.getAsset_img_url());
+	    if (existingImgs != null && !existingImgs.isEmpty()) {
+		    for (AssetImg img : existingImgs) {
+		    	fileManager.deleteFile(savePath + "/asset_img/"+ assetId +"/"+ img.getAsset_img_url());
+		    }
+	    	assetImgDAO.deleteByAssetId(assetId);
 	    }
-	    // 3.2 db에서 삭제 
-	    assetImgDAO.deleteByAssetId(assetId);
 	    
 	    String screenshotDir = savePath + "/asset_img/" + assetId;
 	    List<String> imgFilenames = fileManager.imgUpload(imgFiles, screenshotDir);
@@ -208,21 +208,21 @@ public class AssetServiceImpl implements AssetService {
 	        assetImg.setAsset_img_url(imgFilenames.get(i));
 	        assetImg.set_thumb(i == 0);
 	        assetImg.setAsset(asset);
-	        log.debug("AssetImg  : "+ assetImg);
 	        assetImgs.add(assetImg);
 	    }
+	    // 3.2 db에서 삭제 
 	    if (assetImgs != null && !assetImgs.isEmpty()) {
 	    	assetImgDAO.insert(assetImgs);
 	    }
 
 	    // 4. 기존 파일 삭제 + 새 파일 저장
-
 	    List<AssetFile> existingFiles = assetFileDAO.selectByAssetId(assetId);
-	    for (AssetFile file : existingFiles) {
-	        fileManager.deleteFile(savePath + "/asset/"+ assetId +"/"+ file.getFile_url());
-	    	log.debug("file deleteFIle AssetFile:"+savePath + "/asset/"+ assetId +"/"+ file.getFile_url());
+	    if(existingFiles != null && !existingFiles.isEmpty()) {
+		    for (AssetFile file : existingFiles) {
+		        fileManager.deleteFile(savePath + "/asset/"+ assetId +"/"+ file.getFile_url());
+		    }
+	    	assetFileDAO.deleteByAssetId(assetId);
 	    }
-	    assetFileDAO.deleteByAssetId(assetId);
 	    
 	    String projectDir = savePath + "/asset/" + assetId;
 	    List<String> assetFilenames = fileManager.imgUpload(assetFiles, projectDir);
@@ -232,7 +232,6 @@ public class AssetServiceImpl implements AssetService {
 	        AssetFile assetFile = new AssetFile();
 	        assetFile.setFile_url(filename);
 	        assetFile.setAsset(asset);
-	        log.debug("AssetFile  : "+ assetFile);
 	        assetFilesList.add(assetFile);
 	    }
 	    if (assetFilesList != null && !assetFilesList.isEmpty()) {

@@ -106,38 +106,14 @@
               <!-- /.card-body -->
               <div class="card-footer clearfix">
                 <ul class="pagination pagination-sm m-0 float-left">
-				  <% 
-				    int currentPage = paging.getCurrentPage();
-				    int firstPage = paging.getFirstPage();
-				    int lastPage = paging.getLastPage();
-				    int totalPage = paging.getTotalPage();
-				  %>
-				
-				  <%-- 이전 블럭 버튼 --%>
-				  <% if (firstPage > 1) { %>
-				    <li class="page-item">
-				      <a class="page-link" href="?currentPage=<%= firstPage - 1 %>">&laquo;</a>
-				    </li>
-				  <% } %>
-				
-				  <%-- 페이지 번호 출력 --%>
-				  <% for (int i = firstPage; i <= lastPage; i++) {
-				       if (i > totalPage) break;
-				
-				       boolean isActive = (i == currentPage);
-				  %>
-				    <li class="page-item <%= isActive ? "active" : "" %>">
-				      <a class="page-link" href="?currentPage=<%= i %>"><%= i %></a>
-				    </li>
-				  <% } %>
-				
-				  <%-- 다음 블럭 버튼 --%>
-				  <% if (lastPage < totalPage) { %>
-				    <li class="page-item">
-				      <a class="page-link" href="?currentPage=<%= lastPage + 1 %>">&raquo;</a>
-				    </li>
-				  <% } %>
-				</ul>
+                  <li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
+                  
+                  <% for(int i=paging.getFirstPage(); i<= paging.getLastPage(); i++){ %>
+                  <% if(i > paging.getTotalPage()) break; // 총 페이지 수를 넘으면 반복문 빠져나오기 %>
+                  <li class="page-item"><a class="page-link" href="#"><%= i %></a></li>
+                  <% } %>
+                  <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
+                </ul>
                   <!-- 오른쪽 끝 배치 -->
 				  <div class="float-right">
 				    <button type="button" class="btn btn-info" id="bt_regist">공지글 작성</button>

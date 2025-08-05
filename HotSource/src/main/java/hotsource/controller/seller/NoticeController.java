@@ -2,7 +2,10 @@ package hotsource.controller.seller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,15 +30,19 @@ public class NoticeController {
 	Paging paging;
 
 	@GetMapping("/notice/list")
-	public ModelAndView selectAll() {
+	public ModelAndView selectAll(HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
 		
-		log.debug("목록 요청 받음");
-	
-		// 3단계 : 일 시키기
-		List noticeList = noticeService.selectAll();
-		
-		// 4단계 : 결과 저장
+		List<Notice> allList = noticeService.selectAll();
+		int total = allList.size();
+
+		paging.init(total, allList, request);
+
+		int start = paging.getCurPos();
+		int end = Math.min(start + paging.getPageSize(), total); // end index는 범위 초과 방지
+
+		List<Notice> noticeList = allList.subList(start, end);
+
 		mav.addObject("noticeList", noticeList);
 		mav.addObject("paging", paging);
 		mav.setViewName("seller/notice/list");

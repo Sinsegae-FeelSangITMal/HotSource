@@ -260,8 +260,8 @@
 <%@ include file="../inc/footer_link.jsp" %>
 <script src="/static/admin/custom/ProductImg.js"></script>
 <script>
-
-let selectedFile = [];
+let selectedFile = [];    // 이미지 파일
+let selectedFiles = [];   // 일반 파일
 
 function printCategory(obj, list, v){
 	let tag="<option value='0'>카테고리 선택</option>";
@@ -307,41 +307,47 @@ function getTopCategory(v){
   // 단, 기존 선택값 반영 필요
 
   function updateAsset() {
-    const formData = new FormData(document.getElementById("form1"));
-    formData.delete("photo");
+  const formData = new FormData(document.getElementById("form1"));
 
-    for(let i=0;i<selectedFile.length;i++){
-      formData.append("photo", selectedFile[i]);
-    }
+  formData.delete("photo");     // 이미지
+  formData.delete("uploadFiles"); // 일반파일
 
-    $.ajax({
-      url: "/seller/dashboard/asset/update",
-      type: "post",
-      data: formData,
-      processData: false,
-      contentType: false,
-      success: function(result) {
-        if(result.status === "success") {
-          alert("수정 완료");
-          location.href = "/seller/dashboard/assetList?seller_id=<%= asset.getSeller().getSeller_id() %>";
-        } else {
-          alert("수정 실패");
-        }
-      },
-      error: function(xhr, status, err) {
-        alert(err);
-      }
-    });
+  // 이미지 첨부
+  for (let i = 0; i < selectedFile.length; i++) {
+    formData.append("photo", selectedFile[i]);
   }
+
+  // 일반파일 첨부
+  for (let i = 0; i < selectedFiles.length; i++) {
+    formData.append("uploadFiles", selectedFiles[i]);
+  }
+
+  $.ajax({
+    url: "/seller/dashboard/asset/update",
+    type: "post",
+    data: formData,
+    processData: false,
+    contentType: false,
+    success: function(result) {
+      if (result.status === "success") {
+        alert("수정 완료");
+        location.href = "/seller/dashboard/assetList?seller_id=<%= asset.getSeller().getSeller_id() %>";
+      } else {
+        alert("수정 실패");
+      }
+    },
+    error: function(xhr, status, err) {
+      alert(err);
+    }
+  });
+}
   
   function handleFiles(files) {
 	  for (let i = 0; i < files.length; i++) {
 	    const file = files[i];
+	    if (selectedFiles.some(f => f.name === file.name)) continue;
 
-	    // 이미 동일한 이름의 파일이 있는지 확인 (중복 방지)
-	    if (selectedFile.some(f => f.name === file.name)) continue;
-
-	    selectedFile.push(file);
+	    selectedFiles.push(file);
 
 	    const fileEntry = document.createElement("div");
 	    fileEntry.classList.add("uploaded-file-name");
@@ -363,7 +369,7 @@ function getTopCategory(v){
 	    deleteBtn.style.color = "red";
 
 	    deleteBtn.onclick = function () {
-	      selectedFile = selectedFile.filter(f => f.name !== file.name);
+    	  selectedFiles = selectedFiles.filter(f => f.name !== file.name);
 	      fileEntry.remove();
 	    };
 
@@ -374,65 +380,62 @@ function getTopCategory(v){
 	}
 
 //비동기 방식으로, 서버의 이미지를 다운로드 받기 
-function getImgList(dir, filename, type){
-  console.log("넘겨받은 파일명은 ", dir, "/", filename);
+function getImgList(dir, filename, type) {
   $.ajax({
     url: "/data/" + dir + "/" + filename,
     type: "GET",
     xhr: function () {
       const xhr = new XMLHttpRequest();
-      xhr.responseType = "blob"; // blob 형태로 받음
+      xhr.responseType = "blob";
       return xhr;
     },
-    success: function (result, status, xhr) {
-      console.log("서버로부터 받은 바이너리 정보는 ", result);
+    success: function (result) {
       const file = new File([result], filename, { type: result.type });
-      selectedFile.push(file);
+
+      if (type === "img") {
+        selectedFile.push(file); // 이미지 배열에 저장
+      } else if (type === "file") {
+        selectedFiles.push(file); // 일반파일 배열에 저장
+      }
 
       const reader = new FileReader();
       reader.onload = function (e) {
-        console.log("읽어들인 정보 ", e);
         if (type === "img") {
-          // 이미지일 경우 썸네일 생성
           new ProductImg(document.getElementById("preview"), file, e.target.result, 100, 100);
         } else if (type === "file") {
-        	  // 일반 파일일 경우 파일명 + 삭제 버튼 추가
-        	  const fileEntry = document.createElement("div");
-        	  fileEntry.classList.add("uploaded-file-name");
-        	  fileEntry.style.display = "flex";
-        	  fileEntry.style.justifyContent = "space-between";
-        	  fileEntry.style.alignItems = "center";
-        	  fileEntry.style.marginBottom = "5px";
+          const fileEntry = document.createElement("div");
+          fileEntry.classList.add("uploaded-file-name");
+          fileEntry.style.display = "flex";
+          fileEntry.style.justifyContent = "space-between";
+          fileEntry.style.alignItems = "center";
+          fileEntry.style.marginBottom = "5px";
 
-        	  const fileNameSpan = document.createElement("span");
-        	  fileNameSpan.textContent = filename;
+          const fileNameSpan = document.createElement("span");
+          fileNameSpan.textContent = filename;
 
-        	  const deleteBtn = document.createElement("button");
-        	  deleteBtn.type = "button";
-        	  deleteBtn.textContent = "❌";
-        	  deleteBtn.style.marginLeft = "10px";
-        	  deleteBtn.style.border = "none";
-        	  deleteBtn.style.background = "none";
-        	  deleteBtn.style.cursor = "pointer";
-        	  deleteBtn.style.color = "red";
-        	  
-        	  deleteBtn.onclick = function () {
-        	    // selectedFile 배열에서 해당 파일 제거
-        	    selectedFile = selectedFile.filter(f => f.name !== filename);
-        	    fileEntry.remove();
-        	  };
+          const deleteBtn = document.createElement("button");
+          deleteBtn.type = "button";
+          deleteBtn.textContent = "❌";
+          deleteBtn.style.marginLeft = "10px";
+          deleteBtn.style.border = "none";
+          deleteBtn.style.background = "none";
+          deleteBtn.style.cursor = "pointer";
+          deleteBtn.style.color = "red";
 
-        	  fileEntry.appendChild(fileNameSpan);
-        	  fileEntry.appendChild(deleteBtn);
-        	  document.getElementById("dropZone").appendChild(fileEntry);
-        	}
+          deleteBtn.onclick = function () {
+            selectedFiles = selectedFiles.filter(f => f.name !== filename);
+            fileEntry.remove();
+          };
 
+          fileEntry.appendChild(fileNameSpan);
+          fileEntry.appendChild(deleteBtn);
+          document.getElementById("dropZone").appendChild(fileEntry);
+        }
       };
       reader.readAsDataURL(file);
     }
   });
 }
-
 
   $(function() {
 	 getTopCategory(<%= asset.getSubCategory().getTopcategory().getTopcategory_id() %>);
