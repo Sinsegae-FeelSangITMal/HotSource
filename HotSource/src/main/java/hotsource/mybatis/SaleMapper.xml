@@ -27,11 +27,13 @@
 	</select>
 	
 	<!-- 현재 날짜 기준으로 유효한 할인 정보 조회 -->
-	<select id="selectValidByAssetId" resultMap="joinMap" parameterType="long">
+	<select id="selectValidByAssetId" resultType="Sale" parameterType="long">
 		SELECT <include refid="columns"/>
 		FROM sale
-		WHERE asset_id=#{asset_id}  
+		WHERE asset_id=#{asset_id}
 		AND CURDATE() BETWEEN start_date AND end_date
+		ORDER BY start_date DESC
+		LIMIT 1
 	</select>
 	
 	<insert id="insert" parameterType="Sale">

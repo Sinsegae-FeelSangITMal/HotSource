@@ -21,13 +21,11 @@
         <result property="view_count" column="view_count"/>
 
         <!-- 외래키는 객체 대신 ID만 담김 -->
-        <association column="seller_id" property="seller" javaType="Seller" select="Seller.selectBySellerId"/>
-           
-        <association column="subcategory_id" property="subCategory" javaType="SubCategory" select="SubCategory.select" />
+        <association property="sale" javaType="Sale" column="asset_id" select="Sale.selectValidByAssetId"/>
         <association property="thumbnail" column="asset_id" javaType="AssetImg" select="AssetImg.selectThumbnailByAssetId" />
-        
-        <association column="asset_id" property="sale" javaType="Sale" select="Sale.selectValidByAssetId"/>
-        <association column = "asset_id" property="thumbnail" javaType="AssetImg" select = "AssetImg.selectThumbnailByAssetId"/>
+        <association column="seller_id" property="seller" javaType="Seller" select="Seller.selectBySellerId"/>
+        <association column="subcategory_id" property="subCategory" javaType="SubCategory" select="SubCategory.select" />
+           
         <collection property="reviewList" column="asset_id" javaType="java.util.List" ofType="Review" select="Review.selectByAssetId"/>
        	<collection property="keywordList" column="asset_id" javaType="java.util.List" ofType="AssetKeywordMapping" select="AssetKeywordMapping.selectByAssetId"/>
         <collection property="fileList" column="asset_id" javaType="java.util.List" ofType="AssetFile" select="AssetFile.selectByAssetId"/>
