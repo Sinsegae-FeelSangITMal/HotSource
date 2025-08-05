@@ -55,6 +55,7 @@
 	    (#{item.asset.asset_id}, #{item.asset_img_url}, #{item.is_thumb})
 	  </foreach>
 	</insert>
+	
     <!-- 4. 수정 -->
     <update id="update" parameterType="AssetImg">
         UPDATE asset_img

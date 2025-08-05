@@ -30,7 +30,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">(판매자) 공지글 작성</h1>
+            <h1 class="m-3"> Notice Write</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">

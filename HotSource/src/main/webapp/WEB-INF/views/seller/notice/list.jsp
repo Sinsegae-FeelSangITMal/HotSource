@@ -37,7 +37,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Notice List</h1>
+            <h1 class="m-3">Notice List</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -60,7 +60,9 @@
           <div class="col-12">
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">여기에 메인페이지 작가 공지글 리스트로 넘어가는 링크 걸어주면 굿</h3>
+                <h3 class="card-title">
+				<a href="/main/seller/detail?seller_id=<%=seller.getSeller_id()%>">메인 작가 페이지 바로가기</a>
+				</h3>
 
                 <div class="card-tools">
                   <div class="input-group input-group-sm" style="width: 150px;">
