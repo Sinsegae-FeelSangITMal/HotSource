@@ -26,30 +26,22 @@
 		<result			column="create_date"	property="create_date"/>
 		<result			column="update_date"	property="update_date"/>
 		
-		<association	column="review_like_id"	property="reviewLike"		javaType="ReviewLike"		select="ReviewLike.select"/>
+		<association	column="review_id"	property="reviewLike"		javaType="ReviewLike"		select="ReviewLike.select"/>
 	</resultMap>
 	
 	<select id="selectAll" resultMap="joinMap">
-		SELECT <include refid="columns"/> FROM review
+		SELECT review_id, rate, comment, create_date, update_date, user_id, asset_id, order_asset_id
+		FROM review
 	</select>
 	
 	<select id="select" resultMap="joinMap" parameterType="long">
 		SELECT <include refid="columns"/> FROM review WHERE review_id=#{review_id}
 	</select>
-		
-	<select id="selectFromUser" resultMap="jotMap" parameterType="long">
-		SELECT <include refid="columns"/> FROM review WHERE review_id=#{review_id}
-	</select>
-	
-	<select id="selectByUserId" resultMap="joinMap" parameterType="long">
-		SELECT <include refid="columns"/> FROM review WHERE user_id=#{user_id}
-	</select>
-	
 	<select id="selectByAssetId" resultMap="joinMap" parameterType="long">
 		SELECT <include refid="columns"/> FROM review WHERE asset_id=#{asset_id}
 	</select>
 	
-	<select id="selectByOrderedAssetId" resultType="Review" parameterType="long">
+	<select id="selectByOrderedAssetId" resultMap="jotMap" parameterType="long">
 		SELECT <include refid="columns"/>
 		FROM review
 		WHERE order_asset_id=#{order_asset_id}
