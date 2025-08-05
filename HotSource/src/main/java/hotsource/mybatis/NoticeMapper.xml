@@ -12,6 +12,7 @@
         <result property="content" column="content"/>
         <result property="create_date" column="create_date"/>
         <result property="notice_img_url" column="notice_img_url"/>
+   		<association column="seller_id" property="seller" javaType="Seller" select="Seller.selectBySellerId"/>
 
 		<!-- 1:N 관계 -->
 		<!-- <collection property="reviewList" column="asset_id" javaType="java.util.List" ofType="Review" select="Review.selectByAssetId"/> -->
@@ -31,7 +32,7 @@
 	</select>
 	
 	<insert id="insert" parameterType="Notice">
-		insert into notice(title, seller_id, content) values(#{title}, 1, #{content})
+		insert into notice(title, seller_id, content, notice_img_url) values(#{title}, #{seller.seller_id}, #{content}, #{notice_img_url})
 	</insert>
 	
 	<update id="update" parameterType="Notice">

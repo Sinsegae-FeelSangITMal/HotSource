@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import hotsource.domain.Notice;
 import hotsource.domain.NoticeComment;
@@ -13,6 +14,7 @@ import hotsource.domain.User;
 import hotsource.exception.NoticeException;
 import hotsource.model.notice_comment.NoticeCommentDAO;
 import hotsource.model.user.UserDAO;
+import hotsource.util.FileManager;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -28,6 +30,9 @@ public class NoticeServiceImpl implements NoticeService{
 	
 	@Autowired
 	private UserDAO userDAO;
+	
+	@Autowired
+	private FileManager fileManager;
 
 	public List selectAll() {
 		log.debug("service의 selectAll() 도달");
@@ -44,7 +49,9 @@ public class NoticeServiceImpl implements NoticeService{
 	}
 	
 	@Transactional
-	public void regist(Notice notice) throws NoticeException{
+	public void regist(Notice notice, String savePath) throws NoticeException{
+		fileManager.noticeImgSave(notice, savePath);
+		
 		noticeDAO.insert(notice);
 	}
 

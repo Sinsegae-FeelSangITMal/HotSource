@@ -10,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import hotsource.domain.Asset;
 import hotsource.domain.AssetImg;
+import hotsource.domain.Notice;
 import hotsource.domain.Seller;
 import hotsource.domain.User;
 import hotsource.exception.UploadException;
@@ -139,6 +140,30 @@ public class FileManager{
 			String filename = UUID.randomUUID().toString() + "." + ext;
 			
 			seller.setProfile_img_url(filename);
+			
+			File file = new File(directory.getAbsoluteFile() + File.separator + filename);
+			log.debug("이미지가 저장된 전체 경로: " + file.getAbsolutePath());
+			
+			photo.transferTo(file);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new UploadException("파일 업로드 실패 ",e);
+		}
+	}
+	
+	//판매자 이미지파일 저장 
+	public void noticeImgSave(Notice notice, String savePath) throws UploadException{
+		
+		File directory = new File(savePath+"/");
+		
+		MultipartFile photo = notice.getNotice_profile();
+		
+		try {
+			String ori = photo.getOriginalFilename();
+			String ext = ori.substring(ori.lastIndexOf(".")+1, ori.length());
+			String filename = UUID.randomUUID().toString() + "." + ext;
+			
+			notice.setNotice_img_url(filename);
 			
 			File file = new File(directory.getAbsoluteFile() + File.separator + filename);
 			log.debug("이미지가 저장된 전체 경로: " + file.getAbsolutePath());

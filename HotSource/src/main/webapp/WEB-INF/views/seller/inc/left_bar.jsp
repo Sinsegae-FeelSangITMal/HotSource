@@ -15,7 +15,7 @@
 <aside class="main-sidebar sidebar-light elevation-4">
   <!-- Brand Logo -->
   <a href="/main/index" class="brand-link d-flex justify-content-center align-items-center" style="background-color: #15161D; height: 60px;">
-    <img src="/static/util/subLogo.png" alt="Hot Source Logo" class="brand-image" style="height: 60px; object-fit: contain;">
+	  <img src="/static/images/main_logo.png" alt="Hot Source Logo" class="brand-image" style="height: 90%; width: 90%; object-fit: contain;">
   </a>
 
   <!-- Sidebar -->
@@ -144,9 +144,11 @@
   }
 
   .brand-image {
-    max-height: 40px;
-    padding: 5px 0;
-  }
+	  width: auto;              /* 비율 유지하면서 자동 조절 */
+	  height: 100%;             /* 영역 높이에 맞춤 */
+	  max-width: 100%;          /* 좌우 넘침 방지 */
+	  object-fit: contain;      /* 잘리지 않음, 여백 생길 수 있음 */
+	}
 
   .main-sidebar .nav-sidebar .nav-link {
     color: #444;
