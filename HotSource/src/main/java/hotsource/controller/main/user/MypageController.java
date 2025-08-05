@@ -15,8 +15,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import hotsource.domain.Review;
+import hotsource.domain.ReviewLike;
 import hotsource.domain.User;
+import hotsource.model.asset.AssetService;
 import hotsource.model.keyword.KeywordService;
+import hotsource.model.ordered_asset.OrderedAssetService;
+import hotsource.model.review.ReviewService;
+import hotsource.model.review_like.ReviewLikeService;
 import hotsource.model.user.UserService;
 import hotsource.model.user_keyword_mapping.UserKeywordMappingService;
 import hotsource.util.FileManager;
@@ -36,7 +42,19 @@ public class MypageController {
 	
 	@Autowired
 	private KeywordService keywordService;
-
+	
+	@Autowired
+	private ReviewService reviewService;
+	
+	@Autowired
+	private ReviewLikeService reviewLikeService;
+	
+	@Autowired
+	private AssetService assetService;
+	
+	@Autowired
+	private OrderedAssetService orderedAssetService;
+	
     MypageController(FileManager fileManager) {
         this.fileManager = fileManager;
     }
@@ -46,7 +64,9 @@ public class MypageController {
 		User user = (User) session.getAttribute("user");
 		List keywordList = keywordService.selectAll();
 		List userKeywordList = userKeywordService.selectByUserId(user.getUser_id());
-		
+		List orderedList = userService.select(user.getUser_id()).getOrderList();
+		log.debug("mypageController의 orderList: " + orderedList);
+
 		String contentUrl = "info.jsp";
 		
 		switch (mymenu) {
@@ -54,13 +74,13 @@ public class MypageController {
 			case "security": contentUrl = "security.jsp"; break;
 			case "review": contentUrl = "review.jsp"; break;
 			case "resource": contentUrl = "resource.jsp"; break;
-			case "subscription": contentUrl = "subscription.jsp"; break;
 		}
 		
 		model.addAttribute("mymenu", mymenu);
 		model.addAttribute("myContent", contentUrl);
 		model.addAttribute("keywordList", keywordList);
 		model.addAttribute("userKeywordList", userKeywordList);
+		model.addAttribute("orderedList", orderedList);
 		
 		return "user/mypage/index";
 	}
@@ -120,4 +140,39 @@ public class MypageController {
 		    session.setAttribute("user", newUser);
 		}
 	}
+	
+	@PostMapping("/user/mypage/review/regist")
+	@ResponseBody
+	public String registReview(
+	        @RequestParam("asset_id") long asset_id,
+	        @RequestParam("orderAsset_id") long orderAsset_id,
+	        @RequestParam("recommend") boolean recommend,
+	        @RequestParam("comment") String comment,
+	        @RequestParam("rating") double rating,
+	        HttpSession session) {
+
+	    User user = (User) session.getAttribute("user");
+
+	    Review review = new Review();
+	    review.setRate(rating);
+	    review.setComment(comment != null ? comment : "");
+	    review.setUser(user);
+	    review.setAsset(assetService.select(asset_id));
+	    review.setOrderedAsset(orderedAssetService.select(orderAsset_id));
+
+	    reviewService.insert(review);
+
+	    ReviewLike reviewLike = new ReviewLike();
+	    reviewLike.setIs_like(recommend ? 1 : 0);
+	    reviewLike.setUser(user);
+	    reviewLike.setReview(review);
+
+	    reviewLikeService.insert(reviewLike);
+	    
+	    User newUser = userService.select(user.getUser_id());
+	    session.setAttribute("user", newUser);
+
+	    return "success";
+	}
+
 }

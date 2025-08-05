@@ -15,4 +15,5 @@ public class Ordered {
 	private int total_pay;
 	
 	private User user;
+	private List<OrderedAsset> orderedAssetList;
 }

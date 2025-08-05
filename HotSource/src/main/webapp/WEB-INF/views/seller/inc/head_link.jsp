@@ -20,3 +20,5 @@
   <link rel="stylesheet" href="/static/admin/plugins/daterangepicker/daterangepicker.css">
   <!-- summernote -->
   <link rel="stylesheet" href="/static/admin/plugins/summernote/summernote-bs4.min.css">
+  <!-- 별점 라이브러리 RateYo -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/rateYo/3.2.0/jquery.rateyo.min.css">

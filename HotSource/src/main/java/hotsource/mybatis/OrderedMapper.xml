@@ -6,14 +6,15 @@
 		order_id, order_no, order_date, order_state, total_price, total_pay, user_id
 	</sql>
 	
-	<resultMap 			type="Ordered" 					id="joinOrderMap">
-		<id 				column="order_id" 			property="order_id"/>
-		<result 			column="order_no" 			property="order_no"/>
-		<result 			column="order_date" 		property="order_date"/>
-		<result 			column="order_state" 		property="order_state"/>
-		<result 			column="total_price" 		property="total_price"/>
-		<result 			column="total_pay" 			property="total_pay"/>
-		<association 	column="user_id" 				property="user" 	javaType="User" select="User.select"/>
+	<!-- 유저부터 시작되기 때문에 유저를 다시 매핑할 필요 X -->
+	<resultMap 		type="Ordered" 			id="joinOrderMap">
+		<id 					column="order_id" 		property="order_id"/>
+		<result 			column="order_no" 		property="order_no"/>
+		<result 			column="order_date" 	property="order_date"/>
+		<result 			column="order_state" 	property="order_state"/>
+		<result 			column="total_price" 	property="total_price"/>
+		<result 			column="total_pay" 		property="total_pay"/>
+		<collection 		column="order_id"			property="orderedAssetList"	javaType="java.util.List"		ofType="OrderedAsset"		select="OrderedAsset.selectByOrderId"/>
 	</resultMap>
 	
 	<select id="selectAll" resultMap="joinOrderMap">
@@ -37,6 +38,6 @@
 	    	WHERE o.user_id = #{user_id}
 	      	AND oa.asset_id = #{asset_id}
 	  	)
-</select>
+	</select>
 	
 </mapper>

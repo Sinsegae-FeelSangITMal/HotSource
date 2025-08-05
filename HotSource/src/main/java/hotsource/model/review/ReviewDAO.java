@@ -13,4 +13,5 @@ public interface ReviewDAO {
 //	public double selectAvgRate(int seller_id);
 	public double selectAverageRateByAssetId(long asset_id);
 	public int countByAssetId(long asset_id);
+	public void insert(Review review);
 }

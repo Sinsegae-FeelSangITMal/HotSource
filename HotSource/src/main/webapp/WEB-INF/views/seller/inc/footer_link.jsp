@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <!-- jQuery -->
-<script src="/static/admin/plugins/jquery/jquery.min.js"></script>
+<script src="/static/admin/plugins/jquery/jquery.min.js"></script>	<!-- 이거 어디갓죠?? 오류남 -->
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <!-- jQuery UI 1.11.4 -->
 <script src="/static/admin/plugins/jquery-ui/jquery-ui.min.js"></script>
 <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
@@ -24,5 +25,7 @@
 <script src="/static/admin/plugins/summernote/summernote-bs4.min.js"></script>
 <!-- overlayScrollbars -->
 <script src="/static/admin/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+<!-- 별점 라이브러리 RateYo -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/rateYo/3.2.0/jquery.rateyo.min.js"></script>
 <!-- AdminLTE App -->
 <script src="/static/admin/dist/js/adminlte.js"></script>
