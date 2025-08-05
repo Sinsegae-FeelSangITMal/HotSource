@@ -1,5 +1,6 @@
 package hotsource.controller.main;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -17,14 +18,20 @@ import hotsource.domain.Wishlist;
 import hotsource.exception.WishlistException;
 import hotsource.model.wishlist.WishlistDetailDTO;
 import hotsource.model.wishlist.WishlistService;
+import hotsource.model.wishlist.WishlistSimpleDTO;
+import hotsource.model.wishlist_item.WishlistItemService;
+import hotsource.model.wishlist_item.WishlistItemServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
 public class WishlistController {
+
 	
 	@Autowired
 	private WishlistService wishlistService;
+	@Autowired
+	private WishlistItemService wishlistItemService;
 	
 	@PostMapping("/wishlist/regist")
 	@ResponseBody
@@ -52,6 +59,24 @@ public class WishlistController {
 		
 		return mav;
 	}
+	
+	@GetMapping("/wishlist/json")
+	@ResponseBody
+	public List<WishlistSimpleDTO> getWishlistsJson(@RequestParam long asset_id, HttpSession session) 
+	{
+	    User user = (User) session.getAttribute("user");
+	    
+	    List<WishlistSimpleDTO> dtoList = new ArrayList<>();
+	    List<Wishlist> list = (List)wishlistService.selectByUserId(user.getUser_id());
+	    for(Wishlist w : list) {
+	    	WishlistSimpleDTO dto = new WishlistSimpleDTO(w);
+	    	// 이 유저가 이 상품을 찜했냐가 아니라, 이 목록에 이 상품이 존재하는지를 알아야 함 
+	    	dto.setContained(wishlistItemService.isContained(w.getWishlist_id(), asset_id));
+	    	dtoList.add(dto);
+	    }
+	    return dtoList; 
+	}
+	
 	
 	@GetMapping("/wishlist/detail")
 	public ModelAndView getWishlist(@RequestParam long wishlist_id, HttpSession session) {

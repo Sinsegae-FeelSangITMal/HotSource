@@ -27,7 +27,6 @@ public class AssetDetailDTO {
 	            ", youtube_url='" + asset.getYoutube_url() + '\'' +
 	            ", create_date=" + asset.getCreate_date() +
 	            ", view_count=" + asset.getView_count() +
-	            ", rate_avg=" + asset.getRate_avg() +
 	            ", sale=" + (asset.getSale() != null ? asset.getSale().getSale_value() : "null") +
 	            ", thumbnail=" + (asset.getThumbnail() != null ? asset.getThumbnail().toString() : "null") +
 	            ", seller=" + (asset.getSeller() != null ? asset.getSeller().getSeller_name() : "null") +

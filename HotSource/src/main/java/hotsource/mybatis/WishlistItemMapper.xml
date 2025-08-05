@@ -25,6 +25,15 @@
 		SELECT <include refid="columns"/> FROM wishlist_item WHERE wishlist_id=#{wishlist_id}
 	</select>
 	
+	<select id="existsByWishlistIdAndAssetId" parameterType="map" resultType="boolean">
+		select exists (
+			select 1
+			from wishlist_item 
+			where wishlist_id = #{wishlist_id}
+			and asset_id = #{asset_id}
+		) 
+	</select>
+	
 	<select id="existsByUserIdAndAssetId" parameterType="map" resultType="boolean">
 		SELECT EXISTS (
 	    	SELECT 1

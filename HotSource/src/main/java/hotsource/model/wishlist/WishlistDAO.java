@@ -1,6 +1,7 @@
 package hotsource.model.wishlist;
 
 import java.util.List;
+import java.util.Map;
 
 import hotsource.domain.Wishlist;
 
