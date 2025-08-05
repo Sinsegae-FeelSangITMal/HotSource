@@ -208,9 +208,12 @@ public class AssetServiceImpl implements AssetService {
 	        assetImg.setAsset_img_url(imgFilenames.get(i));
 	        assetImg.set_thumb(i == 0);
 	        assetImg.setAsset(asset);
+	        log.debug("AssetImg  : "+ assetImg);
 	        assetImgs.add(assetImg);
 	    }
-	    assetImgDAO.insert(assetImgs);
+	    if (assetImgs != null && !assetImgs.isEmpty()) {
+	    	assetImgDAO.insert(assetImgs);
+	    }
 
 	    // 4. 기존 파일 삭제 + 새 파일 저장
 
@@ -229,9 +232,12 @@ public class AssetServiceImpl implements AssetService {
 	        AssetFile assetFile = new AssetFile();
 	        assetFile.setFile_url(filename);
 	        assetFile.setAsset(asset);
+	        log.debug("AssetFile  : "+ assetFile);
 	        assetFilesList.add(assetFile);
 	    }
-	    assetFileDAO.insert(assetFilesList);
+	    if (assetFilesList != null && !assetFilesList.isEmpty()) {
+	    	assetFileDAO.insert(assetFilesList);
+	    }
 	}
 
 
