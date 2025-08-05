@@ -90,9 +90,6 @@
         DELETE FROM asset WHERE asset_id = #{asset_id}
     </delete>
 
-
-
-
     <!-- user에서 시작된 매퍼 흐름 끊는 용 -->
     <resultMap id="startFromUser" type="Asset">
         <id property="asset_id" column="asset_id"/>

@@ -17,11 +17,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import hotsource.domain.Notice;
 import hotsource.domain.Seller;
-<<<<<<< HEAD
 import hotsource.model.notice.NoticeDAO;
-=======
 import hotsource.domain.User;
->>>>>>> develop
 import hotsource.model.notice.NoticeService;
 import hotsource.model.seller.SellerService;
 import hotsource.util.Paging;
