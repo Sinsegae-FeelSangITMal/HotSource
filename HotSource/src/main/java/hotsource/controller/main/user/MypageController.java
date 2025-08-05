@@ -72,7 +72,6 @@ public class MypageController {
 		switch (mymenu) {
 			case "order": contentUrl = "order.jsp"; break;
 			case "security": contentUrl = "security.jsp"; break;
-			case "review": contentUrl = "review.jsp"; break;
 			case "resource": contentUrl = "resource.jsp"; break;
 		}
 		

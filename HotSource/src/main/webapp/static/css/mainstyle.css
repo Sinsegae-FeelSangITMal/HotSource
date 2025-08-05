@@ -151,17 +151,12 @@ td.download-wrap {
   width: 130px;
   font-weight: 500;
   padding: 5px 15px;
-  background-color: #eee;
   color: #000000;
   border-radius: 10px;
   transition: all 0.3s;
   font-size: 14px;
   text-decoration: none;
   text-align: center;
-}
-
-.download-wrap .download:hover {
-  background-color: #F9B54A;
 }
 
 .download-wrap .download.active {
@@ -172,6 +167,13 @@ td.download-wrap {
   background-color: #e69c00;
 }
 
+.download-wrap .download.disable {
+  background-color: #eee;
+}
+
+.download-wrap .download.disable:hover {
+  background-color: #d1d1d1;
+}
 
 
 
@@ -1340,12 +1342,12 @@ td.download-wrap {
   padding: 20px 20px;
   border-radius: 12px;
   box-shadow: 0 0 10px rgba(0,0,0,0.05);
-  height: 340px;
+  height: 290px;
 }
 
 /* 메뉴 하나 적은 버전 */
 .sidebar.short {
-  height: 290px;
+  height: 240px;
 }
 	
 /* 제목 */
@@ -1546,6 +1548,8 @@ td.download-wrap {
   margin: 50px auto;
   padding: 20px;
   position: relative;
+    max-height: 80vh; /* 화면 높이 80% 제한 */
+    overflow-y: auto; /* 세로 스크롤 활성화 */
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
 }
 

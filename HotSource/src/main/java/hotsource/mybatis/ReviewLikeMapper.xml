@@ -12,8 +12,11 @@
 		<result				column="is_like"				property="is_like"/>
 	</resultMap>
 	
-	<select id="select" resultMap="joinMap" parameterType="long">
-		SELECT <include refid="columns"/> FROM review_like WHERE review_id=#{review_id}
+	<select id="select" resultType="ReviewLike" parameterType="long">
+		SELECT <include refid="columns"/>
+		FROM review_like
+		WHERE review_id=#{review_id}
+		LIMIT 1
 	</select>
 	
 	<insert id="insert" parameterType="ReviewLike">

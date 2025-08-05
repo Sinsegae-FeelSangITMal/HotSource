@@ -45,9 +45,9 @@
 									data-price-paid="<%=order.getTotal_pay() %>"
 									data-user-name="<%=user.getUser_name() %>"
 									data-user-email="<%=user.getUser_email() %>"
-									data-order-list="<%=order.getOrderedAssetList() %>"
 									>
 									Receipt</a>
+									
 						</div>
 					</td>
 				</tr>
@@ -72,10 +72,16 @@ function openReceiptPopup(el) {
 	const pricePaid = el.getAttribute("data-price-paid");
 	const userName = el.getAttribute("data-user-name");
 	const userEmail = el.getAttribute("data-user-email");
-	const orderList = el.getAttribute("data-order-list");
 
 	// 팝업에 삽입
 	document.getElementById("popupOrderDate").textContent = orderDate;
+	document.getElementById("popupOrderStatus").textContent = orderStatus;
+	document.getElementById("popupOrderNo").textContent = orderNo;
+	document.getElementById("popupBuyerName").textContent = userName;
+	document.getElementById("popupTotalPrice").textContent = priceTotal;
+	document.getElementById("popupDiscountPrice").textContent = priceTotal-pricePaid;
+	document.getElementById("popupPayPrice").textContent = pricePaid;
+	
 	
 	// 팝업 보이기
 	document.getElementById("receiptPopup").style.display = "block";
