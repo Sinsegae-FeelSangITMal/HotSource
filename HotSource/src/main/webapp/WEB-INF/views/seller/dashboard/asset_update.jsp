@@ -454,7 +454,7 @@ function getImgList(dir, filename, type) {
     //현재 우리가 가진 정보는,filename밖에 없으므로 실제 이미지를 onLoad 시점에 서버로 부터 다운로드 받자
   <%-- 이미지 파일 목록 --%>
 	<% for (AssetImg assetImg : asset.getImgList()) { %>
-	  getImgList("asset_img/<%= asset.getAsset_id() %>", "<%= assetImg.getAsset_img_url() %>", "img");
+	  getImgList("asset_img/", "<%= assetImg.getAsset_img_url() %>", "img");
 	<% } %>
 	
 	<%-- 일반 파일 목록 --%>

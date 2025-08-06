@@ -165,7 +165,7 @@
         <% for (Asset asset : list) { %>
             <div class="asset-card">
                 <% if (asset.getThumbnail() != null) { %>
-                    <img src="/data/asset_img/<%= asset.getAsset_id() %>/<%= asset.getThumbnail().getAsset_img_url() %>" alt="Thumbnail">
+                    <img src="/data/asset_img/<%= asset.getThumbnail().getAsset_img_url() %>" alt="Thumbnail">
                 <% } else { %>
                     <img src="/images/default-thumbnail.png" alt="No Thumbnail">
                 <% } %>

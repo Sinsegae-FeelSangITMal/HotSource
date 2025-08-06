@@ -51,7 +51,6 @@ public class NoticeServiceImpl implements NoticeService{
 	@Transactional
 	public void regist(Notice notice, String savePath) throws NoticeException{
 		fileManager.noticeImgSave(notice, savePath);
-		
 		noticeDAO.insert(notice);
 	}
 

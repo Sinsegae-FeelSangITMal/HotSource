@@ -33,10 +33,14 @@
 	
 	<insert id="insert" parameterType="Notice">
 		insert into notice(title, seller_id, content, notice_img_url) values(#{title}, #{seller.seller_id}, #{content}, #{notice_img_url})
+		
+		<selectKey keyColumn="notice_id" keyProperty="notice_id" resultType="long" order="AFTER">
+        	select last_insert_id()
+        </selectKey> 
 	</insert>
 	
 	<update id="update" parameterType="Notice">
-		update notice set title=#{title}, seller_id=#{seller.seller_id}, content=#{content}
+		update notice set title=#{title}, seller_id=#{seller.seller_id}, content=#{content}, notice_img_url = #{notice_img_url}
 		where notice_id=#{notice_id}
 	</update>
 	

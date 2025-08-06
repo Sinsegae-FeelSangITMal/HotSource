@@ -45,7 +45,7 @@
 				<div class="seller-post-body d-flex">
 					<!-- <img src="/static/images/cozy_tileset_preview.png" alt="tileset" class="seller-post-image">-->
 					
-					<img class="seller-post-image " src="/data/notice/<%=notice.getNotice_id()%>/<%=notice.getNotice_img_url()%>">
+					<img class="seller-post-image " src="/data/notice/<%=notice.getNotice_img_url()%>">
 					<div class="post-text ms-3">
 						<h4 class="seller-post-title"><%= notice.getTitle() %></h4>
 						<hr>

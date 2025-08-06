@@ -75,7 +75,7 @@ public class NoticeController {
 			Seller seller = (Seller) session.getAttribute("seller");
 			log.debug("Notice seller :" + seller);
 			notice.setSeller(seller);
-			noticeService.regist(notice, savePath+notice.getNotice_id());
+			noticeService.regist(notice, savePath);
 			mav.setViewName("redirect:/seller/notice/list");
 		} catch(Exception e) {
 			log.error("등록 실패", e.getMessage()); 
