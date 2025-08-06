@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import hotsource.domain.WishlistItem;
 import hotsource.exception.WishlistItemException;
 
 @Repository
@@ -14,6 +15,14 @@ public class MybatisWishlistItemDAO implements WishlistItemDAO {
 	
 	@Autowired
 	private SqlSessionTemplate sqlSessionTemplate;
+	
+	@Override
+	public void insert(WishlistItem wishlistItem) throws WishlistItemException{
+		int result = sqlSessionTemplate.insert("WishlistItem.insert", wishlistItem);
+		if(result < 1) {
+			throw new WishlistItemException("상품 찜하기가 실패하였습니다.");
+		}
+	}
 	
 	@Override
 	public List selectAll() {
@@ -39,9 +48,6 @@ public class MybatisWishlistItemDAO implements WishlistItemDAO {
 	@Override
 	public void deleteByWishlistIdAndAssetId(Map<String, Object> paramMap) throws WishlistItemException {
 		int result = sqlSessionTemplate.delete("WishlistItem.deleteByWishlistIdAndAssetId", paramMap);
-		if(result < 1) {
-			throw new WishlistItemException("찜 목록에서 제거 실패");
-		}
 	}
 
 	@Override
@@ -53,4 +59,6 @@ public class MybatisWishlistItemDAO implements WishlistItemDAO {
 	public boolean existsByWishlistIdAndAssetId(Map<String, Object> paramMap) {
 		return sqlSessionTemplate.selectOne("WishlistItem.existsByWishlistIdAndAssetId", paramMap);
 	}
+
+
 }

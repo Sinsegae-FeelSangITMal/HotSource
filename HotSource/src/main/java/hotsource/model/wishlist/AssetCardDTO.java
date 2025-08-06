@@ -8,6 +8,7 @@ import lombok.Data;
 @Data
 public class AssetCardDTO {
 	private long asset_id;
+	private long seller_id;
 	private String seller_name;
 	private String title;
 	private String thumbnail_url;

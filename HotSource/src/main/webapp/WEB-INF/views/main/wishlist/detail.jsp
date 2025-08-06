@@ -87,42 +87,6 @@
 	<script src="/static/js/asset_card.js"></script>
 	
 	<script type="text/javascript">
-		//비동기 방식으로, 서버의 이미지를 다운로드 받기 
-		function getImgList(img){
-			    const assetId = img.dataset.assetId;
-			    const filename = img.dataset.filename;
-				console.log("넘겨받은 파일명은 ", filename);
-				
-				$.ajax({
-					url:"/data/asset_img/" + assetId + "/" + filename, 
-					type:"GET",
-					//서버로부터 가져온 이미지 정보는 img src로 표현되려면, 
-					//1) 서버로 부터 가져온 정보를 Blob 형태로 가져와서
-					//2) 웹브라우저 지원 객체인 File 로 변환 
-					//3) 이 파일을 읽어들인 후 e.target.result 형태로 img src에 대입
-					//XMLHttpRequest 객체를 이용해야 함
-					xhr: function(){
-						const xhr = new XMLHttpRequest();
-						xhr.responseType="blob"; 
-						return xhr;
-					},
-					success:function(result, status, xhr){
-						console.log("서버로부터 받은 바이너리 정보는 ",result);
-						const file = new File([result], filename, {type: result.type});
-						
-						const reader = new FileReader();
-						reader.onload=function(e){
-							img.src = e.target.result;
-						}
-						reader.readAsDataURL(file);//대상 파일 읽기 
-					}
-				});
-			}
-			
-			document.querySelectorAll("img.thumb").forEach(img => {
-			    getImgList(img);
-			});
-
 		
 		function updateWishlist(){
 			

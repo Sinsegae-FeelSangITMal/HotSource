@@ -3,7 +3,10 @@ package hotsource.model.wishlist_item;
 import java.util.List;
 import java.util.Map;
 
+import hotsource.domain.WishlistItem;
+
 public interface WishlistItemDAO {
+	public void insert(WishlistItem wishlistItem);
 	public List selectAll();
 	public List selectByWishlistId(long wishlist_id);
 	public void deleteByWishlistId(long wishlist_id);

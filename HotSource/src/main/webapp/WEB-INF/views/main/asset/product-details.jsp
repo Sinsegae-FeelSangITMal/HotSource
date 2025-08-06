@@ -6,7 +6,9 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <!DOCTYPE html>
 <%
+	boolean loggined = (session.getAttribute("user") != null);
 	AssetDetailDTO dto = (AssetDetailDTO)request.getAttribute("assetDetailDTO");
+
 %>
 <html lang="zxx">
 <head>
@@ -18,6 +20,7 @@
 	<%@ include file="../inc/head_link.jsp" %>
 	<link rel="stylesheet" href="/static/css/asset_detail.css" type="text/css">
 	<link rel="stylesheet" href="/static/css/toast.css" type="text/css">
+	<link href="/static/css/wishlist_modal.css" type="text/css" rel="stylesheet">
 </head>
 
 <body>
@@ -60,7 +63,7 @@
 							<div class="product__details__pic__slider owl-carousel">
 								<% for(int i = 0; i < dto.getAsset().getImgList().size(); i++){ %>
 								<img class="product__big__img big_pic" style="width:800px; height:400px"
-									src="/data/asset_img/<%=dto.getAsset().getAsset_id() %>/<%=dto.getAsset().getImgList().get(i).getAsset_img_url() %>"
+									src="/data/asset_img/<%=dto.getAsset().getImgList().get(i).getAsset_img_url() %>"
 									data-hash="product-<%=i%>" 
 								> 
 								<%} %>
@@ -71,7 +74,7 @@
 							<% for(int i = 0; i < dto.getAsset().getImgList().size(); i++){ %>
 							<a class="pt active" href="#product-<%=i%>"> 
 								<img class="my_pic" style="width:100px; height:100px"
-								 	src="/data/asset_img/<%=dto.getAsset().getAsset_id() %>/<%=dto.getAsset().getImgList().get(i).getAsset_img_url() %>" alt="">
+								 	src="/data/asset_img/<%=dto.getAsset().getImgList().get(i).getAsset_img_url() %>" alt="">
 							</a> 
 							<%} %>
 						</div>
@@ -81,10 +84,11 @@
 				</div>
 				<div class="col-lg-4">
 					<div class="product__details__text">
-						<h3><%=dto.getAsset().getTitle() %> <span><img src="/data/0/<%=dto.getAsset().getSeller().getProfile_img_url() %>"
+						<h3><%=dto.getAsset().getTitle() %> <span><img src="/data/user_profile_img/<%=dto.getAsset().getSeller().getProfile_img_url() %>"
 								style="width: 30px; height: 30px; border-radius: 50%; object-fit: cover"> <%=dto.getAsset().getSeller().getSeller_name() %></span>
 						</h3>
 						<div class="rating">
+						<%if(dto.getReview_count() >= 5){ %>
 							<%int fullStars = (int)Math.floor(dto.getAverage_rate());  %>
 							<%for(int i = 0; i < fullStars; i++) {%>
 							<i class="fa fa-star"></i>
@@ -93,13 +97,24 @@
 							<i class="fa fa-star-o"></i>
 							<%} %> 
 							<span>( <%=dto.getReview_count() %> reviews ) | </span> 
+						<%} else { %>
+							<span>(Not Enough Ratings) | </span>
+						<%} %>
 							<span>
 								<i class="fa fa-heart" style="color: black; margin-right: 3px;"></i> 
 								( <%= dto.getWish_count() %> )
 							</span>
 						</div>
 						<div class="product__details__price">
-							$ <%=dto.getSale_price() %> <span>$ <%=dto.getAsset().getPrice() %></span>
+						<%if(dto.getAsset().getPrice() == 0){ %>
+							  Free
+						<%} else{%>
+							<%if(dto.getSale_price() != 0) {%>
+								$ <%=dto.getSale_price() %> <span>$ <%=dto.getAsset().getPrice() %></span>
+							<%} else {%>
+								 <%=dto.getAsset().getPrice() %>
+							<%} %>
+						<%} %>
 						</div>
 						<p><%=dto.getAsset().getSummary() %></p>
 						<div class="product__details__button" ">
@@ -184,7 +199,7 @@
 										<div class="review-user">
 											   <%
 											        double rate = review.getRate();  // 예: 3.5
-											        fullStars = (int)rate;      // 정수 부분만 full star
+											        int fullStars = (int)rate;      // 정수 부분만 full star
 											        boolean hasHalf = (rate - fullStars) == 0.5;
 											        int emptyStars = 5 - fullStars - (hasHalf ? 1 : 0);
 											    %>
@@ -223,7 +238,7 @@
 						<div id="tab-contact" class="custom-tab-panel">
 							<div class="publisher-tab">
 								<div class="publisher-box">
-									<img src="/data/0/<%=dto.getAsset().getSeller().getProfile_img_url() %>" alt="profile" class="publisher-profile-img">
+									<img src="/data/user_profile_img/<%=dto.getAsset().getSeller().getProfile_img_url() %>" alt="profile" class="publisher-profile-img">
 									<div class="publisher-name">
 										<%=dto.getAsset().getSeller().getSeller_name() %>
 									</div>
@@ -240,7 +255,7 @@
 								</div>
 							</div>
 							<div class="publisher-profile-btn-wrap" style="margin-left:50px;">
-								<a href="/publisher/pomodoro" class="publisher-profile-btn">view publisher’s profile</a>
+								<a href="/main/seller/detail?seller_id=<%=dto.getAsset().getSeller().getSeller_id()%>" class="publisher-profile-btn">view publisher’s profile</a>
 							</div>
 						</div>
 					</div>
@@ -263,6 +278,10 @@
 						<button class="save-btn">저장</button>
 					</div>
 				</div></section>
+				
+				<!-- 찜 목록 생성 모달 -->
+				<%@ include file="../wishlist/create_form.jsp" %>
+				
     <!-- Product Details Section End -->
     
     <!-- 푸터 영역 시작 -->
@@ -271,6 +290,7 @@
 	
 	<!-- Js Plugins -->
 	<%@ include file="../inc/footer_link.jsp" %>
+	<script src="/static/js/wishlist_create_modal.js"></script>
 	
 <script>
 
@@ -312,13 +332,24 @@ document.addEventListener("DOMContentLoaded", function () {
 	  });
 	});
 	
+function loginCheck(){
+    if (!<%=loggined%>) {
+        alert("로그인 후 이용 가능합니다. 로그인 페이지로 이동합니다.");
+        location.href = "/main/user/login";
+        return false;
+    }
+    return true;
+}
+	
 	$("#cart_btn").click(function(){
-		const isCart = $(this).data("is-cart");
-		if(isCart){
-			showToast("이미 담긴 상품입니다.");
-		} else {
-			addToCart(this);
-		}
+	    if (!loginCheck()) return; // 로그인 안 되어 있으면 여기서 중단
+	
+	    const isCart = $(this).data("is-cart");
+	    if (isCart) {
+	        showToast("이미 담긴 상품입니다.");
+	    } else {
+	        addToCart(this);
+	    }
 	});
 	
 	function showToast(msg){
@@ -386,7 +417,7 @@ document.addEventListener("DOMContentLoaded", function () {
 	              console.log(w);
 
 			    const thumb = w.thumbUrl
-			      ? '<img src="/data/asset_img/' + w.asset_id + '/' + w.thumbUrl + '" class="wishlist-thumb" alt="썸네일">'
+			      ? '<img src="/data/asset_img/' + w.thumbUrl + '" class="wishlist-thumb" alt="썸네일">'
 			      : '<div class="wishlist-thumb no-thumb"></div>';
 
 			      const html =
@@ -411,15 +442,64 @@ document.addEventListener("DOMContentLoaded", function () {
 	  document.getElementById("wishlist-modal").style.display = "none";
 	});
 	
+	$(()=>{
+		// 찜 목록 생성 모달 열기
+		$(".add-list-btn").click(function(){
+			 document.getElementById("wishlist-modal").style.display = "none";
+			  modal.style.display = "flex";
+			  titleInput.value = "";
+			  descInput.value = "";
+			  saveBtn.disabled = true;
+			  saveBtn.classList.remove("enabled");
+		});
+		
+	})
+	
+	function updateWishlistItem(asset_id, list_ids){
+				
+		$.ajax({
+			url: "/main/wishlist/item/add",
+			type: "post",
+			traditional: "true",  //리스트 전송 시 필수 
+			data: {
+				"asset_id": asset_id,
+				"list_ids": list_ids
+			},
+			success: function(result){
+				console.log("업데이트 성공", result);
+				const wishBtn = $("#wish_btn");
+				const icon = wishBtn.find(".icon-dynamic");
+				
+				if(result.isWished){
+					icon.removeClass("bi-heart").addClass("bi-heart-fill");
+					wishBtn.attr("data-is-wished", "true");
+					showToast("찜 목록에 추가되었습니다.");
+				}else {
+					icon.removeClass("bi-heart-fill").addClass("bi-heart");
+					wishBtn.attr("data-is-wished", "false");
+					showToast("찜 목록에서 제거되었습니다.");
+				}
+				document.getElementById("wishlist-modal").style.display = "none";
+			},
+			error: function(xhr){
+				console.log("업데이트 실패", xhr);
+			}
+		});
+	}
+	
 	// 찜 버튼 클릭 이벤트
 	$("#wish_btn").click(function(){
+		if(!loginCheck()) return;
 		openWishlistModal();
-/* 		const isWished = $(this).data("is-wished");
-		if(isWished){
-			showToast("이미 찜한 상품입니다.");
-		} else {
-		}
- */	});
+	});
+	
+	$(".save-btn").click(function(){
+		const selectedListIds = $(".wishlist-checkbox:checked").map(function() {
+		    return parseInt($(this).val());
+		}).get();
+		console.log(selectedListIds);
+		updateWishlistItem(<%=dto.getAsset().getAsset_id()%>,selectedListIds);
+	}); 
 	
 </script>
 
