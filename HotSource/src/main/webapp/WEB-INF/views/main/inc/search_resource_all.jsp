@@ -72,7 +72,7 @@
 	    </div>
 	    <div class="img-wrapper">
 	      <a href=""><img src="<%=(asset.getImgList().size() != 0) 
-		    ? ("/data/asset_img/" + asset.getAsset_id() + "/" + asset.getImgList().get(0).getAsset_img_url()) 
+		    ? ("/data/asset_img/" + asset.getImgList().get(0).getAsset_img_url()) 
 		    : "/static/images/noimg.jpg" %>" alt="썸네일" /></a>
 	    </div>
 	    <div class="product-meta mini">
