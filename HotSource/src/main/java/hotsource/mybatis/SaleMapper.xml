@@ -27,7 +27,7 @@
 	</select>
 	
 	<!-- 현재 날짜 기준으로 유효한 할인 정보 조회 -->
-	<select id="selectValidByAssetId" resultType="Sale" parameterType="long">
+	<select id="selectValidByAssetId" resultMap="joinMap" parameterType="long">
 		SELECT <include refid="columns"/>
 		FROM sale
 		WHERE asset_id=#{asset_id}
