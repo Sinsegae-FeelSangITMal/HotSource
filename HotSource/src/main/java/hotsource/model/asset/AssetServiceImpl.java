@@ -199,12 +199,12 @@ public class AssetServiceImpl implements AssetService {
 	    List<AssetImg> existingImgs = assetImgDAO.selectByAssetId(assetId);
 	    if (existingImgs != null && !existingImgs.isEmpty()) {
 		    for (AssetImg img : existingImgs) {
-		    	fileManager.deleteFile(savePath + "/asset_img/"+ assetId +"/"+ img.getAsset_img_url());
+		    	fileManager.deleteFile(savePath + "/asset_img/" + img.getAsset_img_url());
 		    }
 	    	assetImgDAO.deleteByAssetId(assetId);
 	    }
 	    
-	    String screenshotDir = savePath + "/asset_img/" + assetId;
+	    String screenshotDir = savePath + "/asset_img/";
 	    List<String> imgFilenames = fileManager.imgUpload(imgFiles, screenshotDir);
 
 	    List<AssetImg> assetImgs = new ArrayList<>();

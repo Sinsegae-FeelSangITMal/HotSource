@@ -155,7 +155,7 @@ public class FileManager{
 	//판매자 이미지파일 저장 
 	public void noticeImgSave(Notice notice, String savePath) throws UploadException{
 		
-		File directory = new File(savePath+"/");
+		File directory = new File(savePath +"/");
 		
 		MultipartFile photo = notice.getNotice_profile();
 		

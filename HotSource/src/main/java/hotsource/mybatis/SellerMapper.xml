@@ -31,7 +31,7 @@
 		select <include refid="columns"/> from seller
 	</select>
 	
-	<select id="selectBySellerId" parameterType="long" resultType="Seller">
+	<select id="selectBySellerId" parameterType="long" resultMap="joinMap">
 		select <include refid="columns"/> from seller where seller_id = #{seller_id}
 	</select>
 	

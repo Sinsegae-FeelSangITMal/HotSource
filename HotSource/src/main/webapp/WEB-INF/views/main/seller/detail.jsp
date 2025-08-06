@@ -60,7 +60,7 @@
 			<div class="row align-items-center">
 				<!-- 프로필 이미지 -->
 				<div class="col-md-3 text-center mb-3 mb-md-0">
-					<img class="artist-avatar" src="/data/seller_profile_img/<%=seller.getSeller_id()%>/<%=seller.getProfile_img_url()%>"
+					<img class="artist-avatar" src="/data/user_profile_img/<%=seller.getProfile_img_url()%>"
 					alt="작가 프로필" class="img-fluid rounded-circle" style="width: 150px; height: 150px;">
 				</div>
 
@@ -102,7 +102,6 @@
 					<div class="seller-rating mx-auto">
 					    <span class="seller-rating-result"><%= assetRate %>/5</span>
 					    <p class="fw-bold mb-0 fs-5"><%= assetRate %></p>
-					
 					    <%	for (int i = 1; i <= 5; i++) {
 					            if (assetRate >= i) {
 					                // 꽉 찬 별
