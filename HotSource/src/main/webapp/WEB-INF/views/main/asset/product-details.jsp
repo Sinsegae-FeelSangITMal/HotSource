@@ -194,7 +194,9 @@
 							<%for(Review review : dto.getAsset().getReviewList()) { %>
 							<div class="review-item">
 								<div class="review-header">
-									<img src="/data/user/<%=review.getUser().getProfile_img_url()%>" alt="user profile" class="review-profile-img">
+									<img src="<%=(review.getUser().getProfile_img_url()!=null) 
+		    ? ("/data/user/" + review.getUser().getProfile_img_url()) 
+		    : "/static/images/noimg.jpg" %>" alt="user profile" class="review-profile-img">
 									<div class="review-meta">
 										<div class="review-user">
 											   <%
