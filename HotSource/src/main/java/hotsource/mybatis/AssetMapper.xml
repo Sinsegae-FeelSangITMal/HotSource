@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Asset">
+
+    <sql id="columns">
+        asset_id, subcategory_id, seller_id, title, price, summary, 
+        description, youtube_url, create_date, view_count
+    </sql>
+
+    <!-- 단순 ResultMap -->
+    <resultMap id="AssetResultMap" type="Asset">
+        <id property="asset_id" column="asset_id"/>
+        <result property="title" column="title"/>
+        <result property="price" column="price"/>
+        <result property="summary" column="summary"/>
+        <result property="description" column="description"/>
+        <result property="youtube_url" column="youtube_url"/>
+        <result property="create_date" column="create_date"/>
+        <result property="view_count" column="view_count"/>
+
+        <!-- 외래키는 객체 대신 ID만 담김 -->
+        <association column="seller_id" property="seller" javaType="Seller" select="Seller.selectBySellerId"/>
+        <association property="thumbnail" column="asset_id" javaType="AssetImg" select="AssetImg.selectThumbnailByAssetId" />
+        <association property="sale" javaType="Sale" column="asset_id" select="Sale.selectValidByAssetId"/>
+        <association column="subcategory_id" property="subCategory" javaType="SubCategory" select="SubCategory.select" />
+           
+        <collection property="reviewList" column="asset_id" javaType="java.util.List" ofType="Review" select="Review.selectByAssetId"/>
+       	<collection property="keywordList" column="asset_id" javaType="java.util.List" ofType="AssetKeywordMapping" select="AssetKeywordMapping.selectByAssetId"/>
+        <collection property="fileList" column="asset_id" javaType="java.util.List" ofType="AssetFile" select="AssetFile.selectByAssetId"/>
+   		<collection property="imgList" column="asset_id" javaType="java.util.List" ofType="AssetImg" select="AssetImg.selectByAssetId"/>
+
+    </resultMap>
+
+    <!-- 전체 조회 -->
+    <select id="selectAll" resultMap="AssetResultMap">
+        SELECT <include refid="columns"/> FROM asset
+    </select>
+
+    <!-- 단일 조회 -->
+    <select id="select" parameterType="long" resultMap="AssetResultMap">
+        SELECT <include refid="columns"/> FROM asset
+        WHERE asset_id = #{asset_id}
+    </select>
+    
+    
+    <!-- 에셋 개수 조회 -->
+    <select id="selectCount" parameterType="long" resultType="int">
+    	SELECT count(asset_id) FROM asset WHERE seller_id=#{seller_id}
+    </select>
+    
+    <!-- 작가 아이디로 조회 -->
+    <select id="selectBySellerId" parameterType="long" resultMap="AssetResultMap">
+		SELECT <include refid="columns"/> FROM asset WHERE seller_id = #{seller_id}
+	</select>
+
+
+    <!-- 등록 -->
+    <insert id="insert" parameterType="Asset" >
+        INSERT INTO asset (
+            subcategory_id, seller_id, title, price, summary, description, youtube_url
+        ) VALUES (
+            #{subCategory.subcategory_id},
+            #{seller.seller_id},
+            #{title}, #{price}, #{summary}, #{description}, #{youtube_url}
+        )
+        <!-- insert 시키자 마자, 현재 세션에서 일으킨 pk의 최대값  -->
+		<selectKey keyColumn="asset_id" keyProperty="asset_id" resultType="long" order="AFTER">
+			select last_insert_id() as asset_id
+		</selectKey>
+	</insert>
+
+    <!-- 수정 -->
+    <update id="update" parameterType="Asset">
+        UPDATE asset
+        SET title = #{title},
+            price = #{price},
+            summary = #{summary},
+            description = #{description},
+            youtube_url = #{youtube_url},
+            subcategory_id = #{subCategory.subcategory_id}
+        WHERE asset_id = #{asset_id}
+    </update>
+
+    <!-- 삭제 -->
+    <delete id="delete" parameterType="long">
+        DELETE FROM asset WHERE asset_id = #{asset_id}
+    </delete>
+
+    <!-- user에서 시작된 매퍼 흐름 끊는 용 -->
+    <resultMap id="startFromUser" type="Asset">
+        <id property="asset_id" column="asset_id"/>
+        <result property="title" column="title"/>
+        <result property="price" column="price"/>
+        <result property="summary" column="summary"/>
+        <result property="description" column="description"/>
+        <result property="youtube_url" column="youtube_url"/>
+        <result property="create_date" column="create_date"/>
+        <result property="view_count" column="view_count"/>
+        <association property="thumbnail" column="asset_id" javaType="AssetImg" select="AssetImg.selectThumbnailByAssetId" />
+    </resultMap>
+
+    <!-- 단일 조회 - resultMap 이용X -->
+    <select id="selectAsset" parameterType="long" resultMap="startFromUser">
+        SELECT <include refid="columns"/> FROM asset
+        WHERE asset_id = #{asset_id}
+    </select>
+
+	<!-- 일단 돌아가니 나중에 JOIN 해체하고 수정,,,, topcategory부터 시작 -->
+	<sql id="mainSql">
+	    SELECT 
+	        a.asset_id, a.title, a.price, a.subcategory_id, a.create_date, a.view_count,
+	        s.seller_id, s.seller_name,
+	        sa.sale_value,
+	        i.asset_img_url
+	    FROM asset a
+	    LEFT JOIN subcategory sc ON a.subcategory_id = sc.subcategory_id
+	    LEFT JOIN topcategory tc ON sc.topcategory_id = tc.topcategory_id
+	    LEFT JOIN seller s ON a.seller_id = s.seller_id
+	    LEFT JOIN sale sa ON sa.asset_id = a.asset_id
+	    LEFT JOIN asset_img i ON i.asset_id = a.asset_id AND i.is_thumb = 1
+	</sql>
+	
+	<resultMap id="mainMap" type="Asset">
+		<id property="asset_id" column="asset_id"/>
+		<result property="title" column="title"/>
+		<result property="price" column="price"/>
+		<result property="create_date" column="create_date"/>
+		<result property="view_count" column="view_count"/>
+	
+		<association property="seller" javaType="Seller">
+		    <id property="seller_id" column="seller_id"/>
+		    <result property="seller_name" column="seller_name"/>
+		</association>
+	
+		<association property="subCategory" javaType="SubCategory">
+			<result property="subcategory_id" column="subcategory_id"/>
+		</association>
+	
+		<collection property="saleList" ofType="Sale">
+			<id property="sale_id" column="sale_id"/>
+			<result property="sale_value" column="sale_value"/>
+		</collection>
+        
+		<collection property="imgList" ofType="AssetImg">
+			<result property="asset_img_url" column="asset_img_url"/>
+		</collection>
+	</resultMap>
+
+	<!-- 인기 리소스: 조회수 내림차순 조회 (일단 조회수 순으로만) -->
+	<select id="selectHot" resultMap="mainMap" parameterType="int">
+		<include refid="mainSql"/>
+		WHERE tc.topcategory_id = #{topcategory_id}
+		ORDER BY a.view_count DESC
+	</select>
+
+	<!-- 최신 리소스: 날짜 내림차순 조회 -->
+	<select id="selectNew" resultMap="mainMap" parameterType="int">
+		<include refid="mainSql"/>
+		WHERE tc.topcategory_id = #{topcategory_id}
+		ORDER BY a.create_date DESC 
+	</select>
+
+	<!-- 무료 리소스: 날짜 내림차순 조회 -->
+	<select id="selectFree" resultMap="mainMap" parameterType="int">
+		<include refid="mainSql"/>
+		WHERE tc.topcategory_id = #{topcategory_id}
+			AND a.price = 0
+	</select>
+
+	<!-- 세일 리소스: 세일 시작과 끝 기간 내에 속하는지 조회 -->
+	<select id="selectSale" resultMap="mainMap" parameterType="int">
+		<include refid="mainSql"/>
+		WHERE tc.topcategory_id = #{topcategory_id}
+			AND CURDATE() BETWEEN sa.start_date AND sa.end_date
+	</select>
+	
+	<!-- 카테고리 분류 없는 세일 리소스: 세일 시작과 끝 기간 내에 속하는지 조회 -->
+	<select id="selectSaleAll" resultMap="mainMap">
+		<include refid="mainSql"/>
+		WHERE CURDATE() BETWEEN sa.start_date AND sa.end_date
+	</select>
+	
+</mapper>

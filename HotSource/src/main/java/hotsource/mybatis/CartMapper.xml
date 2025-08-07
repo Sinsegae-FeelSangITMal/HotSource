@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Cart">
+	<insert id="insert" parameterType="cart">
+		insert into cart(asset_id, user_id) values(#{asset.asset_id}, #{user.user_id})
+        <selectKey keyColumn="cart_id" keyProperty="cart_id" resultType="long" order="AFTER">
+        	select last_insert_id() as cart_id
+        </selectKey>    
+    </insert>
+	<sql id="columns">
+		cart_id, create_date, asset_id, user_id
+	</sql>
+	
+	<resultMap 		type="Cart" 					id="joinMap">
+		<id 					column="cart_id" 			property="cart_id"/>
+		<result 			column="create_date" 	property="create_date"/>
+		<association 	column="asset_id" 		property="asset" 			javaType="Asset" 		select="Asset.select"/>
+		<association 	column="user_id" 		property="user" 			javaType="User" 		select="User.select"/>
+	</resultMap>
+	
+	<select id="selectAll" resultMap="joinMap">
+		SELECT <include refid="columns"/> FROM cart
+	</select>
+	
+	<select id="select" resultMap="joinMap" parameterType="long">
+		SELECT <include refid="columns"/> FROM cart WHERE cart_id=#{cart_id}
+	</select>
+	
+	<select id="selectByUserId" resultMap="joinMap" parameterType="long">
+		SELECT <include refid="columns"/> FROM cart WHERE user_id=#{user_id} ORDER BY create_date DESC
+	</select>
+
+	<select id="existsByUserIdAndAssetId" parameterType="map" resultType="boolean">
+		select exists(
+			select 1 
+			from cart
+			where user_id = #{user_id}
+			and asset_id = #{asset_id}		
+		)
+	</select>
+	<!-- 단건 삭제 -->
+    <delete id="delete" parameterType="long">
+            delete from cart where cart_id = #{cart_id}
+    </delete>
+    
+    <!-- 다건 삭제 -->
+    <delete id="deleteByCartIds" parameterType="list">
+            delete from cart where cart_id in
+            <foreach item="cart_id" collection="list" open="(" separator="," close=")">
+                    #{cart_id}
+            </foreach>
+    </delete>
+    
+</mapper>

@@ -12,10 +12,11 @@ import hotsource.domain.Notice;
 public interface NoticeDAO {
 
 	public List selectAll();
-	public Notice select(int notice_id);
+	public Notice select(long notice_id);
+	public List selectBySellerId(long seller_id);
 	public void insert(Notice notice);
 	public void update(Notice notice);
-	public void delete(int notice_id);
+	public void delete(long notice_id);
 	
 	
 }

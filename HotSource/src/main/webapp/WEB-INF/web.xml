@@ -18,6 +18,28 @@
 	</listener>
 	
 	<filter>
+		<filter-name>LoginCheckFilter</filter-name>
+	    <filter-class>hotsource.util.LoginCheckFilter</filter-class>
+	</filter>
+	
+	<filter-mapping>
+		<filter-name>LoginCheckFilter</filter-name>
+		<url-pattern>/main/*</url-pattern>
+	</filter-mapping>
+	
+	 <filter>
+	    <filter-name>SellerLoginCheckFilter</filter-name>
+	    <filter-class>hotsource.util.SellerLoginCheckFilter</filter-class>
+	</filter>
+	
+	<filter-mapping>
+		<filter-name>SellerLoginCheckFilter</filter-name>
+		<url-pattern>/seller/*</url-pattern>
+	</filter-mapping> 
+	
+	
+	
+	<filter>
 		<filter-name>encodingFilter</filter-name>
 		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
 		<init-param>
@@ -29,6 +51,16 @@
 		<filter-name>encodingFilter</filter-name>
 		<url-pattern>/*</url-pattern>		
 	</filter-mapping>
+	
+	<!-- 임시 로그인 
+	<filter>
+		<filter-name>loginBypassFilter</filter-name>
+		<filter-class>hotsource.util.LoginBypassFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>loginBypassFilter</filter-name>
+		<url-pattern>/*</url-pattern>		
+	</filter-mapping> -->
 
 	<!-- 모든 요청은 1차적으로 하나의 서블릿으로 처리해야 하므로, 하나의 진입점이 되는 서블릿을 정의 -->
 
@@ -50,6 +82,23 @@
 	</servlet-mapping>
 
 	<servlet>
+		<servlet-name>userDispatcher</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextClass</param-name>
+			<param-value>org.springframework.web.context.support.AnnotationConfigWebApplicationContext</param-value>
+		</init-param>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>hotsource.spring.config.UserWebConfig</param-value>
+		</init-param>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>userDispatcher</servlet-name>
+		<url-pattern>/user/*</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
 		<servlet-name>mainDispatcher</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
 		<init-param>
@@ -65,5 +114,21 @@
 		<servlet-name>mainDispatcher</servlet-name>
 		<url-pattern>/main/*</url-pattern>
 	</servlet-mapping>
-  
+	
+	<servlet>
+		<servlet-name>sellerDispatcher</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextClass</param-name>
+			<param-value>org.springframework.web.context.support.AnnotationConfigWebApplicationContext</param-value>
+		</init-param>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>hotsource.spring.config.SellerWebConfig</param-value>
+		</init-param>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>sellerDispatcher</servlet-name>
+		<url-pattern>/seller/*</url-pattern>
+	</servlet-mapping>
 </web-app>

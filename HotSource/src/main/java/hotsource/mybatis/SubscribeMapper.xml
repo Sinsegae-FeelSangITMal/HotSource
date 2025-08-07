@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Subscribe">
+	
+	<sql id="columns">
+		subscribe_id, subscribe_date, cancel_date, user_id, seller_id
+	</sql>
+	
+	<resultMap 			type="Subscribe" 			id="joinMap">
+		<id 			column="subscribe_id" 		property="subscribe_id"/>
+		<result 		column="subscribe_date" 	property="subscribe_date"/>
+		<result 		column="cancel_date" 		property="cancel_date"/>
+		
+		<!-- 여기서 User는 구독자 A, Seller는 판매자 B로 다른 사람임 -->
+		<association 	column="user_id" 		property="user" 	javaType="User" 	select="User.select"/>
+		<association 	column="seller_id" 	property="seller" 	javaType="Seller" 	select="Seller.select"/>
+	</resultMap>
+	
+	<select id="selectAll" resultMap="joinMap">
+		SELECT <include refid="columns"/> FROM subscribe
+	</select>
+	
+	<select id="selectByUserId" resultMap="joinMap" parameterType="long">
+		SELECT <include refid="columns"/> FROM subscribe WHERE user_id=#{user_id}
+	</select>
+	
+	<select id="selectBySellerId" resultMap="joinMap" parameterType="long">
+		SELECT <include refid="columns"/> FROM subscribe WHERE seller_id=#{seller_id}
+	</select>
+	
+	<select id="selectSubCount" resultType="int" parameterType="long">
+		SELECT count(user_id) FROM subscribe WHERE seller_id=#{seller_id} and cancel_date is null
+	</select>
+	
+	<!-- 기존 구독 내역 조회 (user_id & seller_id 기준) -->
+	<select id="selectByUserAndSeller" resultMap="joinMap" parameterType="map">
+		SELECT <include refid="columns"/> 
+		FROM subscribe 
+		WHERE user_id=#{user_id} AND seller_id=#{seller_id}
+	</select>
+	
+	<!-- 구독 등록 -->
+	<insert id="insert" parameterType="Subscribe">
+		INSERT INTO subscribe(subscribe_date, user_id, seller_id)
+		VALUES (NOW(), #{user.user_id}, #{seller.seller_id})
+	</insert>
+	
+	<!-- 구독 취소 -->
+	<update id="cancel" parameterType="map">
+		UPDATE subscribe 
+		SET cancel_date = NOW() 
+		WHERE user_id=#{user_id} AND seller_id=#{seller_id} AND cancel_date IS NULL
+	</update>
+	
+	<!-- 구독 재등록 (취소된 구독의 cancel_date 초기화) -->
+	<update id="reactivate" parameterType="map">
+		UPDATE subscribe 
+		SET cancel_date = NULL, subscribe_date = NOW() 
+		WHERE user_id=#{user_id} AND seller_id=#{seller_id} AND cancel_date IS NOT NULL
+	</update>
+	
+	
+</mapper>

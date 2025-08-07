@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="AssetFile">
+
+    <!-- 공통 컬럼 정의 -->
+    <sql id="columns">
+        asset_file_id, file_url, asset_id
+    </sql>
+
+    <!-- ResultMap: asset 객체는 foreign key만 매핑 -->
+    <resultMap id="AssetFileResultMap" type="AssetFile">
+        <id property="asset_file_id" column="asset_file_id"/>
+        <result property="file_url" column="file_url"/>
+        
+        <association property="asset" javaType="Asset">
+            <id property="asset_id" column="asset_id"/>
+        </association>
+    </resultMap>
+
+    <!-- 1. 특정 asset_id의 모든 파일 조회 -->
+    <select id="selectByAssetId" parameterType="long" resultMap="AssetFileResultMap">
+        SELECT <include refid="columns"/>
+        FROM asset_file
+        WHERE asset_id = #{asset_id}
+    </select>
+
+    <!-- 2. 단일 파일 조회 -->
+    <select id="select" parameterType="long" resultMap="AssetFileResultMap">
+        SELECT <include refid="columns"/>
+        FROM asset_file
+        WHERE asset_file_id = #{asset_file_id}
+    </select>
+
+    <!-- 3. 등록 -->
+	<insert id="insert" parameterType="java.util.List">
+	    INSERT INTO asset_file (file_url, asset_id)
+	    VALUES 
+	    <foreach collection="list" item="item" separator=",">
+	        (#{item.file_url}, #{item.asset.asset_id})
+	    </foreach>
+	</insert>
+
+    <!-- 4. 수정 -->
+    <update id="update" parameterType="AssetFile">
+        UPDATE asset_file
+        SET file_url = #{file_url}
+        WHERE asset_file_id = #{asset_file_id}
+    </update>
+
+    <!-- 5. 삭제 -->
+    <delete id="delete" parameterType="long">
+        DELETE FROM asset_file WHERE asset_file_id = #{asset_file_id}
+    </delete>
+
+    <!-- 6. 특정 asset의 모든 파일 삭제 (선택적 기능) -->
+    <delete id="deleteByAssetId" parameterType="long">
+        DELETE FROM asset_file WHERE asset_id = #{asset_id}
+    </delete>
+
+</mapper>

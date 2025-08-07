@@ -4,21 +4,17 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 import org.apache.ibatis.session.SqlSessionFactory;
-import org.hibernate.SessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jndi.JndiTemplate;
-import org.springframework.orm.hibernate5.HibernateTransactionManager;
-import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 /*
  * 애플리케이션 Scope 수준에서 관리될 빈즈들의 대한 설정파일
@@ -26,7 +22,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @Configuration // xml 설정 파일 대신, 설정 역할을 하겠다
 @EnableTransactionManagement
 @ComponentScan(basePackages= {"hotsource.model", "hotsource.util"})
-public class RootConfig {
+public class RootConfig{
 	
 	// 어떤 데이터베이스를 사용할 지를 선택
 		public DataSource dataSource() throws NamingException {
@@ -54,6 +50,13 @@ public class RootConfig {
 		@Bean
 		public SqlSessionTemplate sqlSessionTemplate() throws Exception {
 			return new SqlSessionTemplate(sqlSessionFactory());
+		}
+		
+		@Bean
+		public CommonsMultipartResolver multipartResolver() {
+			CommonsMultipartResolver resolver = new CommonsMultipartResolver();
+			resolver.setMaxUploadSize(10*1024*1024); // 10M
+			return resolver;
 		}
 		
 }

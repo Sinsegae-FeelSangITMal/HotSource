@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Review">
+	
+	<sql id="columns">
+		review_id, rate, comment, create_date, update_date, user_id, asset_id, order_asset_id
+	</sql>
+	
+	<!-- OrderAsset에서 와서 orderAsset 소유할 필요 x -->
+	<resultMap			type="Review"			id="joinMap">
+		<id 			column="review_id"		property="review_id"/>
+		<result			column="rate"			property="rate"/>
+		<result			column="comment"		property="comment"/>
+		<result			column="create_date"	property="create_date"/>
+		<result			column="update_date"	property="update_date"/>
+		
+		<association	column="user_id"		property="user"			javaType="User"			select="User.select"/>
+		<association	column="asset_id"		property="asset"		javaType="Asset"		select="Asset.select"/>
+		<association	column="review_like_id"	property="reviewLike"		javaType="ReviewLike"		select="ReviewLike.select"/>
+	</resultMap>
+	
+	<resultMap			type="Review"			id="jotMap">
+		<id 			column="review_id"		property="review_id"/>
+		<result			column="rate"			property="rate"/>
+		<result			column="comment"		property="comment"/>
+		<result			column="create_date"	property="create_date"/>
+		<result			column="update_date"	property="update_date"/>
+		
+		<association	column="review_id"	property="reviewLike"		javaType="ReviewLike"		select="ReviewLike.select"/>
+	</resultMap>
+	
+	<select id="selectAll" resultMap="joinMap">
+		SELECT review_id, rate, comment, create_date, update_date, user_id, asset_id, order_asset_id
+		FROM review
+	</select>
+	
+	<select id="select" resultMap="joinMap" parameterType="long">
+		SELECT <include refid="columns"/> FROM review WHERE review_id=#{review_id}
+	</select>
+	<select id="selectByAssetId" resultMap="joinMap" parameterType="long">
+		SELECT <include refid="columns"/> FROM review WHERE asset_id=#{asset_id}
+	</select>
+	
+	<select id="selectByOrderedAssetId" resultMap="jotMap" parameterType="long">
+		SELECT <include refid="columns"/>
+		FROM review
+		WHERE order_asset_id=#{order_asset_id}
+	</select>
+	
+	<!-- asset의 평균 별점 구하기 : 레코드가 없어 null이 뜨는 경우 0을 반환 -->
+	<select id="selectAverageRateByAssetId" parameterType="long" resultType="double">
+		select coalesce(avg(rate), 0) from review where asset_id = #{asset_id} 
+	</select>
+	
+	<!-- asset의 리뷰 수 구하기 -->
+	<select id="countByAssetId" parameterType="long" resultType="int">
+		select count(*) from review where asset_id = #{asset_id}
+	</select>
+	<!-- 
+	<select id="selectAvgRate" parameterType="long" resultType="double">
+		select 	AVG(rate)
+		from 	review r
+			   ,asset  a
+		where 	r.asset_id = a.asset_id
+		and 	a.seller_id = #{seller_id}
+	</select>
+	 -->
+	 	
+	<select id="selectAssetId" resultType="Review" parameterType="long">
+		SELECT <include refid="columns"/>
+		FROM review
+		WHERE asset_id=#{asset_id}
+	</select>
+	
+	<insert id="insert" parameterType="Review" useGeneratedKeys="true" keyProperty="review_id">
+		INSERT INTO
+		review (rate, comment, user_id, asset_id, order_asset_id)
+		VALUES(#{rate, jdbcType=DECIMAL}, #{comment}, #{user.user_id}, #{asset.asset_id}, #{orderedAsset.order_asset_id})
+	</insert>
+	
+</mapper>

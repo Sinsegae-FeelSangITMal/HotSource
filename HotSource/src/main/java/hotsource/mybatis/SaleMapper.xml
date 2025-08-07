@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Sale">
+	
+	<sql id="columns">
+		sale_id, sale_value, start_date, end_date, create_date, asset_id
+	</sql>
+	
+	<resultMap 			type="Sale" 					id="joinMap">
+		<id 					column="sale_id" 			property="sale_id"/>
+		<result 			column="sale_value" 		property="sale_value"/>
+		<result 			column="start_date" 		property="start_date"/>
+		<result 			column="end_date" 		property="end_date"/>
+		<result 			column="create_date" 	property="create_date"/>
+	</resultMap>
+	
+	<select id="selectAll" resultMap="joinMap">
+		SELECT <include refid="columns"/> FROM sale
+	</select>
+	
+	<select id="select" resultMap="joinMap" parameterType="long">
+		SELECT <include refid="columns"/> FROM sale WHERE sale_id=#{sale_id}
+	</select>
+	
+	<select id="selectByAssetId" resultMap="joinMap" parameterType="long">
+		SELECT <include refid="columns"/> FROM sale WHERE asset_id=#{asset_id}
+	</select>
+	
+	<!-- 현재 날짜 기준으로 유효한 할인 정보 조회 -->
+	<select id="selectValidByAssetId" resultType="Sale" parameterType="long">
+		SELECT <include refid="columns"/>
+		FROM sale
+		WHERE asset_id=#{asset_id}
+		AND CURDATE() BETWEEN start_date AND end_date
+		ORDER BY start_date DESC
+		LIMIT 1
+	</select>
+	
+	<insert id="insert" parameterType="Sale">
+		insert into sale(asset_id, sale_value, start_date, end_date)
+		values (#{asset_id}, #{sale_value},  NOW(), DATE_ADD(NOW(), INTERVAL 1 MONTH))
+	</insert>
+	
+	<update id="update" parameterType="Sale">
+		update sale
+		set sale_value = #{sale_value},
+			start_date = NOW(),
+			end_date = DATE_ADD(NOW(), INTERVAL 1 MONTH)
+		where asset_id = #{asset_id} <!-- 또는 적절한 조건 -->
+	</update>
+	
+	<delete id="deleteByAssetId" parameterType="long">
+		delete from sale where asset_id = #{asset_id}
+	</delete>
+	
+</mapper>

@@ -6,8 +6,9 @@ import lombok.Data;
 
 @Data
 public class Cart {
-	private int cart_id;
+	private long cart_id;
+	private Timestamp create_date;
+	
 	private Asset asset;
 	private User user;
-	private Timestamp create_date;
 }

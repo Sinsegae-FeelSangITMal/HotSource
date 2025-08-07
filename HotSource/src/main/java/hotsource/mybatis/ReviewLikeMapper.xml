@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ReviewLike">
+	
+	<sql id="columns">
+		review_like_id, is_like, user_id, review_id
+	</sql>
+
+	<!-- Review에서 와서 review 소유할 필요 x -->	
+	<resultMap			type="ReviewLike"				id="joinMap">
+		<id 					column="review_like_id"	property="review_like_id"/>
+		<result				column="is_like"				property="is_like"/>
+	</resultMap>
+	
+	<select id="select" resultType="ReviewLike" parameterType="long">
+		SELECT <include refid="columns"/>
+		FROM review_like
+		WHERE review_id=#{review_id}
+		LIMIT 1
+	</select>
+	
+	<insert id="insert" parameterType="ReviewLike">
+		INSERT INTO
+		review_like (is_like, user_id, review_id)
+		VALUES (#{is_like}, #{user.user_id}, #{review.review_id})
+	</insert>
+</mapper>

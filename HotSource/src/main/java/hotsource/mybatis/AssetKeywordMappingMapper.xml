@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="AssetKeywordMapping">
+	
+	<sql id="columns">
+		asset_keyword_mapping_id, asset_id, keyword_id
+	</sql>
+	
+	<resultMap			type="AssetKeywordMapping"					id="joinMap">
+		<id 			property="asset_keyword_mapping_id"	column="asset_keyword_mapping_id"/>
+		<association property="asset" javaType="Asset">
+		    <id property="asset_id" column="asset_id"/>
+		</association>
+		<association	column="keyword_id"		property="keyword"			javaType="Keyword"		select="Keyword.select"/>
+	</resultMap>
+	
+	<select id="selectByAssetId" resultMap="joinMap" parameterType="long">
+		SELECT <include refid="columns"/> FROM asset_keyword_mapping WHERE asset_id=#{asset_id}
+	</select>
+	
+	<insert id="insert" parameterType="list">
+    INSERT INTO asset_keyword_mapping (asset_id, keyword_id)
+    VALUES
+    <foreach collection="list" item="item" separator=",">
+        (#{item.asset.asset_id}, #{item.keyword.keyword_id})
+    </foreach>
+</insert>
+	
+	<delete id="deleteByAssetId" parameterType="long">
+		delete from asset_keyword_mapping where asset_id = #{asset_id}
+	</delete>
+
+</mapper>

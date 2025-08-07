@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Paypal">
+	
+	<sql id="columns">
+		paypal_id, paypal_status, paypal_payer_id, paypal_verified, paypal_email, seller_id
+	</sql>
+	
+	<resultMap 			type="Paypal" 						id="joinMap">
+		<id 					column="paypal_id" 				property="paypal_id"/>
+		<result 			column="paypal_status" 		property="paypal_status"/>
+		<result 			column="paypal_payer_id" 	property="paypal_payer_id"/>
+		<result 			column="paypal_verified" 		property="paypal_verified"/>
+		<result 			column="paypal_email" 			property="paypal_email"/>
+		<association 	column="seller_id" 				property="seller" 				javaType="Seller" 		select="Seller.select"/>
+	</resultMap>
+	
+	<select id="selectAll" resultMap="joinMap">
+		SELECT <include refid="columns"/> FROM paypal
+	</select>
+	
+	<select id="select" resultMap="joinMap" parameterType="long">
+		SELECT <include refid="columns"/> FROM paypal WHERE paypal_id=#{paypal_id}
+	</select>
+	
+	<select id="selectBySellerId" resultMap="joinMap" parameterType="long">
+		SELECT <include refid="columns"/> FROM paypal WHERE seller_id=#{seller_id}
+	</select>
+	
+</mapper>

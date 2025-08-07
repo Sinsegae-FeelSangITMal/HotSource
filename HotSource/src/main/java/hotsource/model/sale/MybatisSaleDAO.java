@@ -1,0 +1,53 @@
+package hotsource.model.sale;
+
+import java.util.List;
+
+import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import hotsource.domain.Sale;
+
+@Repository
+public class MybatisSaleDAO implements SaleDAO {
+
+	@Autowired
+	private SqlSessionTemplate sqlSessionTemplate;
+	
+	@Override
+	public List selectAll() {
+		return sqlSessionTemplate.selectList("Sale.selectAll");
+	}
+
+	@Override
+	public Sale select(long sale_id) {
+		return sqlSessionTemplate.selectOne("Sale.select", sale_id);
+	}
+
+	@Override
+	public Sale selectByAssetId(long asset_id) {
+		return sqlSessionTemplate.selectOne("Sale.selectByAssetId", asset_id);
+	}
+
+	@Override
+	public Sale selectValidByAssetId(long asset_id) {
+		return sqlSessionTemplate.selectOne("Sale.selectValidByAssetId", asset_id);
+	}
+
+	@Override
+	public void insert(Sale sale) {
+		sqlSessionTemplate.insert("Sale.insert", sale);
+	}
+
+	@Override
+	public void update(Sale sale) {
+		sqlSessionTemplate.update("Sale.update", sale);
+	}
+
+	@Override
+	public void deleteByAssetId(long asset_id) {
+		sqlSessionTemplate.delete("Sale.deleteByAssetId", asset_id);
+	}
+	
+	
+}

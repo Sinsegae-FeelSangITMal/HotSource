@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="WishlistItem">
+
+	<insert id="insert" parameterType="WishlistItem">
+		insert into wishlist_item(wishlist_id, asset_id) values(#{wishlist.wishlist_id}, #{asset.asset_id})
+		<selectKey keyColumn="wishlist_item_id" keyProperty="wishlist_item_id" resultType="long" order="AFTER">
+			select last_insert_id()
+		</selectKey>
+	</insert>
+	
+	<sql id="columns">
+		wishlist_item_id, create_date, wishlist_id, asset_id
+	</sql>
+	
+	<resultMap 		type="WishlistItem" 				id="joinMap">
+		<id 			column="wishlist_item_id" 		property="wishlist_item_id"/>
+		<result 		column="create_date" 			property="create_date"/>
+		 <result 		column="wishlist_id"      		property="wishlist.wishlist_id"/>
+		<association 	column="asset_id"				property="asset"			javaType="Asset"		select="Asset.select"/>
+	</resultMap>
+	
+	 <select id="select" parameterType="long" resultMap="joinMap">
+	 	select <include refid="columns"/> from wishlist_item where wishlist_item_id = #{wishlist_item_id}
+	 </select>
+	
+	<select id="selectAll" resultMap="joinMap">
+		SELECT <include refid="columns"/> FROM wishlist_item
+	</select>
+	
+	<select id="selectByWishlistId" resultMap="joinMap" parameterType="long">
+		SELECT <include refid="columns"/> FROM wishlist_item WHERE wishlist_id=#{wishlist_id}
+	</select>
+	
+	<select id="existsByWishlistIdAndAssetId" parameterType="map" resultType="boolean">
+		select exists (
+			select 1
+			from wishlist_item 
+			where wishlist_id = #{wishlist_id}
+			and asset_id = #{asset_id}
+		) 
+	</select>
+	
+	<select id="existsByUserIdAndAssetId" parameterType="map" resultType="boolean">
+		SELECT EXISTS (
+	    	SELECT 1
+	    	FROM wishlist w
+	    	JOIN wishlist_item wi ON w.wishlist_id = wi.wishlist_id
+	    	WHERE w.user_id = #{user_id}
+	      	AND wi.asset_id = #{asset_id}
+	  	)
+	</select>
+	
+	<delete id="deleteByWishlistId" parameterType="long">
+		delete from wishlist_item where wishlist_id = #{wishlist_id}
+	</delete>
+	
+	<delete id="deleteByWishlistIdAndAssetId" parameterType="map">
+		delete from wishlist_item where wishlist_id = #{wishlist_id} and asset_id = #{asset_id}
+	</delete>
+	
+	<select id="countByAssetId" parameterType="long" resultType="int">
+		select count(*) from wishlist_item where asset_id = #{asset_id}
+	</select>
+	
+</mapper>
